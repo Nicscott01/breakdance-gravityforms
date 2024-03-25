@@ -1,0 +1,47 @@
+.gfield {
+    border:none;
+    padding:0;
+}
+
+.gform_wrapper .breakdance-form {
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.gform-grid-row {
+    display:flex;
+    flex-direction: row;
+    gap: var(--bde-form-gap);
+    width: 100%;
+}
+
+
+
+.gform-grid-row .gform-grid-col {
+    flex: 1 1 0;
+}
+
+.gform-grid-row .gform-grid-col--size-auto {
+    flex: 1 0 auto;
+}
+
+
+.gform_fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--bde-form-gap);
+}
+
+.gfield_visibility_hidden, 
+.gf_invisible {
+    inset-inline-start: -9999px;
+    position: absolute;
+    visibility: hidden;
+}
+
+.gform_validation_container {
+    display:none !important;
+}
+
+.gfield_description {
+    font-size:.95rem;
+}

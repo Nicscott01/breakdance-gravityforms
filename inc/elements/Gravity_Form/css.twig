@@ -1,0 +1,123 @@
+
+{% if design.form_elements.labels.hide_labels %}
+	%%SELECTOR%% .gfield_label:not(.bdgf-choice-label) {
+       border: 0;
+      clip: rect(1px, 1px, 1px, 1px);
+      -webkit-clip-path: inset(50%);
+      clip-path: inset(50%);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      overflow-wrap: normal !important;
+      word-wrap: normal !important;
+      padding: 0;
+      position: absolute !important;
+      width: 1px;
+	}
+{% endif %}
+
+{% if breakpoint == design.form_elements.vertical_at %}
+	%%SELECTOR%% .gform-grid-row {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+{% endif %}
+    
+
+
+{% if design.form_elements.radio_checkbox.layout == 'vertical' %}
+  %%SELECTOR%% .gfield_radio,
+  %%SELECTOR%% .gfield_checkbox {
+    flex-direction: column;
+	}
+
+
+{% elseif design.form_elements.radio_checkbox.layout == 'horizontal' %}
+  	%%SELECTOR%% .gfield_radio,
+	%%SELECTOR%% .gfield_checkbox {
+    	flex-direction: row;
+	}
+    %%SELECTOR%% .gfield_radio .gchoice,
+    %%SELECTOR%% .gfield_checkbox .gchoice {
+        width: auto;
+    }
+
+    %%SELECTOR%% .breakdance-form-radio:last-child,
+    %%SELECTOR%% .breakdance-form-checkbox:last-child {
+        margin-bottom: var(--bde-form-after-sublabel);
+    }
+
+{% endif %}
+
+%%SELECTOR%% .gfield_radio,
+%%SELECTOR%% .gfield_checkbox {
+	gap: {{ design.form_elements.radio_checkbox.gap.style }};
+}
+
+
+
+%%SELECTOR%% .gfield .small  {
+    width: {{ design.form_elements.inputs.width_small.style }};
+}
+%%SELECTOR%% .gfield .medium {
+    width: {{ design.form_elements.inputs.width_medium.style }};
+}
+%%SELECTOR%% .gfield .large {
+    width: {{ design.form_elements.inputs.width_large.style }};
+}
+
+{% if design.form_elements.footer.submit_alignment == 'left' %}
+
+{% elseif design.form_elements.footer.submit_alignment == 'center' %}
+%%SELECTOR%% .gform_footer {
+	justify-content:center;
+}
+{% elseif design.form_elements.footer.submit_alignment == 'right' %}
+  %%SELECTOR%% .gform_footer {
+	justify-content:flex-end;
+}
+{% endif %}
+
+%%SELECTOR%% {
+{{ macros.spacing_margin_y(design.spacing) }}
+}
+
+%%SELECTOR%% .gform_validation_errors {
+background-color: {{ design.form_elements.validation.container.background_color }};
+  {{ macros.borders(design.form_elements.validation.container.borders) }}
+  {{ macros.spacing_padding_all(design.form_elements.validation.container.padding) }}
+}
+
+%%SELECTOR%% .gform_validation_errors h2 {
+{{ macros.typography(design.form_elements.validation.h2_messages, globalSettings) }}
+}
+
+%%SELECTOR%% .gform_validation_errors ol,
+%%SELECTOR%% .gform_validation_errors li {
+{{ macros.typography(design.form_elements.validation.list_items, globalSettings) }}
+}
+
+%%SELECTOR%% .gform_confirmation_message {
+	{{ macros.typography(design.form_elements.confirmation.typography, globalSettings) }}
+}
+
+
+%%SELECTOR%% .validation_message {
+	{{ macros.typography(design.form_elements.validation.messages.messages, globalSettings) }}
+  background-color: {{ design.form_elements.validation.messages.background_color }};
+  {{ macros.borders(design.form_elements.validation.messages.borders) }}
+  {{ macros.spacing_padding_all(design.form_elements.validation.messages.padding) }}
+  {{ macros.spacing_margin_y(design.form_elements.validation.messages.margin) }}
+}
+
+ 
+{{ macros.atomV1ButtonCss(design.form_elements.footer.button, 'breakdance-form-button__submit', '%%SELECTOR%%', breakpoint, globalSettings) }}
+
+
+
+{% if design.form_elements.direction == 'vertical' %}
+  CSS or HTML here
+{% elseif design.form_elements.direction == 'horizontal' %}
+ 	
+
+{% endif %}
