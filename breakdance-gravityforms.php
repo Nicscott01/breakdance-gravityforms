@@ -206,7 +206,15 @@
 
         switch( $field->type ) {
 
+            case "consent" :
             case "checkbox":
+
+                //ginput_container ginput_container_consent 
+                if ( $field->type == 'consent' ) {
+
+                    $field_content = str_replace( 'ginput_container_consent', 'ginput_container_consent breakdance-form-checkbox', $field_content );
+
+                }
 
 
                 $field_content = str_replace( 'gchoice', 'breakdance-form-checkbox gchoice', $field_content );

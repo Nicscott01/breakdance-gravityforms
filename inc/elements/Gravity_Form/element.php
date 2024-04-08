@@ -369,15 +369,7 @@ class GravityForm extends \Breakdance\Elements\Element
       "Spacing",
       "spacing",
        ['type' => 'popout']
-     ), c(
-        "new_section",
-        "New Section",
-        [],
-        ['type' => 'section'],
-        false,
-        false,
-        [],
-      )];
+     )];
     }
 
     static function contentControls()
@@ -386,18 +378,10 @@ class GravityForm extends \Breakdance\Elements\Element
         "controls",
         "Controls",
         [c(
-        "mode",
-        "Mode",
-        [],
-        ['type' => 'dropdown', 'layout' => 'vertical', 'items' => ['0' => ['value' => 'load', 'text' => 'Load Form'], '1' => ['text' => 'Form Builder', 'value' => 'builder']]],
-        false,
-        false,
-        [],
-      ), c(
         "form",
         "Form",
         [],
-        ['type' => 'dropdown', 'layout' => 'vertical', 'dropdownOptions' => ['populate' => ['path' => '', 'text' => '', 'value' => '', 'fetchDataAction' => 'bdgf_get_forms', 'fetchContextPath' => 'content.controls.form', 'refetchPaths' => []]], 'condition' => ['0' => ['0' => ['path' => 'content.controls.mode', 'operand' => 'equals', 'value' => 'load']]]],
+        ['type' => 'dropdown', 'layout' => 'vertical', 'dropdownOptions' => ['populate' => ['path' => '', 'text' => '', 'value' => '', 'fetchDataAction' => 'bdgf_get_forms', 'fetchContextPath' => 'content.controls.form', 'refetchPaths' => []]]],
         false,
         false,
         [],
@@ -485,7 +469,7 @@ class GravityForm extends \Breakdance\Elements\Element
 
     static function dynamicPropertyPaths()
     {
-        return ['0' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '1' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '2' => ['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], '3' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '4' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '5' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '6' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '7' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '8' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '9' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '10' => ['accepts' => 'image_url', 'path' => 'design.form_elements.radio_checkbox.active.background.layers[].image'], '11' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '12' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '13' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string']];
+        return ['0' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '1' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '2' => ['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], '3' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '4' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '5' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '6' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '7' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '8' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '9' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '10' => ['accepts' => 'image_url', 'path' => 'design.form_elements.radio_checkbox.active.background.layers[].image'], '11' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '12' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '13' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '14' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '15' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string']];
     }
 
     static function additionalClasses()

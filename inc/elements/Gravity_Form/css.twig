@@ -115,13 +115,6 @@ background-color: {{ design.form_elements.validation.container.background_color 
 
 
 
-{% if design.form_elements.direction == 'vertical' %}
-  CSS or HTML here
-{% elseif design.form_elements.direction == 'horizontal' %}
- 	
-
-{% endif %}
-
 
 {% if design.form_elements.radio_checkbox.radio_type == 'standard' %}
 
@@ -130,9 +123,6 @@ background-color: {{ design.form_elements.validation.container.background_color 
   {{ macros.simpleLayout(design.form_elements.radio_checkbox.layout, breakpoint) }}
 }
 
-%%SELECTOR%% .breakdance-form-radio {
-  
-}
 
 %%SELECTOR%% .breakdance-form-radio input {
     display:none;
