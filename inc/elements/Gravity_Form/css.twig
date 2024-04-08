@@ -121,3 +121,40 @@ background-color: {{ design.form_elements.validation.container.background_color 
  	
 
 {% endif %}
+
+
+{% if design.form_elements.radio_checkbox.radio_type == 'standard' %}
+
+{% elseif design.form_elements.radio_checkbox.radio_type == 'blocks' %}
+%%SELECTOR%% .gfield_radio {
+  {{ macros.simpleLayout(design.form_elements.radio_checkbox.layout, breakpoint) }}
+}
+
+%%SELECTOR%% .breakdance-form-radio {
+  
+}
+
+%%SELECTOR%% .breakdance-form-radio input {
+    display:none;
+  }
+
+%%SELECTOR%% .breakdance-form-radio label {
+  border:1px solid var(--bde-brand-primary-color);
+  {{ macros.borders(design.form_elements.radio_checkbox.borders) }}
+  padding:1rem 2rem !important;
+  text-align:center;
+  margin:0;
+  {{ macros.typography(design.form_elements.radio_checkbox.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .breakdance-form-radio input:checked + label {
+  background-color:var(--bde-brand-primary-color);
+  background-color: {{ design.form_elements.radio_checkbox.active.background_color }};
+  color: #fff;
+  {{ macros.typography(design.form_elements.radio_checkbox.active.typography, globalSettings) }}
+  
+}
+
+
+
+{% endif %}

@@ -28,6 +28,7 @@
 
         require_once( __DIR__ . '/inc/elements.php' );
         require_once( __DIR__ . '/inc/helper-functions.php' );
+        require_once( __DIR__ . '/inc/Modifier.php' );
      
         add_filter( 'gform_disable_css', '__return_true' );
 
@@ -435,3 +436,7 @@
  }
 
  BDGF();
+
+
+
+

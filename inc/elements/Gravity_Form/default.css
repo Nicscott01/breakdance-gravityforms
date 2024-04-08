@@ -62,7 +62,6 @@
   margin-top:.5rem;
 }
 
-
 @media (max-width:767px) {
 .breakdance .bdgf .ginput_container_address .address_city {
   grid-column-end:8;

@@ -45,7 +45,7 @@ class GravityForm extends \Breakdance\Elements\Element
 
     static function category()
     {
-        return 'other';
+        return 'forms';
     }
 
     static function badge()
@@ -154,6 +154,50 @@ class GravityForm extends \Breakdance\Elements\Element
         [],
         ['type' => 'unit', 'layout' => 'inline', 'rangeOptions' => ['step' => 1], 'unitOptions' => ['types' => ['0' => 'rem', '1' => 'em', '2' => 'px', '3' => '%']]],
         true,
+        false,
+        [],
+      ), c(
+        "radio_type",
+        "Radio Type",
+        [],
+        ['type' => 'dropdown', 'layout' => 'inline', 'items' => ['0' => ['value' => 'standard', 'text' => 'Standard'], '1' => ['text' => 'Blocks', 'value' => 'blocks']]],
+        false,
+        false,
+        [],
+      ), getPresetSection(
+      "EssentialElements\\simpleLayout",
+      "Layout",
+      "layout",
+       ['condition' => ['0' => ['0' => ['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]], 'type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\typography",
+      "Typography",
+      "typography",
+       ['condition' => ['0' => ['0' => ['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]], 'type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\borders",
+      "Borders",
+      "borders",
+       ['condition' => ['0' => ['0' => ['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]], 'type' => 'popout']
+     ), c(
+        "active",
+        "Active",
+        [c(
+        "background_color",
+        "Background Color",
+        [],
+        ['type' => 'color', 'layout' => 'inline'],
+        false,
+        false,
+        [],
+      ), getPresetSection(
+      "EssentialElements\\typography",
+      "Typography",
+      "typography",
+       ['type' => 'popout']
+     )],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout'], 'condition' => ['0' => ['0' => ['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]]],
+        false,
         false,
         [],
       )],
@@ -325,7 +369,15 @@ class GravityForm extends \Breakdance\Elements\Element
       "Spacing",
       "spacing",
        ['type' => 'popout']
-     )];
+     ), c(
+        "new_section",
+        "New Section",
+        [],
+        ['type' => 'section'],
+        false,
+        false,
+        [],
+      )];
     }
 
     static function contentControls()
@@ -334,10 +386,18 @@ class GravityForm extends \Breakdance\Elements\Element
         "controls",
         "Controls",
         [c(
+        "mode",
+        "Mode",
+        [],
+        ['type' => 'dropdown', 'layout' => 'vertical', 'items' => ['0' => ['value' => 'load', 'text' => 'Load Form'], '1' => ['text' => 'Form Builder', 'value' => 'builder']]],
+        false,
+        false,
+        [],
+      ), c(
         "form",
         "Form",
         [],
-        ['type' => 'dropdown', 'layout' => 'vertical', 'dropdownOptions' => ['populate' => ['path' => '', 'text' => '', 'value' => '', 'fetchDataAction' => 'bdgf_get_forms', 'fetchContextPath' => 'content.controls.form', 'refetchPaths' => []]]],
+        ['type' => 'dropdown', 'layout' => 'vertical', 'dropdownOptions' => ['populate' => ['path' => '', 'text' => '', 'value' => '', 'fetchDataAction' => 'bdgf_get_forms', 'fetchContextPath' => 'content.controls.form', 'refetchPaths' => []]], 'condition' => ['0' => ['0' => ['path' => 'content.controls.mode', 'operand' => 'equals', 'value' => 'load']]]],
         false,
         false,
         [],
@@ -362,38 +422,6 @@ class GravityForm extends \Breakdance\Elements\Element
         "Notes",
         [],
         ['type' => 'alert_box', 'layout' => 'vertical', 'alertBoxOptions' => ['style' => 'info', 'content' => '<p>Forms that contain conditional logic will display all fields in Breakdance layout. Conditional logic will be preserved on the front end.</p>']],
-        false,
-        false,
-        [],
-      ), c(
-        "fields",
-        "Fields",
-        [c(
-        "field_name",
-        "Field Name",
-        [],
-        ['type' => 'alert_box', 'layout' => 'vertical', 'alertBoxOptions' => ['style' => 'default', 'content' => '<p>Field 1 - Name</p>']],
-        false,
-        false,
-        [],
-      ), c(
-        "field",
-        "FIELD",
-        [],
-        ['type' => 'text', 'layout' => 'vertical'],
-        false,
-        false,
-        [],
-      ), c(
-        "width",
-        "Width",
-        [],
-        ['type' => 'number', 'layout' => 'inline', 'rangeOptions' => ['min' => 1, 'max' => 12, 'step' => 1]],
-        false,
-        false,
-        [],
-      )],
-        ['type' => 'repeater', 'layout' => 'vertical', 'repeaterOptions' => ['titleTemplate' => '', 'defaultTitle' => 'Field', 'buttonName' => '']],
         false,
         false,
         [],
@@ -457,7 +485,7 @@ class GravityForm extends \Breakdance\Elements\Element
 
     static function dynamicPropertyPaths()
     {
-        return ['0' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '1' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '2' => ['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], '3' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '4' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '5' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '6' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '7' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string']];
+        return ['0' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '1' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '2' => ['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], '3' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '4' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '5' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '6' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '7' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '8' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '9' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '10' => ['accepts' => 'image_url', 'path' => 'design.form_elements.radio_checkbox.active.background.layers[].image'], '11' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '12' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '13' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string']];
     }
 
     static function additionalClasses()
@@ -472,7 +500,7 @@ class GravityForm extends \Breakdance\Elements\Element
 
     static function propertyPathsToWhitelistInFlatProps()
     {
-        return ['design.form_elements.footer.layout.horizontal.vertical_at', 'design.form_elements.vertical_at', 'design.form_elements.footer.styles.styles.size.full_width_at', 'design.form_elements.footer.button.custom.size.full_width_at', 'design.form_elements.footer.button.styles'];
+        return ['design.form_elements.footer.layout.horizontal.vertical_at', 'design.form_elements.vertical_at', 'design.form_elements.footer.styles.styles.size.full_width_at', 'design.form_elements.footer.button.custom.size.full_width_at', 'design.form_elements.footer.button.styles', 'design.form_elements.radio_checkbox.layout.horizontal.vertical_at'];
     }
 
     static function propertyPathsToSsrElementWhenValueChanges()

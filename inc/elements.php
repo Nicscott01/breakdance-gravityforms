@@ -18,7 +18,6 @@ class Elements {
         add_action( 'breakdance_loaded', [ $this, 'register_save_location' ], 9 ); 
         add_action( 'breakdance_loaded', [ $this, 'register_handler' ], 9 ); 
 
-
     }
 
 
@@ -126,6 +125,12 @@ error_log( $log );
 
 
 
+    
+    
+
+  
+
+
 
 
 
@@ -134,3 +139,4 @@ error_log( $log );
 
 
 new Elements();
+
