@@ -113,7 +113,22 @@ background-color: {{ design.form_elements.validation.container.background_color 
  
 {{ macros.atomV1ButtonCss(design.form_elements.footer.button, 'breakdance-form-button__submit', '%%SELECTOR%%', breakpoint, globalSettings) }}
 
+{{ macros.atomV1ButtonCss(design.form_elements.radio_checkbox.de_select_all_button, 'gfield_choice_all_toggle', '%%SELECTOR%%', breakpoint, globalSettings) }}
+    
 
+
+{{ macros.atomV1ButtonCss(design.form_elements.list.add_button, 'add_list_item', '%%SELECTOR%%', breakpoint, globalSettings) }}
+    
+
+{{ macros.atomV1ButtonCss(design.form_elements.list.remove_button, 'delete_list_item', '%%SELECTOR%%', breakpoint, globalSettings) }}    
+
+%%SELECTOR%% .gfield_list_icons {
+  gap: {{ design.form_elements.list.gap.style }};
+}
+
+%%SELECTOR%% .gfield_list_group {
+  margin-bottom: {{ design.form_elements.list.margin_bottom.style }};
+}
 
 
 {% if design.form_elements.radio_checkbox.radio_type == 'standard' %}
@@ -148,3 +163,7 @@ background-color: {{ design.form_elements.validation.container.background_color 
 
 
 {% endif %}
+
+
+
+

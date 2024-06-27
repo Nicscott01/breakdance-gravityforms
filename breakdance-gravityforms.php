@@ -42,6 +42,9 @@
         //add_filter( 'gform_field_css_class', [ $this, 'gform_field_css_class_label'], 10, 3 );
 
        // add_filter( 'gform_pre_render', [ $this, 'gform_pre_render' ], 10, 3 );
+       add_filter( 'gform_pre_validation', [ $this, 'gform_pre_render' ], 10 );
+       add_filter( 'gform_pre_submission_filter', [ $this, 'gform_pre_render' ], 10 );
+       add_filter( 'gform_admin_pre_render', [ $this, 'gform_pre_render' ], 10 );
 
 
         add_filter( 'gform_field_container', [ $this, 'gform_field_container' ], 10, 6 );
@@ -177,9 +180,43 @@
      * 
      */
 
-    public function gform_pre_render( $form, $ajax, $field_values ) {
+    public function gform_pre_render( $form ) {
+
+        $transient = sprintf( 'form_%s_direction', $form['id'] );
+
+        $form_direction = get_transient( $transient );
+
+
+        if ( !empty( $form_direction ) ) {
+
+            switch( $form_direction ) {
+
+                case 'horizontal' :
+
+                    return $this->gform_pre_render_horizontal( $form );
+
+                case 'vertical' :
+
+                    return $this->gform_pre_render_vertical( $form );
+            }
+
+        }
+
+
+        return $form;
+    }
+
+    
+    public function gform_pre_render_vertical( $form ) {
 
         $form['cssClass'] = 'breakdance-form breakdance-form--vertical';
+
+        return $form;
+    }
+
+    public function gform_pre_render_horizontal( $form ) {
+
+        $form['cssClass'] = 'breakdance-form breakdance-form--horizontal';
 
         return $form;
     }
@@ -206,6 +243,33 @@
 
         switch( $field->type ) {
 
+            case "list" :
+
+                $field_content = str_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+                $field_content = str_replace( '<input ', '<input class="breakdance-form-field__input" ', $field_content );
+
+
+                $columns = $field->choices;
+
+                $row = 1;
+
+                foreach ( $columns as $column ) {
+
+                    $search = sprintf( 'aria-label=\'%s, Row %s\'', $column['text'], $row );
+
+                    //var_dump( $search );
+
+                    $replace = sprintf( ' placeholder="%s"', $column['text'] );
+
+
+                    $field_content = str_replace( $search, $search . $replace, $field_content );
+
+                    //$row++;
+                }
+
+                //var_dump( $field );
+                //var_dump( $field_content );
+
             case "consent" :
             case "checkbox":
 
@@ -220,6 +284,7 @@
                 $field_content = str_replace( 'gchoice', 'breakdance-form-checkbox gchoice', $field_content );
                 $field_content = str_replace( 'gform-field-label--type-inline', ' gform-field-label--type-inline breakdance-form-checkbox__text ', $field_content );
                 $field_content = str_replace( 'gfield_label_before_complex', 'gfield_label_before_complex breakdance-form-field__label bdgf-choice-label', $field_content );
+                //$field_content = str_replace( 'gfield_choice_all_toggle', 'gfield_choice_all_toggle button-atom', $field_content );
 
                 break;
 
@@ -234,6 +299,7 @@
                 $field_content = str_replace( 'ginput_amount', 'breakdance-form-field__input ginput_amount', $field_content );
                 $field_content = str_replace( "<legend class='gfield_label ", "<legend class='breakdance-form-field__label gfield_label bdgf-choice-label ", $field_content );
                 $field_content = str_replace( "<label class='gfield_label ", "<label class='breakdance-form-field__label gfield_label bdgf-choice-label ", $field_content );
+                $field_content = str_replace( "gchoice_other_control", "gchoice_other_control breakdance-form-field__input", $field_content );
 
                 break;
 
@@ -446,5 +512,12 @@
  BDGF();
 
 
+ function gform_pre_render_vertical( $form ) {
+    return BDGF()->gform_pre_render_vertical( $form );
+ }
 
+
+ function gform_pre_render_horizontal( $form ) {
+    return BDGF()->gform_pre_render_horizontal( $form );
+ }
 

@@ -62,6 +62,29 @@
   margin-top:.5rem;
 }
 
+.breakdance .bdgf .gfield--type-radio .gchoice_other_control,
+.breakdance .bdgf .gfield--type-choice .gchoice_other_control {
+  margin-left:.5em;
+}
+
+
+.breakdance .bdgf .gfield_choice_all_toggle {
+  margin-bottom: var(--bde-form-after-sublabel);
+}
+
+
+.breakdance .bdgf .gfield_list_icons { 
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+}
+
+.breakdance .bdgf .gfield_list_icons,
+.breakdance .bdgf .gfield_header_item--icons {
+  flex:1 1 1px;
+}
+
+
 @media (max-width:767px) {
 .breakdance .bdgf .ginput_container_address .address_city {
   grid-column-end:8;
