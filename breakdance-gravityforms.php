@@ -257,18 +257,12 @@
 
                     $search = sprintf( 'aria-label=\'%s, Row %s\'', $column['text'], $row );
 
-                    //var_dump( $search );
-
                     $replace = sprintf( ' placeholder="%s"', $column['text'] );
-
 
                     $field_content = str_replace( $search, $search . $replace, $field_content );
 
-                    //$row++;
                 }
 
-                //var_dump( $field );
-                //var_dump( $field_content );
 
             case "consent" :
             case "checkbox":
