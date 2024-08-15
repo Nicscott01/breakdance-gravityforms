@@ -14,14 +14,12 @@
     width: 100%;
 }
 
-
-
 .gform-grid-row .gform-grid-col {
     flex: 1 1 0;
 }
 
 .gform-grid-row .gform-grid-col--size-auto {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
 }
 
 

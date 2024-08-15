@@ -1,26 +1,50 @@
-
 {% if design.form_elements.labels.hide_labels %}
-	%%SELECTOR%% .gfield_label:not(.bdgf-choice-label) {
-       border: 0;
-      clip: rect(1px, 1px, 1px, 1px);
-      -webkit-clip-path: inset(50%);
-      clip-path: inset(50%);
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      overflow-wrap: normal !important;
-      word-wrap: normal !important;
-      padding: 0;
-      position: absolute !important;
-      width: 1px;
-	}
+    {# Start with the initial exclusion #}
+    {% set exclusions = ['.bdgf-choice-label'] %}
+
+    {# Check if there are additional exclusions and add them #}
+    {% if design.form_elements.labels.exclusions is not empty %}
+        {% for exclusion in design.form_elements.labels.exclusions %}
+            {% set exclusions = exclusions | merge( [ exclusion.selector ]) %}
+        {% endfor %}
+    {% endif %}
+
+
+    {# Now build the :not() selector string by concatenating each exclusion #}
+    {% set not_selector = '' %}
+    {% for exclusion in exclusions %}
+        {% set not_selector = not_selector ~ ':not(' ~ exclusion ~ ')' %}
+    {% endfor %}
+
+    %%SELECTOR%% .gfield_label{{ not_selector }} {
+        border: 0;
+        clip: rect(1px, 1px, 1px, 1px);
+        -webkit-clip-path: inset(50%);
+        clip-path: inset(50%);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        overflow-wrap: normal !important;
+        word-wrap: normal !important;
+        padding: 0;
+        position: absolute !important;
+        width: 1px;
+    }
 {% endif %}
+
+
+
+
 
 {% if breakpoint == design.form_elements.vertical_at %}
 	%%SELECTOR%% .gform-grid-row {
         flex-direction: column;
         flex-wrap: wrap;
     }
+
+	%%SELECTOR%% .gfield_list_header {
+ 	     display:none;
+	}
 {% endif %}
     
 
@@ -82,6 +106,11 @@
 {{ macros.spacing_margin_y(design.spacing) }}
 }
 
+
+%%SELECTOR%% .gfield {
+  {{ macros.spacing_margin_y(design.form_elements.field_spacing) }}
+}
+
 %%SELECTOR%% .gform_validation_errors {
 background-color: {{ design.form_elements.validation.container.background_color }};
   {{ macros.borders(design.form_elements.validation.container.borders) }}
@@ -113,7 +142,22 @@ background-color: {{ design.form_elements.validation.container.background_color 
  
 {{ macros.atomV1ButtonCss(design.form_elements.footer.button, 'breakdance-form-button__submit', '%%SELECTOR%%', breakpoint, globalSettings) }}
 
+{{ macros.atomV1ButtonCss(design.form_elements.radio_checkbox.de_select_all_button, 'gfield_choice_all_toggle', '%%SELECTOR%%', breakpoint, globalSettings) }}
+    
 
+
+{{ macros.atomV1ButtonCss(design.form_elements.list.add_button, 'add_list_item', '%%SELECTOR%%', breakpoint, globalSettings) }}
+    
+
+{{ macros.atomV1ButtonCss(design.form_elements.list.remove_button, 'delete_list_item', '%%SELECTOR%%', breakpoint, globalSettings) }}    
+
+%%SELECTOR%% .gfield_list_icons {
+  gap: {{ design.form_elements.list.gap.style }};
+}
+
+%%SELECTOR%% .gfield_list_group {
+  margin-bottom: {{ design.form_elements.list.margin_bottom.style }};
+}
 
 
 {% if design.form_elements.radio_checkbox.radio_type == 'standard' %}
@@ -148,3 +192,7 @@ background-color: {{ design.form_elements.validation.container.background_color 
 
 
 {% endif %}
+
+
+
+

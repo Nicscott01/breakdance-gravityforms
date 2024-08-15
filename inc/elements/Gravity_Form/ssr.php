@@ -10,29 +10,40 @@ $show_description = $propertiesData['content']['controls']['show_description'];
 $hide_complex_labels = isset( $propertiesData['design']['form_elements']['labels']['hide_complex_labels'] ) ? $propertiesData['design']['form_elements']['labels']['hide_complex_labels'] : false;
 $submit_button_style = isset( $propertiesData['design']['form_elements']['footer']['button']['style'] ) ? $propertiesData['design']['form_elements']['footer']['button']['style'] : 'primary';
 $form_direction = isset( $propertiesData['design']['form_elements']['direction'] ) ? $propertiesData['design']['form_elements']['direction'] : 'vertical';
+//form_elements.radio_checkbox.de_select_all_button
+$de_select_button_style = isset( $propertiesData['design']['form_elements']['radio_checkbox']['de_select_all_button']['style'] ) ?  $propertiesData['design']['form_elements']['radio_checkbox']['de_select_all_button']['style'] : 'secondary';
+//design.form_elements.list.add_button
+$add_list_item_button_style = isset( $propertiesData['design']['form_elements']['list']['add_button']['style'] ) ?  $propertiesData['design']['form_elements']['list']['add_button']['style'] : 'secondary';
+$remove_list_item_button_style = isset( $propertiesData['design']['form_elements']['list']['remove_button']['style'] ) ?  $propertiesData['design']['form_elements']['list']['remove_button']['style'] : 'secondary';
+//{% if design.form_elements.list.hide_button_label %}
+$hide_list_button_label = isset( $propertiesData['design']['form_elements']['list']['hide_button_label'] ) ? $propertiesData['design']['form_elements']['list']['hide_button_label']  : false;
+
+
 
 
 //Filter the main class
 if ( !empty( $form_direction ) ) {
 
+    $transient = 'form_' . $form_id . '_' . 'direction';
+
     if ( $form_direction == 'vertical' ) {
         
-        add_filter( 'gform_pre_render', function( $form ) {
+        add_filter( 'gform_pre_render', 'BDGF\gform_pre_render_vertical', 10 );
+        add_filter( 'gform_pre_validation', 'BDGF\gform_pre_render_vertical', 10 );
+        add_filter( 'gform_pre_submission_filter', 'BDGF\gform_pre_render_vertical', 10 );
+        add_filter( 'gform_admin_pre_render', 'BDGF\gform_pre_render_vertical', 10 );
 
-            $form['cssClass'] = 'breakdance-form breakdance-form--vertical';
-    
-            return $form;
-            
-        }, 10 );
+        set_transient( $transient, 'vertical', 60 );
+
 
     } else {
-        add_filter( 'gform_pre_render', function( $form ) {
+        add_filter( 'gform_pre_render', 'BDGF\gform_pre_render_horizontal', 10 );
+        add_filter( 'gform_pre_validation', 'BDGF\gform_pre_render_horizontal', 10 );
+        add_filter( 'gform_pre_submission_filter', 'BDGF\gform_pre_render_horizontal', 10 );
+        add_filter( 'gform_admin_pre_render', 'BDGF\gform_pre_render_horizontal', 10 );
 
-            $form['cssClass'] = 'breakdance-form breakdance-form--horizontal';
-    
-            return $form;
-            
-        }, 10 );
+        set_transient( $transient, 'horiztonal', 60 );
+
     }
 
 }
@@ -53,6 +64,59 @@ if ( !empty( $submit_button_style ) ) {
     add_filter( 'gform_submit_button', $button_callback, 11, 2 ); //hook after we transform the element into an html5 button in the main code
 
 }
+
+
+if ( !empty( $de_select_button_style ) ) {
+    
+
+    add_filter( 'gform_field_content', function( $field_content ) use( $de_select_button_style ) {
+
+        $field_content = str_replace( 'gfield_choice_all_toggle', 'gfield_choice_all_toggle button-atom button-atom--' . $de_select_button_style, $field_content );
+
+        return $field_content;
+    });
+
+}
+
+
+if ( $hide_list_button_label ) {
+
+    add_filter( 'gform_field_content', function( $field_content ) {
+
+        $field_content = str_replace( '>Add<', '><span class="screen-reader-text">Add</span><', $field_content );
+        $field_content = str_replace( '>Remove<', '><span class="screen-reader-text">Remove</span><', $field_content );
+
+        return $field_content;
+    });
+}
+
+
+if ( !empty( $add_list_item_button_style ) ) {
+    
+
+    add_filter( 'gform_field_content', function( $field_content ) use( $add_list_item_button_style ) {
+
+        $field_content = str_replace( 'add_list_item', 'add_list_item button-atom button-atom--' . $add_list_item_button_style, $field_content );
+
+        return $field_content;
+    });
+
+}
+
+
+if ( !empty( $remove_list_item_button_style ) ) {
+    
+
+    add_filter( 'gform_field_content', function( $field_content ) use( $remove_list_item_button_style ) {
+
+        $field_content = str_replace( 'delete_list_item', 'delete_list_item button-atom button-atom--' . $remove_list_item_button_style, $field_content );
+
+        return $field_content;
+    });
+
+}
+
+
 
 
 
