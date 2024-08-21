@@ -194,5 +194,26 @@ background-color: {{ design.form_elements.validation.container.background_color 
 {% endif %}
 
 
+%%SELECTOR%% .gfield--type-choice .gfield_description  { 
+  {{ macros.typography(design.form_elements.radio_checkbox.description.typography, globalSettings) }}
+  {{ macros.spacing_margin_y(design.form_elements.radio_checkbox.description.spacing) }}
+
+}
+
+
+%%SELECTOR%% .gfield_radio,
+%%SELECTOR%% .gfield_checkbox {
+{{ macros.spacing_margin_y(design.form_elements.radio_checkbox.choices_spacing) }}
+}
+
+
+%%SELECTOR%% .gfield--input-type-multiselect .gfield_description {
+  {{ macros.spacing_margin_y(design.form_elements.multiselect.description.spacing) }}
+  {{ macros.typography(design.form_elements.multiselect.description.typography, globalSettings) }}
+}
+
+%%SELECTOR%% .ginput_container_multiselect {
+  {{ macros.spacing_margin_y(design.form_elements.multiselect.choices_spacing) }}
+}
 
 

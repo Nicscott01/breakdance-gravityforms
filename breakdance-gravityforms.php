@@ -3,7 +3,7 @@
  *  Plugin Name: Breakdance GravityForms
  *  Description: Apply Breakdance styling to Gravity Forms
  *  Author: Nic Scott
- *  Version: 0.3
+ *  Version: 0.4
  * 
  */
 
@@ -303,6 +303,14 @@
                 $field_content = str_replace( 'gfield_select', 'breakdance-form-field__input gfield_select', $field_content );
                 $field_content = str_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label bdgf-choice-label', $field_content );
 
+
+                break;
+
+            case "multiselect" :
+
+                //breakdance-form-field__input
+                $field_content = str_replace( 'gfield_select', 'breakdance-form-field__input gfield_select', $field_content );
+                $field_content = str_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
 
                 break;
 

@@ -172,7 +172,12 @@ class GravityForm extends \Breakdance\Elements\Element
         true,
         false,
         [],
-      ), c(
+      ), getPresetSection(
+      "EssentialElements\\spacing_margin_y",
+      "Choices Spacing",
+      "choices_spacing",
+       ['type' => 'popout']
+     ), c(
         "radio_type",
         "Radio Type",
         [],
@@ -221,7 +226,25 @@ class GravityForm extends \Breakdance\Elements\Element
       "De/Select All Button",
       "de_select_all_button",
        ['type' => 'popout']
+     ), c(
+        "description",
+        "Description",
+        [getPresetSection(
+      "EssentialElements\\spacing_margin_y",
+      "Spacing",
+      "spacing",
+       ['type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\typography",
+      "Typography",
+      "typography",
+       ['type' => 'popout']
      )],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
+        false,
+        false,
+        [],
+      )],
         ['type' => 'section', 'layout' => 'inline', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
@@ -258,6 +281,37 @@ class GravityForm extends \Breakdance\Elements\Element
         "Width Small",
         [],
         ['type' => 'unit', 'layout' => 'inline'],
+        false,
+        false,
+        [],
+      )],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
+        false,
+        false,
+        [],
+      ), c(
+        "multiselect",
+        "Multiselect",
+        [getPresetSection(
+      "EssentialElements\\spacing_margin_y",
+      "Choices Spacing",
+      "choices_spacing",
+       ['type' => 'popout']
+     ), c(
+        "description",
+        "Description",
+        [getPresetSection(
+      "EssentialElements\\spacing_margin_y",
+      "Spacing",
+      "spacing",
+       ['type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\typography",
+      "Typography",
+      "typography",
+       ['type' => 'popout']
+     )],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
         [],
