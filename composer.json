@@ -1,0 +1,8 @@
+{
+    "name": "nicscott01/breakdance-gravityforms",
+    "description": "Easily embed and style GravityForms forms with Breakdance",
+    "type": "library",
+    "require": {
+        "php": "^8.0"
+    }
+}
