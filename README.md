@@ -3,6 +3,10 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 
 
 ## Changelog
+### 9/23/24
+- Tweak PHP so it doesn't affect plain Gravity Forms on a site alongside Breakdance Gravity Forms
+- Add controls for label typography, margins, etc.
+- Prefix our normalize.css for our element
 ### Version 0.4
 - Add spacing to the description text in a radio/checkbox.
 - Add multiselect support

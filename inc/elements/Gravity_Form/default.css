@@ -14,9 +14,11 @@
     flex-wrap: wrap;
     gap: 1rem;
 }
-.breakdance .bdgf .gform_footer {
-    display: flex;
-    align-items:center;
+.breakdance .bdgf .gform_footer,
+.breakdance .bdgf .gform_page_footer {
+  display: flex;
+  align-items:center;
+  gap: var(--bde-form-gap);
 }
 .breakdance .bdgf .gfield .small {
     width: 25%;
@@ -101,4 +103,74 @@
 
 .breakdance .bdgf .gform_confirmation_wrapper {
   display:block;
+}
+
+.breakdance .bdgf .gf_progressbar {
+  background-color:var(--grey-300);
+  overflow:hidden;
+  min-height: 30px;
+}
+
+.breakdance .bdgf .gf_progressbar_percentage {
+  background-color: var(--bde-brand-primary-color);
+  color: var(--white);
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding: 0 .5rem;
+  height: 100%;
+}
+
+.breakdance .bdgf .gf_page_steps {
+  display:flex;
+  width:100%;
+  justify-content:space-between;
+  position:relative;
+  z-index:1;
+}
+
+.breakdance .bdgf .gf_page_steps:before {
+  content:"";
+  width:100%;
+  position:absolute;
+  z-index: -1;
+  height: 1px;
+  background-color: var(--grey-400);
+  top:50%;
+  bottom:0;
+}
+
+.breakdance .bdgf .gf_page_steps .gf_step {
+  display:inline-flex;
+  align-items:center;
+  background-color: var( --bde-background-color );
+  padding:0 .5rem;
+}
+
+.breakdance .bdgf .gf_page_steps .gf_step_first {
+  padding-left:0;
+}
+
+.breakdance .bdgf .gf_page_steps .gf_step_last {
+  padding-right:0;
+}
+
+.breakdance .bdgf .gf_page_steps .gf_step_number {
+  background-color: var(--bde-brand-primary-color);
+  color: var(--grey-50);
+  border-radius:50%;
+  line-height:1;
+  font-size:1em;
+  text-align:center;
+  padding:1em;
+  width: 1.4em;
+  height: 1.4em;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.breakdance .bdgf .gf_page_steps .gf_step_label {
+  margin-left: .5rem;
+  font-size: .85em;
 }

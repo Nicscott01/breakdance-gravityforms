@@ -90,17 +90,25 @@
     width: {{ design.form_elements.inputs.width_large.style }};
 }
 
-{% if design.form_elements.footer.submit_alignment == 'left' %}
+{% if design.footer.button_alignment == 'left' %}
 
-{% elseif design.form_elements.footer.submit_alignment == 'center' %}
-%%SELECTOR%% .gform_footer {
+{% elseif design.footer.button_alignment == 'center' %}
+%%SELECTOR%% .gform_footer,
+%%SELECTOR%% .gform_page_footer {
 	justify-content:center;
 }
-{% elseif design.form_elements.footer.submit_alignment == 'right' %}
-  %%SELECTOR%% .gform_footer {
+{% elseif design.footer.button_alignment == 'right' %}
+%%SELECTOR%% .gform_footer,
+%%SELECTOR%% .gform_page_footer {
 	justify-content:flex-end;
 }
 {% endif %}
+
+
+%%SELECTOR%% .gform_footer,
+%%SELECTOR%% .gform_page_footer {
+  gap: {{ design.footer.gap.style }};
+}
 
 %%SELECTOR%% {
 {{ macros.spacing_margin_y(design.spacing) }}
@@ -131,7 +139,7 @@ background-color: {{ design.form_elements.validation.container.background_color 
 }
 
 
-%%SELECTOR%% .validation_message {
+%%SELECTOR%% .validation_message:not(.validation_message--hidden-on-empty) {
 	{{ macros.typography(design.form_elements.validation.messages.messages, globalSettings) }}
   background-color: {{ design.form_elements.validation.messages.background_color }};
   {{ macros.borders(design.form_elements.validation.messages.borders) }}
@@ -140,7 +148,11 @@ background-color: {{ design.form_elements.validation.container.background_color 
 }
 
  
-{{ macros.atomV1ButtonCss(design.form_elements.footer.button, 'breakdance-form-button__submit', '%%SELECTOR%%', breakpoint, globalSettings) }}
+{{ macros.atomV1ButtonCss(design.footer.submit_button, 'breakdance-form-button__submit', '%%SELECTOR%%', breakpoint, globalSettings) }}
+{{ macros.atomV1ButtonCss(design.footer.previous_button, 'gform_previous_button', '%%SELECTOR%%', breakpoint, globalSettings) }}
+{{ macros.atomV1ButtonCss(design.footer.next_button, 'gform_next_button', '%%SELECTOR%%', breakpoint, globalSettings) }}
+        
+
 
 {{ macros.atomV1ButtonCss(design.form_elements.radio_checkbox.de_select_all_button, 'gfield_choice_all_toggle', '%%SELECTOR%%', breakpoint, globalSettings) }}
     
@@ -214,6 +226,69 @@ background-color: {{ design.form_elements.validation.container.background_color 
 
 %%SELECTOR%% .ginput_container_multiselect {
   {{ macros.spacing_margin_y(design.form_elements.multiselect.choices_spacing) }}
+}
+
+
+%%SELECTOR%% .gfield_description {
+{{ macros.typography(design.form_elements.labels.description_typography, globalSettings) }};
+  {{ macros.spacing_margin_y(design.form_elements.labels.description_spacing) }};
+}
+
+
+%%SELECTOR%% .breakdance-form-field__label {
+  --bde-form-after-label: {{ design.form_elements.labels.primary_spacing.margin_bottom.style }};
+  margin-top: {{ design.form_elements.labels.primary_spacing.margin_top.style }};
+  {{ macros.typography(design.form_elements.labels.primary_typography, globalSettings) }};
+}
+
+%%SELECTOR%% .breakdance-form-field__label.gform-field-label--type-sub, 
+%%SELECTOR%% .gfield_description.instruction {
+  margin-top: {{ design.form_elements.labels.sub_label_spacing.margin_top.style }};
+  margin-bottom: {{ design.form_elements.labels.sub_label_spacing.margin_top.style }};
+  {{ macros.typography(design.form_elements.labels.sub_label_typography, globalSettings) }};
+}
+
+
+%%SELECTOR%% .gf_progressbar {
+  background-color: {{ design.progress_bar.background_color }};
+  {{ macros.borders(design.progress_bar.borders) }};
+  height: {{ design.progress_bar.height.style }};
+}
+
+%%SELECTOR%% .gf_progressbar .gf_progressbar_percentage {
+  background-color:{{ design.progress_bar.progress_color }};
+  {{ macros.typography(design.progress_bar.typography, globalSettings) }};
+}
+
+
+%%SELECTOR%% .gf_progressbar .gf_progressbar_percentage > span {
+{{ macros.spacing_margin_x(design.progress_bar.text_margin) }};
+}
+
+%%SELECTOR%% .gf_progressbar_title {
+ {{ macros.typography(design.steps.title_typography, globalSettings) }};
+}
+
+%%SELECTOR%% .gf_progressbar_title .gf_step_current_page,
+%%SELECTOR%% .gf_progressbar_title .gf_step_page_count {
+  {{ macros.typography(design.steps.steps_typography, globalSettings) }};
+}
+
+%%SELECTOR%% .gf_progressbar_title .gf_step_current_page {
+  {{ macros.typography(design.steps.current_step_typography, globalSettings) }};
+}
+
+
+%%SELECTOR%% .gf_page_steps .gf_step_number {
+  width: {{ design.numbered_steps.size.style }};
+  height: {{ design.numbered_steps.size.style }};
+  {{ macros.typography(design.numbered_steps.number_typography, globalSettings) }};
+}
+
+%%SELECTOR%% .gf_page_steps .gf_step_label {
+{{ macros.typography(design.numbered_steps.label_typography, globalSettings) }};
+  margin-left: {{ design.numbered_steps.label_margin_left.style }};
+  
 }
 
 
