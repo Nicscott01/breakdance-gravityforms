@@ -3,7 +3,7 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 
 
 ## Changelog
-### 9/30/24
+### 9/30/24 version 0.5
 - Add styling for text things, like HTML
 - Rewrite the element ssr to use FormStyler class for better extensibility
 - Styling for save & continue button
