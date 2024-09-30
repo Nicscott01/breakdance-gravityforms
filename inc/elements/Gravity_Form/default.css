@@ -174,3 +174,8 @@
   margin-left: .5rem;
   font-size: .85em;
 }
+
+.breakdance .bdgf .gform_save_link svg {
+  margin-right:4px;
+  margin-left:4px;
+}

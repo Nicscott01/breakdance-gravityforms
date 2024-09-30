@@ -151,6 +151,7 @@ background-color: {{ design.form_elements.validation.container.background_color 
 {{ macros.atomV1ButtonCss(design.footer.submit_button, 'breakdance-form-button__submit', '%%SELECTOR%%', breakpoint, globalSettings) }}
 {{ macros.atomV1ButtonCss(design.footer.previous_button, 'gform_previous_button', '%%SELECTOR%%', breakpoint, globalSettings) }}
 {{ macros.atomV1ButtonCss(design.footer.next_button, 'gform_next_button', '%%SELECTOR%%', breakpoint, globalSettings) }}
+{{ macros.atomV1ButtonCss(design.footer.save_continue_button, 'gform_save_link', '%%SELECTOR%%', breakpoint, globalSettings) }}
         
 
 
@@ -291,4 +292,24 @@ background-color: {{ design.form_elements.validation.container.background_color 
   
 }
 
+
+%%SELECTOR%% .gsection_title {
+  {{ macros.typography(design.text.section_title.typography, globalSettings) }};
+  {{ macros.spacing_margin_y(design.text.section_title.margin) }};
+}
+
+
+{% for item in design.text.html_field %}
+
+	{% set selectors = item.selectors %}
+	{% set selectorsArray = selectors | split(',') %}
+
+    {% for selector in selectorsArray %}
+%%SELECTOR%% .gfield--type-html {{ selector | trim }} {
+	{{ macros.typography(item.typography, globalSettings) }};
+  {{ macros.spacing_margin_y(item.margin) }};
+}
+    {% endfor %}
+	
+{% endfor %}
 

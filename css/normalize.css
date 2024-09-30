@@ -60,6 +60,11 @@
     grid-column: span 6;
 }
 
+
+.bdgf .gform_wrapper .gfield.gfield--width-third {
+    grid-column: span 4;
+}
+
 @media ( max-width:640px ) {
     .bdgf .gform_wrapper .gfield:not(.gfield--width-full){
         grid-column:1/-1;

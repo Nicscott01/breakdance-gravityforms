@@ -32,6 +32,24 @@
         require_once( __DIR__ . '/inc/Modifier.php' );
      
 
+        add_filter('gform_validation_d', function($validation_result) {
+
+            // Check if you're in the Breakdance Builder or on a specific form/page
+            if ( strpos( '/wp/', $_SERVER['REQUEST_URI'] ) === 0 ||  isset( $_GET['preview'] ) && $_GET['preview'] == 'true' ) {
+                // Bypass validation for this form
+                $form = $validation_result['form'];
+                foreach ($form['fields'] as &$field) {
+                    $field->failed_validation = false;
+                    $field->validation_message = '';
+                }
+                $validation_result['is_valid'] = true;
+            }
+        
+            return $validation_result;
+        });
+
+
+
 
        /**
         *   This is our main way to ensure our BD classes
@@ -76,21 +94,6 @@
 
 
 
-       add_filter('gform_validation_d', function($validation_result) {
-
-            // Check if you're in the Breakdance Builder or on a specific form/page
-            if ( strpos( '/wp/', $_SERVER['REQUEST_URI'] ) === 0 ||  is_admin() ) {
-                // Bypass validation for this form
-                $form = $validation_result['form'];
-                foreach ($form['fields'] as &$field) {
-                    $field->failed_validation = false;
-                    $field->validation_message = '';
-                }
-                $validation_result['is_valid'] = true;
-            }
-        
-            return $validation_result;
-        });
 
 
 

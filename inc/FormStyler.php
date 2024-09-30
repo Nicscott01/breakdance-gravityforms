@@ -13,6 +13,7 @@ class FormStyler {
     public $submit_button_style;
     public $previous_button_style;
     public $next_button_style;
+    public $save_continue_button_style;
     public $form_direction;
     public $de_select_button_style;
     public $add_list_item_button_style;
@@ -39,6 +40,7 @@ class FormStyler {
         $this->submit_button_style = isset( $propertiesData['design']['footer']['submit_button']['style'] ) ? $propertiesData['design']['footer']['submit_button']['style'] : 'primary';
         $this->previous_button_style = isset( $propertiesData['design']['footer']['previous_button']['style'] ) ? $propertiesData['design']['footer']['previous_button']['style'] : 'secondary';
         $this->next_button_style = isset( $propertiesData['design']['footer']['next_button']['style'] ) ? $propertiesData['design']['footer']['next_button']['style'] : 'secondary';
+        $this->save_continue_button_style = isset( $propertiesData['design']['footer']['save_continue_button']['style'] ) ? $propertiesData['design']['footer']['save_continue_button']['style'] : 'primary';
         $this->form_direction = isset( $propertiesData['design']['form_elements']['direction'] ) ? $propertiesData['design']['form_elements']['direction'] : 'vertical';
         //form_elements.radio_checkbox.de_select_all_button
         $this->de_select_button_style = isset( $propertiesData['design']['form_elements']['radio_checkbox']['de_select_all_button']['style'] ) ?  $propertiesData['design']['form_elements']['radio_checkbox']['de_select_all_button']['style'] : 'secondary';
@@ -85,19 +87,42 @@ class FormStyler {
         }
 
 
-        if ( !empty( $this->submit_button_style ) ) {
+       
 
             
-            $button_callback = '\BDGF\button_' . $this->submit_button_style;
-
-            add_filter( 'gform_submit_button', $button_callback, 10, 2 ); //hook after we transform the element into an html5 button in the main code
-
-        }
-
+       
+        //Submit Button
+        add_filter( 'gform_submit_button', '\BDGF\button_' . $this->submit_button_style, 10, 2 ); //hook after we transform the element into an html5 button in the main code
 
         //Pagination Buttons
         add_filter( 'gform_previous_button', '\BDGF\button_' . $this->previous_button_style, 10, 2 );
         add_filter( 'gform_next_button', '\BDGF\button_' . $this->next_button_style, 10, 2 );
+
+        //Save & Continue Button
+
+        $save_continue_button_style = $this->save_continue_button_style;
+
+        add_filter( 'gform_savecontinue_link', function( $link, $url ) use ( $save_continue_button_style ) {
+
+            $link = str_replace( 'gform_save_link', 'gform_save_link button-atom button-atom--' . $save_continue_button_style, $link  );
+
+
+            if ( in_array( $save_continue_button_style, ['primary','secondary'] ) ) {
+
+                //Set default SVG to currentColor;
+                $link = str_replace( 'fill="#6B7280"', 'fill="currentColor"', $link );
+
+            } else {
+                //Remove the SVG
+                // Use a regular expression to remove <svg> tags and their contents
+                $link = preg_replace('/<svg[^>]*>.*?<\/svg>/s', '', $link);
+
+            }
+
+
+            return $link;
+
+        }, 10, 2);
 
 
         if ( !empty( $this->de_select_button_style ) ) {

@@ -600,6 +600,66 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         [],
       ), c(
+        "text",
+        "Text",
+        [c(
+        "section_title",
+        "Section Title",
+        [getPresetSection(
+      "EssentialElements\\typography",
+      "Typography",
+      "typography",
+       ['type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\spacing_margin_y",
+      "Margin",
+      "margin",
+       ['type' => 'popout']
+     )],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
+        false,
+        false,
+        [],
+      ), c(
+        "html_field",
+        "HTML Field",
+        [c(
+        "info",
+        "Info",
+        [],
+        ['type' => 'alert_box', 'layout' => 'vertical', 'alertBoxOptions' => ['style' => 'default', 'content' => '<p>Provide simple selectors. They will only target this form.</p>']],
+        false,
+        false,
+        [],
+      ), c(
+        "selectors",
+        "Selectors",
+        [],
+        ['type' => 'text', 'layout' => 'vertical'],
+        false,
+        false,
+        [],
+      ), getPresetSection(
+      "EssentialElements\\typography",
+      "Typography",
+      "typography",
+       ['type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\spacing_margin_y",
+      "Margin",
+      "margin",
+       ['type' => 'popout']
+     )],
+        ['type' => 'repeater', 'layout' => 'vertical', 'repeaterOptions' => ['titleTemplate' => '{tag}', 'defaultTitle' => 'Tag Style', 'buttonName' => '']],
+        false,
+        false,
+        [],
+      )],
+        ['type' => 'section'],
+        false,
+        false,
+        [],
+      ), c(
         "footer",
         "Footer",
         [c(
@@ -633,6 +693,11 @@ class GravityForm extends \Breakdance\Elements\Element
       "Next Button",
       "next_button",
        ['type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\AtomV1ButtonDesign",
+      "Save & Continue Button",
+      "save_continue_button",
+       ['type' => 'popout']
      )],
         ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
         false,
@@ -643,7 +708,15 @@ class GravityForm extends \Breakdance\Elements\Element
       "Spacing",
       "spacing",
        ['type' => 'popout']
-     )];
+     ), c(
+        "section_title",
+        "Section Title",
+        [],
+        ['type' => 'section'],
+        false,
+        false,
+        [],
+      )];
     }
 
     static function contentControls()
@@ -722,7 +795,28 @@ class GravityForm extends \Breakdance\Elements\Element
   align-items:center;
   margin-top:2rem;
   margin-bottom:2rem;
-}'],],];
+}'],'title' => 'Multipage forms - builder',],'3' =>  ['title' => 'Save & Continue','inlineScripts' => ['function observeElement(targetSelector, classesToAdd) {
+    const observer = new MutationObserver((mutationsList) => {
+        mutationsList.forEach((mutation) => {
+            if (mutation.type === \'childList\') {
+                const element = document.querySelector(targetSelector);
+                if (element) {
+                    element.classList.add(...classesToAdd);
+                    // Optionally stop observing once the element is found and classes are added
+                    observer.disconnect();
+                }
+            }
+        });
+    });
+
+    // Start observing the document body for changes
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
+// Example: Add multiple observers for different elements
+observeElement( \'input[name="gform_send_resume_link_button"\', [\'breakdance-form-button\', \'button-atom\', \'button-atom--primary\']);
+observeElement(\'#gform_resume_email\', [\'breakdance-form-field__input\']);
+observeElement(\'.form_saved_message form\', [\'breakdance-form\']);'],'frontendCondition' => 'return true;','builderCondition' => 'return false;',],];
     }
 
     static function settings()
@@ -767,7 +861,7 @@ class GravityForm extends \Breakdance\Elements\Element
 
     static function dynamicPropertyPaths()
     {
-        return ['0' => ['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], '1' => ['accepts' => 'image_url', 'path' => 'design.form_elements.radio_checkbox.active.background.layers[].image'], '2' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '3' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '4' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '5' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '6' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '7' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '8' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '9' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '10' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string']];
+        return ['0' => ['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], '1' => ['accepts' => 'image_url', 'path' => 'design.form_elements.radio_checkbox.active.background.layers[].image'], '2' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '3' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '4' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '5' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '6' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '7' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '8' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '9' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '10' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '11' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '12' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string']];
     }
 
     static function additionalClasses()
@@ -782,7 +876,7 @@ class GravityForm extends \Breakdance\Elements\Element
 
     static function propertyPathsToWhitelistInFlatProps()
     {
-        return ['design.form_elements.footer.layout.horizontal.vertical_at', 'design.form_elements.vertical_at', 'design.form_elements.footer.styles.styles.size.full_width_at', 'design.form_elements.footer.button.custom.size.full_width_at', 'design.form_elements.footer.button.styles', 'design.form_elements.radio_checkbox.layout.horizontal.vertical_at', 'design.form_elements.radio_checkbox.de_select_all_button.custom.size.full_width_at', 'design.form_elements.radio_checkbox.de_select_all_button.styles', 'design.form_elements.list.remove_button.custom.size.full_width_at', 'design.form_elements.list.remove_button.styles', 'design.footer.submit_button.custom.size.full_width_at', 'design.footer.submit_button.styles', 'design.footer.previous_button.custom.size.full_width_at', 'design.footer.previous_button.styles', 'design.footer.next_button.custom.size.full_width_at', 'design.footer.next_button.styles'];
+        return ['design.form_elements.footer.layout.horizontal.vertical_at', 'design.form_elements.vertical_at', 'design.form_elements.footer.styles.styles.size.full_width_at', 'design.form_elements.footer.button.custom.size.full_width_at', 'design.form_elements.footer.button.styles', 'design.form_elements.radio_checkbox.layout.horizontal.vertical_at', 'design.form_elements.radio_checkbox.de_select_all_button.custom.size.full_width_at', 'design.form_elements.radio_checkbox.de_select_all_button.styles', 'design.form_elements.list.remove_button.custom.size.full_width_at', 'design.form_elements.list.remove_button.styles', 'design.footer.submit_button.custom.size.full_width_at', 'design.footer.submit_button.styles', 'design.footer.previous_button.custom.size.full_width_at', 'design.footer.previous_button.styles', 'design.footer.next_button.custom.size.full_width_at', 'design.footer.next_button.styles', 'design.footer.save_continue_button.custom.size.full_width_at', 'design.footer.save_continue_button.styles'];
     }
 
     static function propertyPathsToSsrElementWhenValueChanges()
