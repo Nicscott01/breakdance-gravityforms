@@ -9,7 +9,6 @@ class FormStyler {
     public $form_id;
     public $show_title;
     public $show_description;
-    public $hide_complex_labels;
     public $submit_button_style;
     public $previous_button_style;
     public $next_button_style;
@@ -19,24 +18,26 @@ class FormStyler {
     public $add_list_item_button_style;
     public $remove_list_item_button_style;
     public $hide_list_button_label;
+    public $is_nested_form;
+    public $is_parent_form;
+    public $design_preset;
+
+    public $gf_user_class;
 
 
-    public function __construct( $propertiesData ) {
+    public function __construct( $propertiesData, $is_nested_form = false, $is_parent_form = false ) {
 
-        add_filter( 'gform_form_tag', function( $form_tag, $form ) {
-       
-            // Use regex to find the opening form tag and add a data attribute
-            $form_tag = preg_replace('/<form\b([^>]*?)>/i', '<form$1 data-bdgf-id="%%ID%%">', $form_tag );
-    
-            return $form_tag;
-        
-        }, 10, 2 );
-        
+        //These are for use with Gravity Perks Nested Forms
+        $this->is_nested_form = $is_nested_form;
+        $this->is_parent_form = $is_parent_form;
+
+        add_filter( 'gform_disable_css', '__return_true', 20 );
+        add_filter( 'gform_disable_form_theme_css', '__return_true', 20 );
+
 
         $this->form_id = $propertiesData['content']['controls']['form'];
-        $this->show_title = $propertiesData['content']['controls']['show_title'];
-        $this->show_description = $propertiesData['content']['controls']['show_description'];
-        $this->hide_complex_labels = isset( $propertiesData['design']['form_elements']['labels']['hide_complex_labels'] ) ? $propertiesData['design']['form_elements']['labels']['hide_complex_labels'] : false;
+        $this->show_title = $propertiesData['content']['controls']['show_title'] ?? false;
+        $this->show_description = $propertiesData['content']['controls']['show_description'] ?? false;
         $this->submit_button_style = isset( $propertiesData['design']['footer']['submit_button']['style'] ) ? $propertiesData['design']['footer']['submit_button']['style'] : 'primary';
         $this->previous_button_style = isset( $propertiesData['design']['footer']['previous_button']['style'] ) ? $propertiesData['design']['footer']['previous_button']['style'] : 'secondary';
         $this->next_button_style = isset( $propertiesData['design']['footer']['next_button']['style'] ) ? $propertiesData['design']['footer']['next_button']['style'] : 'secondary';
@@ -49,40 +50,47 @@ class FormStyler {
         $this->remove_list_item_button_style = isset( $propertiesData['design']['form_elements']['list']['remove_button']['style'] ) ?  $propertiesData['design']['form_elements']['list']['remove_button']['style'] : 'secondary';
         //{% if design.form_elements.list.hide_button_label %}
         $this->hide_list_button_label = isset( $propertiesData['design']['form_elements']['list']['hide_button_label'] ) ? $propertiesData['design']['form_elements']['list']['hide_button_label']  : false;
-        
+        $this->design_preset = $propertiesData['meta']['preset'] ?? false;
 
-        add_filter( 'gform_disable_css', '__return_true' );
+
+        add_filter( 'gform_form_tag_' . $this->form_id, function( $form_tag, $form ) {
+       
+            // Use regex to find the opening form tag and add a data attribute
+            $form_tag = preg_replace('/<form\b([^>]*?)>/i', '<form$1 data-bdgf-id="%%ID%%">', $form_tag );
+    
+            return $form_tag;
+        
+        }, 10, 2 );
+
+
+        
         $this->apply_breakdance_styles_to_gf_fields();
 
 
         //Filter the main class
         if ( !empty( $this->form_direction ) ) {
 
+
+            add_filter( 'gform_pre_render_' . $this->form_id, [ $this, 'set_form_user_class'], 1 ); 
+            
+
+
+
             if ( $this->form_direction == 'vertical' ) {
                 
-                add_filter( 'gform_pre_render', [ $this, 'gform_pre_render_vertical' ], 10 );
-                add_filter( 'gform_pre_validation', [ $this, 'gform_pre_render_vertical' ], 10 );
-                add_filter( 'gform_pre_submission_filter', [ $this, 'gform_pre_render_vertical' ], 10 );
-                add_filter( 'gform_admin_pre_render', [ $this, 'gform_pre_render_vertical' ], 10 );
+                add_filter( 'gform_pre_render_' . $this->form_id, [ $this, 'gform_pre_render_vertical' ], 10 );
+                add_filter( 'gform_pre_validation_' . $this->form_id, [ $this, 'gform_pre_render_vertical' ], 10 );
+                add_filter( 'gform_pre_submission_filter_' . $this->form_id, [ $this, 'gform_pre_render_vertical' ], 10 );
+                add_filter( 'gform_admin_pre_render_' . $this->form_id, [ $this, 'gform_pre_render_vertical' ], 10 );
 
             } else {
                 
-                add_filter( 'gform_pre_render', [ $this, 'gform_pre_render_horizontal' ], 10 );
-                add_filter( 'gform_pre_validation', [ $this, 'gform_pre_render_horizontal' ], 10 );
-                add_filter( 'gform_pre_submission_filter', [ $this, 'gform_pre_render_horizontal' ], 10 );
-                add_filter( 'gform_admin_pre_render', [ $this, 'gform_pre_render_horizontal' ], 10 );
+                add_filter( 'gform_pre_render_' . $this->form_id, [ $this, 'gform_pre_render_horizontal' ], 10 );
+                add_filter( 'gform_pre_validation_' . $this->form_id, [ $this, 'gform_pre_render_horizontal' ], 10 );
+                add_filter( 'gform_pre_submission_filter_' . $this->form_id, [ $this, 'gform_pre_render_horizontal' ], 10 );
+                add_filter( 'gform_admin_pre_render_' . $this->form_id, [ $this, 'gform_pre_render_horizontal' ], 10 );
 
             }
-
-        }
-
-
-
-
-        //Add a class to the form if we want to hide labels so we don't have a ton of extra gross css (because we want to maintain screen reader text)
-        if ( $this->hide_complex_labels ) {
-
-            add_filter( 'gform_field_content', '\BDGF\complex_labels_to_screen_reader_text', 10, 5 );
 
         }
 
@@ -92,17 +100,17 @@ class FormStyler {
             
        
         //Submit Button
-        add_filter( 'gform_submit_button', '\BDGF\button_' . $this->submit_button_style, 10, 2 ); //hook after we transform the element into an html5 button in the main code
+        add_filter( 'gform_submit_button_' . $this->form_id, '\BDGF\button_' . $this->submit_button_style, 10, 2 ); //hook after we transform the element into an html5 button in the main code
 
         //Pagination Buttons
-        add_filter( 'gform_previous_button', '\BDGF\button_' . $this->previous_button_style, 10, 2 );
-        add_filter( 'gform_next_button', '\BDGF\button_' . $this->next_button_style, 10, 2 );
+        add_filter( 'gform_previous_button_' . $this->form_id, '\BDGF\button_' . $this->previous_button_style, 10, 2 );
+        add_filter( 'gform_next_button_' . $this->form_id, '\BDGF\button_' . $this->next_button_style, 10, 2 );
 
         //Save & Continue Button
 
         $save_continue_button_style = $this->save_continue_button_style;
 
-        add_filter( 'gform_savecontinue_link', function( $link, $url ) use ( $save_continue_button_style ) {
+        add_filter( 'gform_savecontinue_link_' . $this->form_id, function( $link, $url ) use ( $save_continue_button_style ) {
 
             $link = str_replace( 'gform_save_link', 'gform_save_link button-atom button-atom--' . $save_continue_button_style, $link  );
 
@@ -198,6 +206,59 @@ class FormStyler {
 
 
 
+        if ( $this->is_parent_form ) {
+            error_log( 'enqueue_script ' . \plugin_dir_url( dirname(__FILE__, 1 ) ). 'assets/js/nested-form-styler.js' );
+            
+           wp_enqueue_script( 'bdgf-nested-form-styler', \plugin_dir_url( dirname(__FILE__, 1 )). 'assets/js/nested-form-styler.js', ['jquery'], null, true );
+        }
+
+        if ( $this->is_nested_form ) {
+            
+            add_filter( 'gpnf_init_script_args_' . $this->form_id, function( $args, $field, $form ) {
+
+                $args['modalHeaderColor'] = '#000';
+                $args['modalColors']['primary'] = 'var(--bde-brand-primary-color)';
+                $args['modalColors']['secondary'] = 'var(--bde-brand-secondary-color)';
+
+                return $args;
+
+            }, 10, 3 );
+        }
+
+
+
+        /**
+         *  Color the indicator for the required fields legend
+         * 
+         */
+        add_filter( 'gform_required_legend_' . $this->form_id, function( $legend ) {
+
+            $legend = str_replace( 'gfield_required', 'gfield_required breakdance-form-field__required', $legend );
+
+            return $legend;
+
+        }, 10 );
+
+
+
+        error_log( 'Finished the construct for FormStyler, form_id: ' . $this->form_id );
+        error_log( 'FormStyler: ' . print_r( $this, 1 ) );
+
+    }
+
+
+
+
+    public function set_form_user_class( $form ) {
+
+
+        if ( empty( $this->gf_user_class ) ) {   
+
+            $this->gf_user_class = $form['cssClass'];
+        }
+
+        return $form;
+
     }
 
 
@@ -206,11 +267,11 @@ class FormStyler {
 
     public function apply_breakdance_styles_to_gf_fields() {
  
-         add_filter( 'gform_field_content', [ $this, 'gform_field_content' ], 10, 5 );
+         add_filter( 'gform_field_content_' . $this->form_id, [ $this, 'gform_field_content' ], 10, 5 );
  
-         add_filter( 'gform_next_button',  'BDGF\input_to_button', 10, 2 );
-         add_filter( 'gform_previous_button',  'BDGF\input_to_button', 10, 2 );
-         add_filter( 'gform_submit_button',  'BDGF\input_to_button', 10, 2 );
+         add_filter( 'gform_next_button_' . $this->form_id,  'BDGF\input_to_button', 10, 2 );
+         add_filter( 'gform_previous_button_' . $this->form_id,  'BDGF\input_to_button', 10, 2 );
+         add_filter( 'gform_submit_button_' . $this->form_id,  'BDGF\input_to_button', 10, 2 );
  
     }
 
@@ -229,7 +290,17 @@ class FormStyler {
 
     public function gform_pre_render_direction( $form, $direction = 'vertical' ) {
 
-        $form['cssClass'] = 'bdgf-%%ID%% breakdance-form breakdance-form--' .  $direction;
+        $form['cssClass'] = $this->gf_user_class;
+
+        if ( $this->is_nested_form ) {
+            $form['cssClass'] .= ' bdgf';
+
+            if ( $this->design_preset ) {
+                $form['cssClass'] .= ' bde-preset-' . $this->design_preset;
+            }
+        }
+
+        $form['cssClass'] .= ' bdgf-%%ID%% breakdance-form breakdance-form--' .  $direction;
 
         return $form;
     }
@@ -263,7 +334,8 @@ class FormStyler {
 
             case "list" :
 
-                $field_content = str_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+                $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+
                 $field_content = str_replace( '<input ', '<input class="breakdance-form-field__input" ', $field_content );
 
 
@@ -288,14 +360,13 @@ class FormStyler {
                 //ginput_container ginput_container_consent 
                 if ( $field->type == 'consent' ) {
 
-                    $field_content = str_replace( 'ginput_container_consent', 'ginput_container_consent breakdance-form-checkbox', $field_content );
+                    $field_content = class_replace( 'ginput_container_consent', 'ginput_container_consent breakdance-form-checkbox', $field_content );
 
                 }
 
-
-                $field_content = str_replace( 'gchoice', 'breakdance-form-checkbox gchoice', $field_content );
-                $field_content = str_replace( 'gform-field-label--type-inline', ' gform-field-label--type-inline breakdance-form-checkbox__text ', $field_content );
-                $field_content = str_replace( 'gfield_label_before_complex', 'gfield_label_before_complex breakdance-form-field__label bdgf-choice-label', $field_content );
+                $field_content = class_replace( 'gchoice', 'breakdance-form-checkbox gchoice', $field_content );
+                $field_content = class_replace( 'gform-field-label--type-inline', ' gform-field-label--type-inline breakdance-form-checkbox__text ', $field_content );
+                $field_content = class_replace( 'gfield_label_before_complex', 'gfield_label_before_complex breakdance-form-field__label bdgf-choice-label', $field_content );
                 //$field_content = str_replace( 'gfield_choice_all_toggle', 'gfield_choice_all_toggle button-atom', $field_content );
 
                 break;
@@ -342,7 +413,7 @@ class FormStyler {
             case "textarea" :
 
                 //Style the label
-                $field_content = str_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+                $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
 
                 $field_content = dom_document_replacement( 'textarea', $field_content );
 
@@ -353,21 +424,36 @@ class FormStyler {
             case "phone":
             case "name":
             case "email":
+            case "modern_date_picker":
 
-                //Style the label
-                $field_content = str_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
-                
+                //Style the label                
+                $field_content = class_replace( 'gfield_label gform-field-label', 'gfield_label breakdance-form-field__label gform-field-label', $field_content );
+
                 $field_content = dom_document_replacement( 'input', $field_content );
 
                 break;
 
+            case "form" : //Gravity perks nested form
+
+                $field_content = class_replace( 'gfield_label gform-field-label', 'gfield_label breakdance-form-field__label gform-field-label', $field_content );
+
+                $field_content = class_replace( 'gpnf-add-entry', 'gpnf-add-entry button-atom button-atom--secondary', $field_content );
+
+                break;
+                
+
             case "address":
 
                 //Style the label
-                $field_content = str_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+                //$field_content = str_replace( 'gform-field-label', 'gform-field-label breakdance-form-field__label', $field_content );
+                $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content, 'g' );
                 
+
                 $field_content = dom_document_replacement( 'input', $field_content );
                 $field_content = dom_document_replacement( 'select', $field_content );
+
+                $field_content = class_replace( 'copy_values_option_container', 'copy_values_option_container breakdance-form-checkbox', $field_content );
+
 
                 break;
             
@@ -377,7 +463,14 @@ class FormStyler {
 
             default:
             
-                $field_content = str_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+               /* $field_content = preg_replace(
+                    '/\b(gform-field-label)\b/',
+                    'breakdance-form-field__label gform-field-label',
+                    $field_content
+                );*/
+
+                //$field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+
                 $field_content = str_replace( '<input ', '<input class="breakdance-form-field__input" ', $field_content );
             
         }
@@ -385,7 +478,21 @@ class FormStyler {
         //Remove weird extra div that throws off layout
         $field_content = str_replace( "<div class='gf_clear gf_clear_complex'></div>", '', $field_content );
 
-        $field_content = str_replace( 'gfield_required gfield_required_asterisk', 'breakdance-form-field__required gfield_required gfield_required_asterisk', $field_content );
+
+        //Required label coloring
+        $required_label_search = [
+            'gfield_required gfield_required_asterisk',
+            'gfield_required gfield_required_text',
+            'gfield_required gfield_required_custom'
+        ];
+
+        $required_label_replace = [
+            'gfield_required breakdance-form-field__required gfield_required_asterisk ',
+            'gfield_required breakdance-form-field__required gfield_required_text',
+            'gfield_required breakdance-form-field__required gfield_required_custom'
+        ];
+
+        $field_content = str_replace( $required_label_search, $required_label_replace, $field_content );
 
         return $field_content;
     }
@@ -401,11 +508,6 @@ class FormStyler {
 
 
         //Kill our filters in case there's another form on the page that we don't want to influence
-        if ( $this->hide_complex_labels ) {
-
-            remove_filter( 'gform_field_content', '\BDGF\complex_labels_to_screen_reader_text', 10, 5 );
-
-        }
 
     }
 

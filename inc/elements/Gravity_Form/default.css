@@ -1,6 +1,12 @@
+.breakdance {
+  --gform-theme-font-size-primary: var(--bde-form-font-size);
+  --gform-theme-padding-block: var(--bde-form-input-padding-top) var(--bde-form-input-padding-bottom);
+}
+
 .breakdance .bdgf {
     width: 100%;
 }
+
 .breakdance .bdgf .gform-body {
     position: relative;
 }
@@ -20,15 +26,24 @@
   align-items:center;
   gap: var(--bde-form-gap);
 }
-.breakdance .bdgf .gfield .small {
+.breakdance .bdgf .gfield .small:not(.textarea) {
     width: 25%;
 }
-.breakdance .bdgf .gfield .medium {
+.breakdance .bdgf .gfield .medium:not(.textarea) {
     width: 50%;
 }
-.breakdance .bdgf .gfield .large {
+.breakdance .bdgf .gfield .large:not(.textarea) {
     width: 100%;
 }
+
+.breakdance .bdgf .gfield .small.textarea {
+    max-height:100px;
+}
+
+.breakdance .bdgf .gfield .medium.textarea {
+    max-height:175px;
+}
+
 .breakdance .bdgf .ginput_container_address {
 	display:grid;
   	grid-template-columns:repeat(11, 1fr);
@@ -108,7 +123,7 @@
 .breakdance .bdgf .gf_progressbar {
   background-color:var(--grey-300);
   overflow:hidden;
-  min-height: 30px;
+  height: 30px;
 }
 
 .breakdance .bdgf .gf_progressbar_percentage {
@@ -178,4 +193,33 @@
 .breakdance .bdgf .gform_save_link svg {
   margin-right:4px;
   margin-left:4px;
+}
+
+.breakdance .bdgf h2.gform_submission_error {
+  font-size: 1.3em;
+  color: var(--red-500);
+}
+
+.breakdance .bdgf .gform_required_legend .breakdance-form-field__required {
+  padding-left:0;
+}
+
+
+/** GP Nested Form **/
+.breakdance .bdgf .gpnf-nested-entries {
+  width:100%;
+  margin-bottom:var( --bde-form-gap );
+}
+
+.breakdance .bdgf .gform-theme--framework .gpnf-row-actions ul {
+  gap: var( --bde-form-gap );
+}
+
+.gpnf-modal form {
+  display:flex;
+  width:100%;
+}
+
+.gpnf-modal form .gform-body {
+  width:100%;
 }

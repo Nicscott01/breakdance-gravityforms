@@ -204,3 +204,25 @@ function dom_document_replacement( $tag, $field_content, $add_class = 'breakdanc
     return $field_content;
 
 }
+
+
+
+/**
+ *  Regex pattern to help match a class
+ *  and no partials
+ * 
+ * 
+ */
+
+ function class_replace( $search, $replace, $subject ) {
+
+    $re = sprintf( '/\b%s\b(?![-_])/', $search );
+
+    return preg_replace(
+        $re,
+        $replace,
+        $subject
+    );
+    
+ }
+

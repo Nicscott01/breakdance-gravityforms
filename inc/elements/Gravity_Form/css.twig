@@ -1,3 +1,7 @@
+{# Start with an empty list of selectors #}
+{% set selectors = [] %}
+
+{# If hide_labels is true, add the main label selector with exclusions #}
 {% if design.form_elements.labels.hide_labels %}
     {# Start with the initial exclusion #}
     {% set exclusions = ['.bdgf-choice-label'] %}
@@ -5,18 +9,27 @@
     {# Check if there are additional exclusions and add them #}
     {% if design.form_elements.labels.exclusions is not empty %}
         {% for exclusion in design.form_elements.labels.exclusions %}
-            {% set exclusions = exclusions | merge( [ exclusion.selector ]) %}
+            {% set exclusions = exclusions | merge([exclusion.selector]) %}
         {% endfor %}
     {% endif %}
 
-
-    {# Now build the :not() selector string by concatenating each exclusion #}
+    {# Build the :not() selector string by concatenating each exclusion #}
     {% set not_selector = '' %}
     {% for exclusion in exclusions %}
         {% set not_selector = not_selector ~ ':not(' ~ exclusion ~ ')' %}
     {% endfor %}
 
-    %%SELECTOR%% .gfield_label{{ not_selector }} {
+    {% set selectors = selectors | merge(['%%SELECTOR%% .gfield_label' ~ not_selector]) %}
+{% endif %}
+
+{# If hide_complex_labels is true, add the complex label selector #}
+{% if design.form_elements.labels.hide_complex_labels %}
+    {% set selectors = selectors | merge(['%%SELECTOR%% .gform-field-label--type-sub']) %}
+{% endif %}
+
+{# Print the CSS if there are any selectors to hide #}
+{% if selectors is not empty %}
+    {{ selectors | join(', ') }} {
         border: 0;
         clip: rect(1px, 1px, 1px, 1px);
         -webkit-clip-path: inset(50%);
@@ -31,6 +44,8 @@
         width: 1px;
     }
 {% endif %}
+
+
 
 
 
@@ -235,9 +250,13 @@ background-color: {{ design.form_elements.validation.container.background_color 
   {{ macros.spacing_margin_y(design.form_elements.labels.description_spacing) }};
 }
 
+%%SELECTOR%% {
+	--bdgf-labels-primary-spacing-margin-bottom: {{ design.form_elements.labels.primary_spacing.margin_bottom.style }};
+}
+
 
 %%SELECTOR%% .breakdance-form-field__label {
-  --bde-form-after-label: {{ design.form_elements.labels.primary_spacing.margin_bottom.style }};
+  --bde-form-after-label: var(--bdgf-labels-primary-spacing-margin-bottom);
   margin-top: {{ design.form_elements.labels.primary_spacing.margin_top.style }};
   {{ macros.typography(design.form_elements.labels.primary_typography, globalSettings) }};
 }
@@ -313,3 +332,19 @@ background-color: {{ design.form_elements.validation.container.background_color 
 	
 {% endfor %}
 
+
+{% set button_order_count = 0 %}
+{% for button in design.footer.button_order %}
+
+	%%SELECTOR%% .{{ button }} {
+      order: {{ button_order_count }};
+	}
+
+	{% set button_order_count = button_order_count + 1 %}
+
+{% endfor %}
+
+
+%%SELECTOR%% .gpnf-nested-entries {
+  margin-bottom: var(--bdgf-labels-primary-spacing-margin-bottom);
+}
