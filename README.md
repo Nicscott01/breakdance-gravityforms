@@ -3,6 +3,10 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 
 
 ## Changelog
+### 11/5/24 version 0.5.1
+- Add file uploader styling
+- Add .gform_validation_error to style with plural verison of the class name
+- Probably a few other things that were useful but not documented :-)
 ### 9/30/24 version 0.5
 - Add styling for text things, like HTML
 - Rewrite the element ssr to use FormStyler class for better extensibility
