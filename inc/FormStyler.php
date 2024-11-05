@@ -446,7 +446,7 @@ class FormStyler {
 
                 //Style the label
                 //$field_content = str_replace( 'gform-field-label', 'gform-field-label breakdance-form-field__label', $field_content );
-                $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content, 'g' );
+                $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
                 
 
                 $field_content = dom_document_replacement( 'input', $field_content );
@@ -457,6 +457,13 @@ class FormStyler {
 
                 break;
             
+            case "fileupload" :
+
+                $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+                $field_content = class_replace( 'button gform_button_select_files', 'button gform_button_select_files button-atom button-atom--secondary', $field_content );
+
+                break;
+
             case "date":
 
                 $field_content = dom_document_replacement( 'select', $field_content );

@@ -134,7 +134,8 @@
   {{ macros.spacing_margin_y(design.form_elements.field_spacing) }}
 }
 
-%%SELECTOR%% .gform_validation_errors {
+%%SELECTOR%% .gform_validation_errors,
+%%SELECTOR%% .gform_validation_error {
 background-color: {{ design.form_elements.validation.container.background_color }};
   {{ macros.borders(design.form_elements.validation.container.borders) }}
   {{ macros.spacing_padding_all(design.form_elements.validation.container.padding) }}

@@ -204,6 +204,26 @@
   padding-left:0;
 }
 
+.breakdance .bdgf .gfield--type-fileupload .ginput_preview_list .ginput_preview {
+  display:flex;
+  flex-direction:row;
+  gap:.5rem;
+}
+
+.breakdance .bdgf .gfield--type-fileupload .gfield_fileupload_filename {
+  font-weight:bolder;
+}
+
+
+.breakdance .bdgf .gfield--type-fileupload .gform_drop_area {
+  padding:1rem;
+  border:1px solid var(--bde-form-input-border-color);
+  display:flex;
+  flex-direction:column;
+  text-align:center;
+
+}
+
 
 /** GP Nested Form **/
 .breakdance .bdgf .gpnf-nested-entries {

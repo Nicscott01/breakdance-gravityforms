@@ -55,7 +55,7 @@ class GravityForm extends \Breakdance\Elements\Element
 
     static function slug()
     {
-        return __CLASS__;
+        return get_class();
     }
 
     static function template()
@@ -93,7 +93,7 @@ class GravityForm extends \Breakdance\Elements\Element
         "direction",
         "Direction",
         [],
-        ['type' => 'dropdown', 'layout' => 'inline', 'items' => [['value' => 'vertical', 'text' => 'Vertical'], ['text' => 'Horizontal', 'value' => 'horizontal']]],
+        ['type' => 'dropdown', 'layout' => 'inline', 'items' => ['0' => ['value' => 'vertical', 'text' => 'Vertical'], '1' => ['text' => 'Horizontal', 'value' => 'horizontal']]],
         false,
         false,
         [],
@@ -144,7 +144,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         [],
       )],
-        ['type' => 'repeater', 'layout' => 'vertical', 'condition' => [[['path' => 'design.form_elements.labels.hide_labels', 'operand' => 'is set', 'value' => '']]], 'repeaterOptions' => ['titleTemplate' => '{selector}', 'defaultTitle' => 'Selector', 'buttonName' => 'Add Selector']],
+        ['type' => 'repeater', 'layout' => 'vertical', 'condition' => ['0' => ['0' => ['path' => 'design.form_elements.labels.hide_labels', 'operand' => 'is set', 'value' => '']]], 'repeaterOptions' => ['titleTemplate' => '{selector}', 'defaultTitle' => 'Selector', 'buttonName' => 'Add Selector']],
         false,
         false,
         [],
@@ -190,7 +190,7 @@ class GravityForm extends \Breakdance\Elements\Element
         "layout",
         "Layout",
         [],
-        ['type' => 'dropdown', 'layout' => 'inline', 'items' => [['value' => 'vertical', 'text' => 'Vertical'], ['text' => 'Horizontal', 'value' => 'horizontal']]],
+        ['type' => 'dropdown', 'layout' => 'inline', 'items' => ['0' => ['value' => 'vertical', 'text' => 'Vertical'], '1' => ['text' => 'Horizontal', 'value' => 'horizontal']]],
         true,
         false,
         [],
@@ -198,7 +198,7 @@ class GravityForm extends \Breakdance\Elements\Element
         "gap",
         "Gap",
         [],
-        ['type' => 'unit', 'layout' => 'inline', 'rangeOptions' => ['step' => 1], 'unitOptions' => ['types' => ['rem', 'em', 'px', '%']]],
+        ['type' => 'unit', 'layout' => 'inline', 'rangeOptions' => ['step' => 1], 'unitOptions' => ['types' => ['0' => 'rem', '1' => 'em', '2' => 'px', '3' => '%']]],
         true,
         false,
         [],
@@ -211,7 +211,7 @@ class GravityForm extends \Breakdance\Elements\Element
         "radio_type",
         "Radio Type",
         [],
-        ['type' => 'dropdown', 'layout' => 'inline', 'items' => [['value' => 'standard', 'text' => 'Standard'], ['text' => 'Blocks', 'value' => 'blocks']]],
+        ['type' => 'dropdown', 'layout' => 'inline', 'items' => ['0' => ['value' => 'standard', 'text' => 'Standard'], '1' => ['text' => 'Blocks', 'value' => 'blocks']]],
         false,
         false,
         [],
@@ -219,17 +219,17 @@ class GravityForm extends \Breakdance\Elements\Element
       "EssentialElements\\simpleLayout",
       "Layout",
       "layout",
-       ['condition' => [[['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]], 'type' => 'popout']
+       ['condition' => ['0' => ['0' => ['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]], 'type' => 'popout']
      ), getPresetSection(
       "EssentialElements\\typography",
       "Typography",
       "typography",
-       ['condition' => [[['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]], 'type' => 'popout']
+       ['condition' => ['0' => ['0' => ['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]], 'type' => 'popout']
      ), getPresetSection(
       "EssentialElements\\borders",
       "Borders",
       "borders",
-       ['condition' => [[['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]], 'type' => 'popout']
+       ['condition' => ['0' => ['0' => ['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]], 'type' => 'popout']
      ), c(
         "active",
         "Active",
@@ -247,7 +247,7 @@ class GravityForm extends \Breakdance\Elements\Element
       "typography",
        ['type' => 'popout']
      )],
-        ['type' => 'section', 'sectionOptions' => ['type' => 'popout'], 'condition' => [[['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]]],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout'], 'condition' => ['0' => ['0' => ['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]]],
         false,
         false,
         [],
@@ -674,7 +674,7 @@ class GravityForm extends \Breakdance\Elements\Element
         "button_alignment",
         "Button Alignment",
         [],
-        ['type' => 'button_bar', 'layout' => 'inline', 'items' => [['value' => 'left', 'text' => 'Align Left', 'icon' => 'FlexAlignLeftIcon'], ['text' => 'Align Center', 'value' => 'center', 'icon' => 'FlexAlignCenterHorizontalIcon'], ['text' => 'Align Right', 'value' => 'right', 'icon' => 'FlexAlignRightIcon']], 'buttonBarOptions' => ['size' => 'small', 'layout' => 'default']],
+        ['type' => 'button_bar', 'layout' => 'inline', 'items' => ['0' => ['value' => 'left', 'text' => 'Align Left', 'icon' => 'FlexAlignLeftIcon'], '1' => ['text' => 'Align Center', 'value' => 'center', 'icon' => 'FlexAlignCenterHorizontalIcon'], '2' => ['text' => 'Align Right', 'value' => 'right', 'icon' => 'FlexAlignRightIcon']], 'buttonBarOptions' => ['size' => 'small', 'layout' => 'default']],
         true,
         false,
         [],
@@ -702,7 +702,7 @@ class GravityForm extends \Breakdance\Elements\Element
         "button_order",
         "Button Order",
         [],
-        ['type' => 'multiselect', 'layout' => 'inline', 'items' => [['value' => 'gform_previous_button', 'text' => 'Previous'], ['text' => 'Next', 'value' => 'gform_next_button'], ['text' => 'Save & Continue', 'value' => 'gform_save_link'], ['text' => 'Submit', 'value' => 'gform_submit']]],
+        ['type' => 'multiselect', 'layout' => 'inline', 'items' => ['0' => ['value' => 'gform_previous_button', 'text' => 'Previous'], '1' => ['text' => 'Next', 'value' => 'gform_next_button'], '2' => ['text' => 'Save & Continue', 'value' => 'gform_save_link'], '3' => ['text' => 'Submit', 'value' => 'gform_submit']]],
         false,
         false,
         [],
@@ -873,7 +873,7 @@ observeElement(\'.form_saved_message form\', [\'breakdance-form\']);'],'frontend
 
     static function spacingBars()
     {
-        return [['cssProperty' => 'margin-top', 'location' => 'outside-top', 'affectedPropertyPath' => 'design.spacing.%%BREAKPOINT%%.margin_top'], ['cssProperty' => 'margin-bottom', 'location' => 'outside-bottom', 'affectedPropertyPath' => 'design.spacing.%%BREAKPOINT%%.margin_bottom']];
+        return ['0' => ['cssProperty' => 'margin-top', 'location' => 'outside-top', 'affectedPropertyPath' => 'design.spacing.%%BREAKPOINT%%.margin_top'], '1' => ['cssProperty' => 'margin-bottom', 'location' => 'outside-bottom', 'affectedPropertyPath' => 'design.spacing.%%BREAKPOINT%%.margin_bottom']];
     }
 
     static function attributes()
@@ -893,7 +893,7 @@ observeElement(\'.form_saved_message form\', [\'breakdance-form\']);'],'frontend
 
     static function dynamicPropertyPaths()
     {
-        return [['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], ['accepts' => 'image_url', 'path' => 'design.form_elements.radio_checkbox.active.background.layers[].image']];
+        return ['0' => ['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], '1' => ['accepts' => 'image_url', 'path' => 'design.form_elements.radio_checkbox.active.background.layers[].image'], '2' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '3' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string']];
     }
 
     static function additionalClasses()
