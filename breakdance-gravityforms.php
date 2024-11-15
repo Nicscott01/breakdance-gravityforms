@@ -3,7 +3,7 @@
  *  Plugin Name: Breakdance GravityForms
  *  Description: Apply Breakdance styling to Gravity Forms
  *  Author: Nic Scott
- *  Version: 0.5.1
+ *  Version: 0.5.1.dev
  * 
  */
 
@@ -30,6 +30,7 @@
         require_once( __DIR__ . '/inc/helper-functions.php' );
         require_once( __DIR__ . '/inc/FormStyler.php' );
         require_once( __DIR__ . '/inc/Modifier.php' );
+        require_once( __DIR__ . '/inc/CustomFieldDatePicker.php' );
      
 
         add_filter('gform_validation_d', function($validation_result) {
@@ -64,19 +65,83 @@
 
             global $post;
        
-            //error_log( 'gform_form_args: ' . print_r( $args, 1 ) );
+            //error_log( '$_POST:' . print_r( $_POST, 1 ) );
+            error_log( '$_REQUEST:' . print_r( $_REQUEST, 1 ) );
+            //error_log( '$post: ' . print_r( $post, 1 ) );
+            error_log( 'pre get transient gform_form_args: ' . print_r( $args, 1 ) );
 
 
-            if ( !empty( $args['field_values'] ) && isset( $args['field_values']['is_bd_element'] ) ) {
-
-                //set_transient( 'bdgf_post_' . $post->ID . 'form_' . $form_id . '_settings', $propertiesData, 60 * 60 );
-
-                $props = get_transient( 'bdgf_post_' . $post->ID . '_form_' . $args['form_id'] . '_settings' );
-
-                error_log( json_encode( $props ) );
-
-                $FormStyler = new FormStyler( $props );
+            //This checks to see if GP Nested Forms are trying to refresh. They change the $field_values,
+            //but since it's AJAX we can look at the $_REQUEST.
+            if ( isset( $_REQUEST['gpnf_context']['field_values'] ) ) {
                 
+                $field_values = $_REQUEST['gpnf_context']['field_values'] ?? false;
+                $is_bd_element = $_REQUEST['gpnf_context']['field_values']['is_bd_element'] ?? false;
+
+                $post_id = $_REQUEST['gpnf_context']['field_values']['post_id'];
+                $form_id = $_REQUEST['gpnf_context']['field_values']['parent_form_id'];
+                $nested_form_ids = $_REQUEST['gpnf_context']['field_values']['nested_form_ids'];
+
+
+
+            } else {
+
+                $field_values = $args['field_values'] ?? false;
+                $is_bd_element = $args['field_values']['is_bd_element'] ?? false;
+
+                //Since the global $post isn't always there, we should have it stored here:
+                $post_id = $args['field_values']['post_id'];
+                $form_id = $args['field_values']['parent_form_id'];
+                $nested_form_ids = $args['field_values']['nested_form_ids'];
+
+            }
+
+
+            if ( $field_values && $is_bd_element ) {
+
+            
+                error_log( 'Nested form ids within the gform_form_args: ' . json_encode( $nested_form_ids ) );
+
+                //Grab the transient we set in the ssr.php file
+                $props = get_transient( 'bdgf_post_' . $post_id . '_form_' . $form_id . '_settings' );
+
+                if ( empty( $props ) ) {
+
+                    error_log( 'BDGF: Could not retrieve $propertiesData from transient bdgf_post_' . $post_id . '_form_' . $form_id . '_settings' );
+                    return $args;
+
+                }
+
+
+
+                //Check the form obj for any nested forms
+                if ( !empty( $nested_form_ids ) ) {
+
+                    //This is the parent, so make it true
+                    new FormStyler( $props, false, true );
+
+                    $nested_form_props = $props;
+                
+                    foreach( $nested_form_ids as $nested_form_id ) {
+
+                        //Set the $propertiesData form ID to the nested form
+                        $nested_form_props['content']['controls']['form'] = $nested_form_id;
+
+                        //Style the form
+                        new FormStyler( $nested_form_props, true, false );
+
+                        error_log( 'BDGF: Triggered the form styling for nested form: ' . $nested_form_id );              
+                        
+                
+                    }
+                } else {
+
+                    //Style the form
+                    new FormStyler( $props );
+
+                }
+
+            
             } 
 
             return $args;
@@ -84,13 +149,34 @@
        }, 10, 3 );
 
 
-       add_filter( 'gform_pre_render_d', function( $form ) {
+       //do_action( 'gpnf_load_nested_form_hooks', $form_id, $parent_form_id );
+       add_action( 'gpnf_load_nested_form_hooks_d', function( $form_id, $parent_form_id ){
 
-        error_log( "form: \n\r" . print_r( $form, 1 ) );
 
-        return $form;
+            error_log(  'gpnf_load_nested_form_hooks, ' . $form_id . ' parent: ' . $parent_form_id );
 
-       }, 10, 1 );
+
+       }, 10, 2 );
+
+
+       /**
+        *   TODO: This is running all the time, and we blindly grab the BD variables 
+        *
+        */
+
+       add_filter( 'gpnf_init_script_args', function( $args, $field, $form ) {
+
+            $args['modalHeaderColor'] = 'var(--bde-brand-primary-color)';
+            $args['modalColors']['primary'] = 'var(--bde-brand-primary-color)';
+            $args['modalColors']['secondary'] = 'var(--grey-500)';
+
+
+            return $args;
+
+        }, 10, 3 );
+
+
+
 
 
 
