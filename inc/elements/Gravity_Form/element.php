@@ -893,7 +893,7 @@ observeElement(\'.form_saved_message form\', [\'breakdance-form\']);'],'frontend
 
     static function dynamicPropertyPaths()
     {
-        return ['0' => ['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], '1' => ['accepts' => 'image_url', 'path' => 'design.form_elements.radio_checkbox.active.background.layers[].image'], '2' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '3' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string']];
+        return ['0' => ['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], '1' => ['accepts' => 'image_url', 'path' => 'design.form_elements.radio_checkbox.active.background.layers[].image'], '2' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '3' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '4' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string'], '5' => ['path' => 'settings.advanced.attributes[].value', 'accepts' => 'string']];
     }
 
     static function additionalClasses()

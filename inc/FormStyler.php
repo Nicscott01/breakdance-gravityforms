@@ -127,7 +127,6 @@ class FormStyler {
 
             }
 
-
             return $link;
 
         }, 10, 2);

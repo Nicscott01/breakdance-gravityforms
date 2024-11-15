@@ -24,6 +24,7 @@
 .breakdance .bdgf .gform_page_footer {
   display: flex;
   align-items:center;
+  flex-wrap:wrap;
   gap: var(--bde-form-gap);
 }
 .breakdance .bdgf .gfield .small:not(.textarea) {

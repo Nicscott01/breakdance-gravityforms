@@ -135,7 +135,8 @@
 }
 
 %%SELECTOR%% .gform_validation_errors,
-%%SELECTOR%% .gform_validation_error {
+%%SELECTOR%% .gform_submission_error,
+%%SELECTOR%% .gform_validation_error:not('.gform_wrapper') {
 background-color: {{ design.form_elements.validation.container.background_color }};
   {{ macros.borders(design.form_elements.validation.container.borders) }}
   {{ macros.spacing_padding_all(design.form_elements.validation.container.padding) }}
@@ -150,7 +151,8 @@ background-color: {{ design.form_elements.validation.container.background_color 
 {{ macros.typography(design.form_elements.validation.list_items, globalSettings) }}
 }
 
-%%SELECTOR%% .gform_confirmation_message {
+%%SELECTOR%% .gform_confirmation_message,
+%%SELECTOR%% h2.gform_submission_error {
 	{{ macros.typography(design.form_elements.confirmation.typography, globalSettings) }}
 }
 
