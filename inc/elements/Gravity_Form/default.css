@@ -225,6 +225,10 @@
 
 }
 
+.breakdance .bdgf .gform_page_footer > button {
+  width:auto;
+}
+
 
 /** GP Nested Form **/
 .breakdance .bdgf .gpnf-nested-entries {
@@ -244,3 +248,4 @@
 .gpnf-modal form .gform-body {
   width:100%;
 }
+
