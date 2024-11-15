@@ -2,7 +2,7 @@
 namespace BDGF;
 
 
-
+if ( class_exists( 'GF_Field' ) ) {
 
 class GF_Field_ModernDatePicker extends \GF_Field {
 
@@ -234,3 +234,5 @@ add_action('wp_footer', function() {
     </script>
     <?php
 });
+
+}
