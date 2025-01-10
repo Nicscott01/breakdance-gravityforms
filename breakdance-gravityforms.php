@@ -3,7 +3,7 @@
  *  Plugin Name: Breakdance GravityForms
  *  Description: Apply Breakdance styling to Gravity Forms
  *  Author: Nic Scott
- *  Version: 0.5.1
+ *  Version: 0.5.2-dev
  * 
  */
 
@@ -61,14 +61,18 @@
         *   
         * 
         */
-       add_action( 'gform_form_args', function( $args ) {
+       add_filter( 'gform_form_args', function( $args ) {
+
+            if ( is_admin() || ( defined('REST_REQUEST') && REST_REQUEST ) ) {
+                return $args;
+            }
 
             global $post;
        
             //error_log( '$_POST:' . print_r( $_POST, 1 ) );
-            error_log( '$_REQUEST:' . print_r( $_REQUEST, 1 ) );
+            //error_log( '$_REQUEST:' . print_r( $_REQUEST, 1 ) );
             //error_log( '$post: ' . print_r( $post, 1 ) );
-            error_log( 'pre get transient gform_form_args: ' . print_r( $args, 1 ) );
+            //error_log( 'pre get transient gform_form_args: ' . print_r( $args, 1 ) );
 
 
             //This checks to see if GP Nested Forms are trying to refresh. They change the $field_values,
