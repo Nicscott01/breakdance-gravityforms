@@ -3,6 +3,8 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 
 
 ## Changelog
+### 1/10/25 version 0.5.2
+- Fix fatal error that would happen when you put a gravity form on a page with the gutenburg editor
 ### 11/5/24 version 0.5.1
 - Add file uploader styling
 - Add .gform_validation_error to style with plural verison of the class name
