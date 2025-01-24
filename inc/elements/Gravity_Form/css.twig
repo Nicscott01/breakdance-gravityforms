@@ -258,7 +258,7 @@ background-color: {{ design.form_elements.validation.container.background_color 
 }
 
 
-%%SELECTOR%% .breakdance-form-field__label {
+%%SELECTOR%% .breakdance-form-field__label:not(.gform-field-label--type-inline) {
   --bde-form-after-label: var(--bdgf-labels-primary-spacing-margin-bottom);
   margin-top: {{ design.form_elements.labels.primary_spacing.margin_top.style }};
   {{ macros.typography(design.form_elements.labels.primary_typography, globalSettings) }};

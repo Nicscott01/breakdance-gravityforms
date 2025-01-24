@@ -18,7 +18,7 @@ class GF_Field_ModernDatePicker extends \GF_Field {
 
     public function get_form_editor_button() {
         return [
-            'group' => 'advanced_fields',
+            'group' => 'standard_fields',
             'text'  => $this->get_form_editor_field_title(),
         ];
     }

@@ -467,6 +467,10 @@ class FormStyler {
 
                 $field_content = dom_document_replacement( 'select', $field_content );
 
+            case "flatpickr_date" :
+
+                $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+
             default:
             
                /* $field_content = preg_replace(
