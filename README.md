@@ -3,6 +3,10 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 
 
 ## Changelog
+### 1/23/25 version 0.5.3
+- Add support for our new flatpickr field type (add class for label)
+- Add native browser based date picker field
+- Style updates
 ### 1/10/25 version 0.5.2
 - Fix fatal error that would happen when you put a gravity form on a page with the gutenburg editor
 ### 11/5/24 version 0.5.1

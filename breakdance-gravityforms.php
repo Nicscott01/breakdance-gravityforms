@@ -31,6 +31,7 @@
         require_once( __DIR__ . '/inc/FormStyler.php' );
         require_once( __DIR__ . '/inc/Modifier.php' );
         require_once( __DIR__ . '/inc/CustomFieldDatePicker.php' );
+        //require_once( __DIR__ . '/inc/GFFlatPickr.php' );
      
 
         add_filter('gform_validation_d', function($validation_result) {
