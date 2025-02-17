@@ -217,8 +217,8 @@ class GravityForm extends \Breakdance\Elements\Element
         [],
       ), getPresetSection(
       "EssentialElements\\simpleLayout",
-      "Layout",
-      "layout",
+      "Choices Layout",
+      "choices_layout",
        ['condition' => [[['path' => 'design.form_elements.radio_checkbox.radio_type', 'operand' => 'equals', 'value' => 'blocks']]], 'type' => 'popout']
      ), getPresetSection(
       "EssentialElements\\typography",
@@ -490,7 +490,49 @@ class GravityForm extends \Breakdance\Elements\Element
       "Field Spacing",
       "field_spacing",
        ['type' => 'popout']
+     ), c(
+        "uploader",
+        "Uploader",
+        [getPresetSection(
+      "EssentialElements\\AtomV1ButtonDesign",
+      "Trash Button",
+      "trash_button",
+       ['type' => 'popout']
+     ), c(
+        "icon",
+        "Icon",
+        [],
+        ['type' => 'icon', 'layout' => 'vertical'],
+        false,
+        false,
+        [],
+      ), c(
+        "color",
+        "Color",
+        [],
+        ['type' => 'color', 'layout' => 'inline'],
+        false,
+        false,
+        [],
+      ), c(
+        "size",
+        "Size",
+        [],
+        ['type' => 'unit', 'layout' => 'inline'],
+        false,
+        false,
+        [],
+      ), getPresetSection(
+      "EssentialElements\\borders",
+      "Borders",
+      "borders",
+       ['type' => 'popout']
      )],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
+        false,
+        false,
+        [],
+      )],
         ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
@@ -537,6 +579,11 @@ class GravityForm extends \Breakdance\Elements\Element
       "Text Margin",
       "text_margin",
        ['type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\spacing_margin_y",
+      "Margin",
+      "margin",
+       ['type' => 'popout']
      )],
         ['type' => 'section'],
         false,
@@ -559,6 +606,11 @@ class GravityForm extends \Breakdance\Elements\Element
       "EssentialElements\\typography",
       "Current Step Typography",
       "current_step_typography",
+       ['type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\spacing_margin_y",
+      "Margin",
+      "margin",
        ['type' => 'popout']
      )],
         ['type' => 'section'],
@@ -620,7 +672,12 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
-      ), c(
+      ), getPresetSection(
+      "EssentialElements\\borders",
+      "Section Borders",
+      "section_borders",
+       ['type' => 'popout']
+     ), c(
         "html_field",
         "HTML Field",
         [c(
@@ -640,7 +697,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         [],
       ), getPresetSection(
-      "EssentialElements\\typography",
+      "EssentialElements\\typography_with_align",
       "Typography",
       "typography",
        ['type' => 'popout']
@@ -711,12 +768,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
-      ), getPresetSection(
-      "EssentialElements\\spacing_margin_y",
-      "Spacing",
-      "spacing",
-       ['type' => 'popout']
-     ), c(
+      ), c(
         "gravity_variables",
         "Gravity Variables",
         [c(
@@ -748,7 +800,46 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
-      )];
+      ), c(
+        "container",
+        "Container",
+        [c(
+        "max_width",
+        "Max Width",
+        [],
+        ['type' => 'unit', 'layout' => 'inline'],
+        true,
+        false,
+        [],
+      ), c(
+        "min_height",
+        "Min Height",
+        [],
+        ['type' => 'unit', 'layout' => 'inline'],
+        true,
+        false,
+        [],
+      ), getPresetSection(
+      "EssentialElements\\spacing_padding_all",
+      "Padding",
+      "padding",
+       ['type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\borders",
+      "Borders",
+      "borders",
+       ['type' => 'popout']
+     )],
+        ['type' => 'section'],
+        false,
+        false,
+        [],
+      ), getPresetSection(
+      "EssentialElements\\spacing_margin_y",
+      "Spacing",
+      "spacing",
+       ['type' => 'popout']
+     )];
     }
 
     static function contentControls()
@@ -908,7 +999,7 @@ observeElement(\'.form_saved_message form\', [\'breakdance-form\']);'],'frontend
 
     static function propertyPathsToWhitelistInFlatProps()
     {
-        return ['design.form_elements.footer.layout.horizontal.vertical_at', 'design.form_elements.vertical_at', 'design.form_elements.footer.styles.styles.size.full_width_at', 'design.form_elements.footer.button.custom.size.full_width_at', 'design.form_elements.footer.button.styles', 'design.form_elements.radio_checkbox.layout.horizontal.vertical_at', 'design.form_elements.radio_checkbox.de_select_all_button.custom.size.full_width_at', 'design.form_elements.radio_checkbox.de_select_all_button.styles', 'design.form_elements.list.remove_button.custom.size.full_width_at', 'design.form_elements.list.remove_button.styles', 'design.footer.submit_button.custom.size.full_width_at', 'design.footer.submit_button.styles', 'design.footer.previous_button.custom.size.full_width_at', 'design.footer.previous_button.styles', 'design.footer.next_button.custom.size.full_width_at', 'design.footer.next_button.styles', 'design.footer.save_continue_button.custom.size.full_width_at', 'design.footer.save_continue_button.styles'];
+        return ['design.form_elements.footer.layout.horizontal.vertical_at', 'design.form_elements.vertical_at', 'design.form_elements.footer.styles.styles.size.full_width_at', 'design.form_elements.footer.button.custom.size.full_width_at', 'design.form_elements.footer.button.styles', 'design.form_elements.radio_checkbox.de_select_all_button.custom.size.full_width_at', 'design.form_elements.radio_checkbox.de_select_all_button.styles', 'design.form_elements.list.remove_button.custom.size.full_width_at', 'design.form_elements.list.remove_button.styles', 'design.footer.submit_button.custom.size.full_width_at', 'design.footer.submit_button.styles', 'design.footer.previous_button.custom.size.full_width_at', 'design.footer.previous_button.styles', 'design.footer.next_button.custom.size.full_width_at', 'design.footer.next_button.styles', 'design.footer.save_continue_button.custom.size.full_width_at', 'design.footer.save_continue_button.styles', 'design.form_elements.radio_checkbox.choices_layout.horizontal.vertical_at', 'design.form_elements.uploader.trash_button.custom.size.full_width_at', 'design.form_elements.uploader.trash_button.styles'];
     }
 
     static function propertyPathsToSsrElementWhenValueChanges()

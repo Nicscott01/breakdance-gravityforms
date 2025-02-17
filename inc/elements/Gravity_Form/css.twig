@@ -127,6 +127,10 @@
 
 %%SELECTOR%% {
 {{ macros.spacing_margin_y(design.spacing) }}
+ max-width: {{ design.container.max_width.style }};
+ min-height:{{ design.container.min_height.style }};
+  {{ macros.spacing_padding_all(design.container.padding) }}
+  {{ macros.borders(design.container.borders) }}
 }
 
 
@@ -195,7 +199,7 @@ background-color: {{ design.form_elements.validation.container.background_color 
 
 {% elseif design.form_elements.radio_checkbox.radio_type == 'blocks' %}
 %%SELECTOR%% .gfield_radio {
-  {{ macros.simpleLayout(design.form_elements.radio_checkbox.layout, breakpoint) }}
+  {{ macros.simpleLayout(design.form_elements.radio_checkbox.choices_layout, breakpoint) }}
 }
 
 
@@ -274,8 +278,9 @@ background-color: {{ design.form_elements.validation.container.background_color 
 
 %%SELECTOR%% .gf_progressbar {
   background-color: {{ design.progress_bar.background_color }};
-  {{ macros.borders(design.progress_bar.borders) }};
+  {{ macros.borders(design.progress_bar.borders) }}
   height: {{ design.progress_bar.height.style }};
+  {{ macros.spacing_margin_y(design.progress_bar.margin) }}
 }
 
 %%SELECTOR%% .gf_progressbar .gf_progressbar_percentage {
@@ -297,8 +302,17 @@ background-color: {{ design.form_elements.validation.container.background_color 
   {{ macros.typography(design.steps.steps_typography, globalSettings) }};
 }
 
-%%SELECTOR%% .gf_progressbar_title .gf_step_current_page {
+%%SELECTOR%% .gf_progressbar_title .gf_step_current_page,
+%%SELECTOR%% .gf_page_steps .gf_step_active {
   {{ macros.typography(design.steps.current_step_typography, globalSettings) }};
+}
+
+%%SELECTOR%% .gf_page_steps {
+  {{ macros.spacing_margin_y(design.steps.margin) }}
+  
+  & .gf_step {
+    {{ macros.typography(design.steps.steps_typography, globalSettings) }}
+  }
 }
 
 
@@ -351,3 +365,19 @@ background-color: {{ design.form_elements.validation.container.background_color 
 %%SELECTOR%% .gpnf-nested-entries {
   margin-bottom: var(--bdgf-labels-primary-spacing-margin-bottom);
 }
+
+%%SELECTOR%% .gfield--type-section {
+  {{ macros.borders(design.text.section_borders) }}
+}
+
+{{ macros.atomV1ButtonCss(design.form_elements.uploader.trash_button, 'gform_delete_file', '%%SELECTOR%%', breakpoint, globalSettings) }}
+
+%%SELECTOR%% .gfield--type-fileupload .gform_drop_area {
+  {{ macros.borders(design.form_elements.uploader.borders) }}
+}
+
+%%SELECTOR%% .drop-zone-icon {
+  color: {{ design.form_elements.uploader.color }};
+  font-size: {{ design.form_elements.uploader.size.style }};
+}
+

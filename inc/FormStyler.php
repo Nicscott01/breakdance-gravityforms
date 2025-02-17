@@ -35,6 +35,7 @@ class FormStyler {
         add_filter( 'gform_disable_form_theme_css', '__return_true', 20 );
 
 
+        $this->propertiesData = $propertiesData;
         $this->form_id = $propertiesData['content']['controls']['form'];
         $this->show_title = $propertiesData['content']['controls']['show_title'] ?? false;
         $this->show_description = $propertiesData['content']['controls']['show_description'] ?? false;
@@ -240,11 +241,51 @@ class FormStyler {
 
 
 
-        error_log( 'Finished the construct for FormStyler, form_id: ' . $this->form_id );
-        error_log( 'FormStyler: ' . print_r( $this, 1 ) );
+        //Style Stripe Checkoug
+        add_filter( 'gform_stripe_elements_style', [ $this, 'style_stripe_form' ], 10, 3 );
+
+
+        //GravityForms File Uploader
+        //$file_upload_markup = apply_filters( 'gform_file_upload_markup', $file_upload_markup, $file_info, $form_id, $id );
+        add_filter( 'gform_file_upload_markup', [ $this, 'style_file_upload_markup' ], 10, 4 );
+
+        //error_log( 'Finished the construct for FormStyler, form_id: ' . $this->form_id );
+        //error_log( 'FormStyler: ' . print_r( $this, 1 ) );
+
+
+
 
     }
 
+
+    /**
+     * Edit file upload markup for 
+     * Breakdance button
+     * 
+     *      <span class="gfield_fileupload_filename">user-icon.png</span>
+     *      <span class="gfield_fileupload_progress gfield_fileupload_progress_complete">
+     *          <span class="gfield_fileupload_progressbar">
+     *              <span class="gfield_fileupload_progressbar_progress" style="width: 100%;"></span>
+     *          </span>
+     *          <span class="gfield_fileupload_percent">100%</span>
+     *      </span>
+     *      <button class="gform_delete_file gform-theme-button gform-theme-button--simple" onclick="gformDeleteUploadedFile( 1, 22, this );">
+     *          <span class="dashicons dashicons-trash" aria-hidden="true"></span>
+     *          <span class="screen-reader-text">Delete this file: user-icon.png</span>
+     *      </button>
+
+     */
+
+    public function style_file_upload_markup( $file_upload_markup, $file_info, $form_id, $id ) {
+
+        $button_style = $this->propertiesData['design']['form_elements']['uploader']['trash_button']['style'];
+
+        error_log( 'button_style:' . print_r( $button_style, 1 ) );
+
+        $file_upload_markup = str_replace( 'gform_delete_file', sprintf( 'button-atom button-atom--%s gform_delete_file', $button_style), $file_upload_markup );
+
+        return $file_upload_markup;
+    }
 
 
 
@@ -458,8 +499,16 @@ class FormStyler {
             
             case "fileupload" :
 
+                
+                $icon = $this->propertiesData['design']['form_elements']['uploader']['icon']['svgCode'];
+                //error_log( 'icon' . print_r(  $icon, 1) );
+
                 $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
                 $field_content = class_replace( 'button gform_button_select_files', 'button gform_button_select_files button-atom button-atom--secondary', $field_content );
+
+                $icon_with_text = sprintf( '<span class="drop-zone-icon">%s</span>Drop files here or ', $icon );
+
+                $field_content = str_replace( 'Drop files here or ', $icon_with_text, $field_content );
 
                 break;
 
@@ -509,6 +558,90 @@ class FormStyler {
 
 
 
+
+    public function style_stripe_form( $card_styles, $form_id, $is_payment_element_enabled ) {
+
+        //error_log( 'card_styles: ' . print_r( $card_styles, 1 ));
+        error_log( 'is_payment_element_enabled: '. print_r( $is_payment_element_enabled, 1 ) );
+
+        //Start with the global styles
+        $global_styles = \Breakdance\Data\get_global_settings_array();
+
+        $primary_color = $global_styles['settings']['colors']['brand'];
+        $text_color = $global_styles['settings']['colors']['text'];
+        $headings_color = $global_styles['settings']['colors']['headings'];
+
+        //Defaults
+        //--bde-form-input-border-radius
+        $form_input_border_radius =  $global_styles['settings']['forms']['fields']['borders']['radius']['breakpoint_base']['all']['style'] ?? '3px';
+
+        //Typography
+        $body_typography = \Breakdance\Fonts\process_font( $global_styles['settings']['typography']['body_font'] ) ?? '';
+        
+        //Font Size
+        $body_font_size_global = $global_styles['settings']['typography']['base_size']['breakpoint_base']['style'];
+        $label_font_size_form = $this->propertiesData['design']['form_elements']['labels']['primary_typography']['typography']['custom']['customTypography']['fontSize']['breakpoint_base']['style'];
+
+        //Font Weight
+        //var(--bde-form-label-font-weight)
+        $font_weight_label = $this->propertiesData['design']['form_elements']['labels']['primary_typography']['typography']['custom']['customTypography']['fontWeight']['breakpoint_base'] ?? '500';
+
+
+        //Field margin bottom
+        $field_margin_bottom = $this->propertiesData['design']['form_elements']['field_spacing']['margin_bottom']['breakpoint_base']['style'];
+
+
+        //Label margin bottom
+        $label_margin_bottom = $this->propertiesData['design']['form_elements']['labels']['primary_spacing']['margin_bottom']['breakpoint_base']['style'];
+
+        error_log( 'field_margin_bottom: ' . print_r( $field_margin_bottom, 1 ) );
+        //error_log( 'global_styles' . print_r( $global_styles, 1 ));
+
+
+        $card_styles['theme'] = 'minimal';
+
+        if ( $is_payment_element_enabled ) {
+
+            // reference https://docs.stripe.com/elements/appearance-api
+            $card_styles['variables'] = array(
+                'colorPrimary' => $primary_color,
+                'colorTextSecondary' => $text_color,
+                'colorText' => $headings_color,
+                'fontFamily' => $body_typography,
+                'fontSizeBase' => $body_font_size_global,
+                'tabSpacing' => '3rem',
+                'borderRadius' => $form_input_border_radius,
+                'spacingGridRow' => $field_margin_bottom
+
+            );
+             
+            $card_styles['rules'] = [
+                '.Label' => [
+                    'fontSize' => $label_font_size_form ?? '',
+                    'fontWeight' => $font_weight_label ?? '',
+                    'marginBottom' => $label_margin_bottom ?? ''
+                ]
+            ];
+     
+        } else {
+     
+            // reference https://docs.stripe.com/js/appendix/style
+            $card_styles['base'] = array(
+                'color' => $primary_color,
+                'fontFamily' => $body_typography,
+                'fontSize' => '22px',
+                'borderColor' => '#000000',
+                ':focus' => array(
+                    'color' => '#272829'
+                )
+            );
+     
+            $card_styles = [];
+        }
+         
+        return $card_styles;
+
+    }
 
 
 
