@@ -381,3 +381,21 @@ background-color: {{ design.form_elements.validation.container.background_color 
   font-size: {{ design.form_elements.uploader.size.style }};
 }
 
+
+%%SELECTOR%% .gfield--input-type-time .gform-grid-row {
+  gap: {{ design.form_elements.time.gap.style }};
+}
+
+%%SELECTOR%% .gfield--input-type-time .gform-grid-row *:last-child {
+  padding-left:{{ design.form_elements.time.gap.style }};
+}
+
+
+%%SELECTOR%% .ginput_product_price_wrapper {
+  {{ macros.spacing_margin_y(design.form_elements.product.calculation.price_spacing_) }}
+}
+
+%%SELECTOR%% .ginput_product_price_wrapper .ginput_product_price {
+  {{ macros.typography(design.form_elements.product.calculation.price_typography, globalSettings) }}
+}
+

@@ -393,6 +393,48 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         [],
       ), c(
+        "time",
+        "Time",
+        [c(
+        "gap",
+        "Gap",
+        [],
+        ['type' => 'unit', 'layout' => 'inline', 'rangeOptions' => ['step' => 1], 'unitOptions' => ['types' => ['rem', 'em', 'px', '%']]],
+        true,
+        false,
+        [],
+      )],
+        ['type' => 'section', 'layout' => 'inline', 'sectionOptions' => ['type' => 'popout']],
+        false,
+        false,
+        [],
+      ), c(
+        "product",
+        "Product",
+        [c(
+        "calculation",
+        "Calculation",
+        [getPresetSection(
+      "EssentialElements\\spacing_margin_y",
+      "Price Spacing ",
+      "price_spacing_",
+       ['type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\typography",
+      "Price Typography",
+      "price_typography",
+       ['type' => 'popout']
+     )],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
+        false,
+        false,
+        [],
+      )],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
+        false,
+        false,
+        [],
+      ), c(
         "validation",
         "Validation",
         [c(

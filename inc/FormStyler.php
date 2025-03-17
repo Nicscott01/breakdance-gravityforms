@@ -370,9 +370,9 @@ class FormStyler {
         //var_dump( $field->type );
         //var_dump ( $field_content );
 
-        switch( $field->type ) {
+        switch( get_class( $field ) ) {
 
-            case "list" :
+            case "GF_Field_List" :
 
                 $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
 
@@ -394,8 +394,9 @@ class FormStyler {
                 }
 
 
-            case "consent" :
-            case "checkbox":
+            case "GF_Field_Consent" :
+            case "GF_Field_Checkbox":
+
 
                 //ginput_container ginput_container_consent 
                 if ( $field->type == 'consent' ) {
@@ -404,6 +405,7 @@ class FormStyler {
 
                 }
 
+
                 $field_content = class_replace( 'gchoice', 'breakdance-form-checkbox gchoice', $field_content );
                 $field_content = class_replace( 'gform-field-label--type-inline', ' gform-field-label--type-inline breakdance-form-checkbox__text ', $field_content );
                 $field_content = class_replace( 'gfield_label_before_complex', 'gfield_label_before_complex breakdance-form-field__label bdgf-choice-label', $field_content );
@@ -411,13 +413,11 @@ class FormStyler {
 
                 break;
 
-            case "radio":
-            case "product":
+            case "GF_Field_Radio":
             
-
-
                 $field_content = str_replace( 'gchoice ', 'breakdance-form-radio gchoice ', $field_content );
-                $field_content = str_replace( 'gform-field-label ', 'breakdance-form-radio__text gform-field-label ', $field_content );
+                //Only replce inline classes (the label next to the radio)
+                $field_content = class_replace( 'gform-field-label--type-inline', 'gform-field-label--type-inline breakdance-form-radio__text ', $field_content );
                 //$field_content = str_replace( '<input ', '<input class="breakdance-form-field__input" ', $field_content );
                 $field_content = str_replace( 'ginput_amount', 'breakdance-form-field__input ginput_amount', $field_content );
                 $field_content = str_replace( "<legend class='gfield_label ", "<legend class='breakdance-form-field__label gfield_label bdgf-choice-label ", $field_content );
@@ -426,7 +426,10 @@ class FormStyler {
 
                 break;
 
-            case "select" :
+
+
+            case "GF_Field_Select" :
+
 
                 $field_content = str_replace( 'gfield--type-select', 'breakdance-form-field breakdance-form-field__select gfield--type-select', $field_content );
                 $field_content = str_replace( 'gfield_select', 'breakdance-form-field__input gfield_select', $field_content );
@@ -435,7 +438,7 @@ class FormStyler {
 
                 break;
 
-            case "multiselect" :
+            case "GF_Field_MultiSelect" :
 
                 //breakdance-form-field__input
                 $field_content = str_replace( 'gfield_select', 'breakdance-form-field__input gfield_select', $field_content );
@@ -443,14 +446,17 @@ class FormStyler {
 
                 break;
 
-            case "total" :
+            case "GF_Field_Total" :
 
                 $field_content = str_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label bdgf-choice-label', $field_content );
+
+                $field_content = class_replace( 'ginput_total ', 'ginput_total breakdance-form-field__input ', $field_content );
+
 
                 break;
 
 
-            case "textarea" :
+            case "GF_Field_Textarea" :
 
                 //Style the label
                 $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
@@ -459,12 +465,13 @@ class FormStyler {
 
                 break;
 
-            case "text":
-            case "number":
-            case "phone":
-            case "name":
-            case "email":
-            case "modern_date_picker":
+            case "GF_Field_Text":
+            case "GF_Field_Number":
+            case "GF_Field_Phone":
+            case "GF_Field_Name":
+            case "GF_Field_Email":
+            case "GF_Field_Website":
+            case "BDGF\GF_Field_ModernDatePicker":
 
                 //Style the label                
                 $field_content = class_replace( 'gfield_label gform-field-label', 'gfield_label breakdance-form-field__label gform-field-label', $field_content );
@@ -473,7 +480,8 @@ class FormStyler {
 
                 break;
 
-            case "form" : //Gravity perks nested form
+            //TODO: Add install gravity perks to find out class of the field
+            case "form" : //Gravity perks nested form   
 
                 $field_content = class_replace( 'gfield_label gform-field-label', 'gfield_label breakdance-form-field__label gform-field-label', $field_content );
 
@@ -482,7 +490,7 @@ class FormStyler {
                 break;
                 
 
-            case "address":
+            case "GF_Field_Address":
 
                 //Style the label
                 //$field_content = str_replace( 'gform-field-label', 'gform-field-label breakdance-form-field__label', $field_content );
@@ -497,7 +505,7 @@ class FormStyler {
 
                 break;
             
-            case "fileupload" :
+            case "GF_Field_FileUpload" :
 
                 
                 $icon = $this->propertiesData['design']['form_elements']['uploader']['icon']['svgCode'];
@@ -512,21 +520,39 @@ class FormStyler {
 
                 break;
 
-            case "date":
+            case "GF_Field_Date":
 
                 $field_content = dom_document_replacement( 'select', $field_content );
 
             case "flatpickr_date" :
+            case "GF_Field_Post_Title" :
+            case "GF_Field_Post_Content" :
+            case "GF_Field_Post_Excerpt" :
+            case "GF_Field_Post_Tags" :
+            case "GF_Field_Post_Image" :
+            case "GF_Field_Price" :
+            case "GF_Field_SingleShipping" :
+            case "GF_Field_Time" :
+            case "GF_Field_Quantity" :
+            case "GF_Field_SingleProduct" :
+            
 
                 $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
 
+            case "GF_Field_Time" :
+
+                $field_content = str_replace( '<select', '<select class="breakdance-form-field breakdance-form-field__input"', $field_content );
+
+
+            case "GF_Field_Calculation" :
+
+                $field_content = class_replace( 'gfield_label_product', 'breakdance-form-field__label gfield_label_product', $field_content );
+                $field_content = class_replace( 'ginput_quantity_label', 'breakdance-form-field__label ginput_quantity_label', $field_content );
+
+
             default:
             
-               /* $field_content = preg_replace(
-                    '/\b(gform-field-label)\b/',
-                    'breakdance-form-field__label gform-field-label',
-                    $field_content
-                );*/
+                var_dump( get_class( $field ) );   
 
                 //$field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
 
