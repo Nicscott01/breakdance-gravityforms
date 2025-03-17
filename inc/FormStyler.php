@@ -207,7 +207,7 @@ class FormStyler {
 
 
         if ( $this->is_parent_form ) {
-            error_log( 'enqueue_script ' . \plugin_dir_url( dirname(__FILE__, 1 ) ). 'assets/js/nested-form-styler.js' );
+            //error_log( 'enqueue_script ' . \plugin_dir_url( dirname(__FILE__, 1 ) ). 'assets/js/nested-form-styler.js' );
             
            wp_enqueue_script( 'bdgf-nested-form-styler', \plugin_dir_url( dirname(__FILE__, 1 )). 'assets/js/nested-form-styler.js', ['jquery'], null, true );
         }
@@ -280,7 +280,7 @@ class FormStyler {
 
         $button_style = $this->propertiesData['design']['form_elements']['uploader']['trash_button']['style'];
 
-        error_log( 'button_style:' . print_r( $button_style, 1 ) );
+        //error_log( 'button_style:' . print_r( $button_style, 1 ) );
 
         $file_upload_markup = str_replace( 'gform_delete_file', sprintf( 'button-atom button-atom--%s gform_delete_file', $button_style), $file_upload_markup );
 
@@ -552,7 +552,7 @@ class FormStyler {
 
             default:
             
-                var_dump( get_class( $field ) );   
+                //var_dump( get_class( $field ) );   
 
                 //$field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
 
@@ -588,7 +588,7 @@ class FormStyler {
     public function style_stripe_form( $card_styles, $form_id, $is_payment_element_enabled ) {
 
         //error_log( 'card_styles: ' . print_r( $card_styles, 1 ));
-        error_log( 'is_payment_element_enabled: '. print_r( $is_payment_element_enabled, 1 ) );
+        //error_log( 'is_payment_element_enabled: '. print_r( $is_payment_element_enabled, 1 ) );
 
         //Start with the global styles
         $global_styles = \Breakdance\Data\get_global_settings_array();
@@ -620,7 +620,7 @@ class FormStyler {
         //Label margin bottom
         $label_margin_bottom = $this->propertiesData['design']['form_elements']['labels']['primary_spacing']['margin_bottom']['breakpoint_base']['style'];
 
-        error_log( 'field_margin_bottom: ' . print_r( $field_margin_bottom, 1 ) );
+        //error_log( 'field_margin_bottom: ' . print_r( $field_margin_bottom, 1 ) );
         //error_log( 'global_styles' . print_r( $global_styles, 1 ));
 
 

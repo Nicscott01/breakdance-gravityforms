@@ -109,7 +109,7 @@
             if ( $field_values && $is_bd_element ) {
 
             
-                error_log( 'Nested form ids within the gform_form_args: ' . json_encode( $nested_form_ids ) );
+                //error_log( 'Nested form ids within the gform_form_args: ' . json_encode( $nested_form_ids ) );
 
                 //Grab the transient we set in the ssr.php file
                 $props = get_transient( 'bdgf_post_' . $post_id . '_form_' . $form_id . '_settings' );
@@ -139,7 +139,7 @@
                         //Style the form
                         new FormStyler( $nested_form_props, true, false );
 
-                        error_log( 'BDGF: Triggered the form styling for nested form: ' . $nested_form_id );              
+                        //error_log( 'BDGF: Triggered the form styling for nested form: ' . $nested_form_id );              
                         
                 
                     }

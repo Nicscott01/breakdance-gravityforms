@@ -102,7 +102,7 @@ add_filter( 'gform_field_content_d', function( $html, $field, $value, $entry_id,
 
             if ( $form['id'] == $nested_form ) {
 
-                error_log( 'gform_pre_render should be nested: ' . print_r( $form, 1 ) );
+                //error_log( 'gform_pre_render should be nested: ' . print_r( $form, 1 ) );
 
                 $form['cssClass'] = $form['cssClass'] . ' test';
 
