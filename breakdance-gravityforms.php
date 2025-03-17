@@ -4,6 +4,7 @@
  *  Description: Apply Breakdance styling to Gravity Forms
  *  Author: Nic Scott
  *  Version: 0.5.5
+ *  Requires Plugins: breakdance, gravityforms
  * 
  */
 
