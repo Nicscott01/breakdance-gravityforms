@@ -107,6 +107,15 @@
 }
 
 
+.breakdance .bdgf .gfield--input-type-time .gform-grid-row{
+  align-items:center;
+}
+
+.breakdance .bdgf .gfield--input-type-time .hour_minute_colon {
+  flex:0;
+}
+
+
 @media (max-width:767px) {
 .breakdance .bdgf .ginput_container_address .address_city {
   grid-column-end:8;
@@ -250,6 +259,17 @@
 .breakdance .bdgf .gform_page_footer > button {
   width:auto;
 }
+
+
+.breakdance .bdgf .ginput_container_product_calculation {
+  display:flex;
+  flex-direction:column;
+}
+
+.breakdance .bdgf .ginput_product_price_wrapper {
+  order:99;
+}
+
 
 
 /** GP Nested Form **/

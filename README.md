@@ -4,6 +4,11 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 
 ## Changelog
 
+
+### 3/17/25 v0.5.6
+- Improve overall style compaibility
+- Add styles for newer multi-choice field
+- Add styles for pricing fields
 ### 3/17/25 version 0.5.5
 - Bump version and tag
 ### 2/16/25 version 0.5.4
