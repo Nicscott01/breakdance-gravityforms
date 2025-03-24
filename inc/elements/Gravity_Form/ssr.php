@@ -30,7 +30,7 @@ $nested_form_ids = [];
 
 if ( !empty( $form_obj ) ) {
 
-    $nested_form_props = $props;
+    $nested_form_props = isset( $props ) ? $props : null;
 
     foreach( $form_obj['fields'] as $field ) {
 

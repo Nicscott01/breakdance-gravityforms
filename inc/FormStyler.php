@@ -294,7 +294,7 @@ class FormStyler {
 
         if ( empty( $this->gf_user_class ) ) {   
 
-            $this->gf_user_class = $form['cssClass'];
+            $this->gf_user_class = isset( $form['cssClass'] ) ? $form['cssClass'] : '';
         }
 
         return $form;
@@ -593,32 +593,66 @@ class FormStyler {
         //Start with the global styles
         $global_styles = \Breakdance\Data\get_global_settings_array();
 
-        $primary_color = $global_styles['settings']['colors']['brand'];
-        $text_color = $global_styles['settings']['colors']['text'];
-        $headings_color = $global_styles['settings']['colors']['headings'];
+        $primary_color = null;
+        $text_color = null;
+        $headings_color = null;
+        $form_input_border_radius = null;
+        $body_typography = null;
+        $body_font_size_global = null;
+        $label_font_size_form = null;
+        $font_weight_label = null;
+        $field_margin_bottom = null;
+        $label_margin_bottom = null;
 
-        //Defaults
-        //--bde-form-input-border-radius
-        $form_input_border_radius =  $global_styles['settings']['forms']['fields']['borders']['radius']['breakpoint_base']['all']['style'] ?? '3px';
+        if ( isset( $global_styles['settings']['colors'] ) ) {
 
-        //Typography
-        $body_typography = \Breakdance\Fonts\process_font( $global_styles['settings']['typography']['body_font'] ) ?? '';
+            $primary_color = isset($global_styles['settings']['colors']['brand']) ? $global_styles['settings']['colors']['brand'] : null;
+            $text_color    = isset($global_styles['settings']['colors']['text']) ? $global_styles['settings']['colors']['text'] : null;
+            $headings_color = isset($global_styles['settings']['colors']['headings']) ? $global_styles['settings']['colors']['headings'] : null;
         
-        //Font Size
-        $body_font_size_global = $global_styles['settings']['typography']['base_size']['breakpoint_base']['style'];
-        $label_font_size_form = $this->propertiesData['design']['form_elements']['labels']['primary_typography']['typography']['custom']['customTypography']['fontSize']['breakpoint_base']['style'];
-
-        //Font Weight
-        //var(--bde-form-label-font-weight)
-        $font_weight_label = $this->propertiesData['design']['form_elements']['labels']['primary_typography']['typography']['custom']['customTypography']['fontWeight']['breakpoint_base'] ?? '500';
+        } 
 
 
-        //Field margin bottom
-        $field_margin_bottom = $this->propertiesData['design']['form_elements']['field_spacing']['margin_bottom']['breakpoint_base']['style'];
+        if ( isset( $global_styles['settings'] ) ) {
+
+            //Defaults
+            //--bde-form-input-border-radius
+            $form_input_border_radius =  $global_styles['settings']['forms']['fields']['borders']['radius']['breakpoint_base']['all']['style'] ?? '3px';
+
+            //Typography
+            $body_typography = \Breakdance\Fonts\process_font( $global_styles['settings']['typography']['body_font'] ) ?? '';
+            
+            //Font Size
+            $body_font_size_global = isset($global_styles['settings']['typography']['base_size']['breakpoint_base']['style']) ? $global_styles['settings']['typography']['base_size']['breakpoint_base']['style'] : null;
+            
+        }
 
 
-        //Label margin bottom
-        $label_margin_bottom = $this->propertiesData['design']['form_elements']['labels']['primary_spacing']['margin_bottom']['breakpoint_base']['style'];
+
+        if ( isset( $this->propertiesData['design']['form_elements']['labels']['primary_typography'] ) ) {
+        
+            $label_font_size_form = $this->propertiesData['design']['form_elements']['labels']['primary_typography']['typography']['custom']['customTypography']['fontSize']['breakpoint_base']['style'];
+
+            //Font Weight
+            //var(--bde-form-label-font-weight)
+            $font_weight_label = $this->propertiesData['design']['form_elements']['labels']['primary_typography']['typography']['custom']['customTypography']['fontWeight']['breakpoint_base'] ?? '500';
+
+        }
+
+    
+        if ( isset( $this->propertiesData['design']['form_elements']['field_spacing'] ) ) {
+
+            //Field margin bottom
+            $field_margin_bottom = $this->propertiesData['design']['form_elements']['field_spacing']['margin_bottom']['breakpoint_base']['style'];
+
+        }
+
+
+        if ( isset( $this->propertiesData['design']['form_elements']['labels'] ) ) {
+            //Label margin bottom
+            $label_margin_bottom = $this->propertiesData['design']['form_elements']['labels']['primary_spacing']['margin_bottom']['breakpoint_base']['style'];
+
+        }
 
         //error_log( 'field_margin_bottom: ' . print_r( $field_margin_bottom, 1 ) );
         //error_log( 'global_styles' . print_r( $global_styles, 1 ));
@@ -629,25 +663,51 @@ class FormStyler {
         if ( $is_payment_element_enabled ) {
 
             // reference https://docs.stripe.com/elements/appearance-api
-            $card_styles['variables'] = array(
-                'colorPrimary' => $primary_color,
-                'colorTextSecondary' => $text_color,
-                'colorText' => $headings_color,
-                'fontFamily' => $body_typography,
-                'fontSizeBase' => $body_font_size_global,
-                'tabSpacing' => '3rem',
-                'borderRadius' => $form_input_border_radius,
-                'spacingGridRow' => $field_margin_bottom
+            if ( !empty( $primary_color ) ) {
+                $card_styles['variables']['colorPrimary'] = $primary_color;
+            }
+            if ( !empty( $text_color ) ) {
+                $card_styles['variables']['colorTextSecondary'] = $text_color;
+            }
+            if ( !empty( $headings_color ) ) {
+                $card_styles['variables']['colorText'] = $headings_color;
+            }
+            if ( !empty( $body_typography ) ) {
+                $card_styles['variables']['fontFamily'] = $body_typography;
+            }
 
-            );
+            if ( !empty( $body_font_size_global ) ) {
+                $card_styles['variables']['fontSizeBase'] = $body_font_size_global;
+            }
+            $card_styles['variables']['tabSpacing'] = '3rem';
+            if ( !empty( $form_input_border_radius ) ) {
+                $card_styles['variables']['borderRadius'] = $form_input_border_radius;
+            }
+            if ( !empty( $field_margin_bottom ) ) {
+                $card_styles['variables']['spacingGridRow'] = $field_margin_bottom;
+            }
              
-            $card_styles['rules'] = [
-                '.Label' => [
-                    'fontSize' => $label_font_size_form ?? '',
-                    'fontWeight' => $font_weight_label ?? '',
-                    'marginBottom' => $label_margin_bottom ?? ''
-                ]
-            ];
+            $rules = [];
+
+            if ( !empty( $label_font_size_form ) ) {
+                $rules['fontSize'] = $label_font_size_form;
+            }
+            if ( !empty( $font_weight_label ) ) {
+                $rules['fontWeight'] = $font_weight_label;
+            }
+            if ( !empty( $label_margin_bottom ) ) {
+                $rules['marginBottom'] = $label_margin_bottom;
+            }
+
+            if ( !empty( $body_typography ) ) {
+                $rules['fontFamily'] = $body_typography;
+            }
+
+            if ( !empty( $rules ) ) {
+                $card_styles['rules'] = [
+                    '.Label' => $rules
+                ];
+            }
      
         } else {
      
