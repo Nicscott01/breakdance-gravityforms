@@ -18,14 +18,11 @@ if ( $propertiesData['design'] === null && isset( $propertiesData['meta']['prese
 }
 
 
-
-
 $form_id = $propertiesData['content']['controls']['form'];
 
 
-
-
 $form_obj = \GFAPI::get_form( $form_id );
+
 
 //Check the form obj for any nested forms
 
@@ -46,18 +43,11 @@ if ( !empty( $form_obj ) ) {
     }
 }
 
-/*
-var_dump( '%%UNIQUESLUG%%' );
-var_dump( $propertiesData['meta'] );
-var_dump( $nested_form_ids );
-var_dump( $propertiesData['globalSettings'] );
-*/
+
 //We set the transient so that this form can be styled when it's loaded via ajax. This transient is used in the filter gform_form_args
 set_transient( 'bdgf_post_' . $post->ID . '_form_' . $form_id . '_settings', $propertiesData, 60 * 60 );
 
-//Don't need to call this here since the transient takes care of it above
-//$FormStyler = new \BDGF\FormStyler($propertiesData);
-//var_dump( $FormStyler );
+
 //Gravity Form Arguments
 $display_inactive = false;
 $field_values = [
@@ -117,6 +107,3 @@ add_filter( 'gform_field_content_d', function( $html, $field, $value, $entry_id,
 
 }, 10, 5 );
 
-
-
-//$FormStyler->kill_modifications();

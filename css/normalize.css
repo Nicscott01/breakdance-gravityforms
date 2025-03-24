@@ -30,7 +30,8 @@
 }
 
 .bdgf .gfield_visibility_hidden, 
-.bdgf .gf_invisible {
+.bdgf .gf_invisible,
+.bdgf .gfield--input-type-hiddenproduct {
     inset-inline-start: -9999px;
     position: absolute;
     visibility: hidden;
