@@ -3,6 +3,8 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 
 
 ## Changelog
+### 3/27/25 v0.5.10
+- Prevent uneccessary script from loading for modern date picker field
 ### 3/24/25 v0.5.9
 - Fix loading of variables into Stripe for GF Stripe fields; we check that a value is set first
 ### 3/24/25 v0.5.8

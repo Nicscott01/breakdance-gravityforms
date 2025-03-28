@@ -43,6 +43,8 @@ class GF_Field_ModernDatePicker extends \GF_Field {
         $field_id = $this->id;
         $field_name = 'input_' . $field_id;
 
+        add_action( 'wp_footer', 'BDGF\get_form_editor_inline_script_on_page_render' );
+
         // Get the size setting, default to 'medium' if not set
         $size = !empty($this->size) ? $this->size : 'medium';
 
@@ -161,7 +163,7 @@ add_filter('gform_field_content', function($content, $field) {
 
 
 
-add_action('wp_footer', function() {
+function get_form_editor_inline_script_on_page_render() {
     ?>
     <script type="text/javascript">
         /**
@@ -233,6 +235,6 @@ add_action('wp_footer', function() {
         });
     </script>
     <?php
-});
+    }   
 
 }
