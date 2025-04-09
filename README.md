@@ -3,6 +3,8 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 
 
 ## Changelog
+### 4/9/25 v0.5.11
+- Fix for unset variable
 ### 3/27/25 v0.5.10
 - Prevent uneccessary script from loading for modern date picker field
 ### 3/24/25 v0.5.9
