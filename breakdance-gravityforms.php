@@ -68,6 +68,7 @@
         */
        add_filter( 'gform_form_args', function( $args ) {
 
+
             if ( is_admin() || ( defined('REST_REQUEST') && REST_REQUEST ) ) {
                 return $args;
             }
@@ -98,16 +99,20 @@
                 $field_values = $args['field_values'] ?? false;
                 $is_bd_element = $args['field_values']['is_bd_element'] ?? false;
 
-                //Since the global $post isn't always there, we should have it stored here:
-                $post_id = $args['field_values']['post_id'];
-                $form_id = $args['field_values']['parent_form_id'];
-                $nested_form_ids = $args['field_values']['nested_form_ids'];
+                if ( $field_values ) {
+                
+                    //Since the global $post isn't always there, we should have it stored here:
+                    $post_id = $field_values['post_id'] ?? 0;
+                    $form_id = $field_values['parent_form_id'] ?? 0;
+                    $nested_form_ids = $field_values['nested_form_ids'] ?? 0;
 
+                }
             }
 
 
             if ( $field_values && $is_bd_element ) {
 
+                
             
                 //error_log( 'Nested form ids within the gform_form_args: ' . json_encode( $nested_form_ids ) );
 
