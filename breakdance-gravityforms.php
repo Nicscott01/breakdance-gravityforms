@@ -3,7 +3,7 @@
  *  Plugin Name: Breakdance GravityForms
  *  Description: Apply Breakdance styling to Gravity Forms
  *  Author: Nic Scott
- *  Version: 0.5.12-dev
+ *  Version: 0.5.12
  *  Requires Plugins: breakdance, gravityforms
  *  
  * 
@@ -15,7 +15,7 @@
  use function \Breakdance\Elements\control;
  use DOMDocument;
 
- define( 'BDGF_VERSION', '0.5.12-dev' );
+ define( 'BDGF_VERSION', '0.5.12' );
  define( 'BDGF_PATH', plugin_dir_path( __FILE__ ) );
  define( 'BDGF_URL', plugin_dir_url( __FILE__ ) );
 
