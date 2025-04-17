@@ -92,8 +92,62 @@ function button_text( $button, $form ) {
 *
 * @return string The filtered button.
 */
+
 function input_to_button( $button, $form ) {
-    
+
+    error_log( 'input_to_button $button:' . $button );
+
+    libxml_use_internal_errors( true );
+
+    $wrapper_id = 'submit-button-wrapper-' . $form['id'];
+
+    $dom = new DOMDocument();
+    $dom->loadHTML( '<?xml encoding="utf-8" ?><div id="'.$wrapper_id.'">' . $button . '</div>' ); // wrap in container to preserve siblings
+
+    $wrapper = $dom->getElementById( $wrapper_id );
+    $input   = $wrapper->getElementsByTagName( 'input' )->item(0);
+
+    if ( $input ) {
+        $new_button = $dom->createElement( 'button' );
+        $new_button->appendChild( $dom->createTextNode( $input->getAttribute( 'value' ) ) );
+        $input->removeAttribute( 'value' );
+
+        foreach( $input->attributes as $attribute ) {
+            if ( $attribute->name === 'class' ) {
+                $class = $attribute->value;
+
+                if ( strpos( $class, 'gform_previous_button' ) !== false || strpos( $class, 'gform_next_button' ) !== false ) {
+                    $class .= ' button-atom button-atom--primary breakdance-form-button';
+                } else {
+                    $class .= ' button-atom button-atom--primary breakdance-form-button breakdance-form-button__submit';
+                }
+
+                $new_button->setAttribute( 'class', $class );
+            } else {
+                $new_button->setAttribute( $attribute->name, $attribute->value );
+            }
+        }
+
+        $input->parentNode->replaceChild( $new_button, $input );
+    }
+
+    $new_html_button = '';
+    foreach ( $wrapper->childNodes as $child ) {
+        $new_html_button .= $dom->saveHTML( $child );
+    }
+
+    error_log( 'input_to_button $new_button:' . $new_html_button );
+
+    return $new_html_button;
+}
+
+
+
+function input_to_button_d( $button, $form ) {
+
+    error_log( 'input_to_button $button:' . $button );
+    libxml_use_internal_errors( true );
+
     $dom = new DOMDocument();
     $dom->loadHTML( '<?xml encoding="utf-8" ?>' . $button );
     $input = $dom->getElementsByTagName( 'input' )->item(0);
@@ -125,8 +179,13 @@ function input_to_button( $button, $form ) {
         $input->parentNode->replaceChild( $new_button, $input );
     
     }
+
+    $new_html_button = $dom->saveHtml( $new_button );
+
+    error_log( 'input_to_button $new_button:' . $new_html_button );
+
     
-    return $dom->saveHtml( $new_button );
+    return $new_html_button;
 }
 
 

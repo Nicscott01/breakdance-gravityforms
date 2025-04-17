@@ -271,6 +271,24 @@
 }
 
 
+.breakdance .bdgf .gform_ppcp_smart_payment_buttons {
+  inline-size: 100%;
+  
+  &.responsive {
+  	max-inline-size:100%;
+  }
+  &.small {
+    max-inline-size:200px;
+  }
+  &.medium {
+    max-inline-size:350px;
+  }
+  &.large {
+    max-inline-size:500px;
+  }
+  
+}
+
 
 /** GP Nested Form **/
 .breakdance .bdgf .gpnf-nested-entries {

@@ -399,3 +399,10 @@ background-color: {{ design.form_elements.validation.container.background_color 
   {{ macros.typography(design.form_elements.product.calculation.price_typography, globalSettings) }}
 }
 
+{% if design.footer.paypal_button_size.style is defined and design.footer.paypal_button_size.style %}
+  %%SELECTOR%% div.gform_ppcp_smart_payment_buttons {
+  	max-inline-size: {{ design.footer.paypal_button_size.style }} !important;
+	}
+{% endif %}
+
+

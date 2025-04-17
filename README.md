@@ -3,6 +3,10 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 
 
 ## Changelog
+### 4/17/25 v0.5.12
+- Add proper handling of PayPal checkout. Fixes the accidental removal of the Paypal div that's inserted by a wp filter.
+- Add size input for PayPal button size
+- Add default PayPal button css
 ### 4/9/25 v0.5.11
 - Fix for unset variable
 ### 3/27/25 v0.5.10

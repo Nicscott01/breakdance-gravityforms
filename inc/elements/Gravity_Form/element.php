@@ -805,6 +805,22 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+      ), c(
+        "paypal_button_about",
+        "Paypal Button About",
+        [],
+        ['type' => 'alert_box', 'layout' => 'vertical', 'alertBoxOptions' => ['style' => 'info', 'content' => '<p>You can control the max width of a Paypal Button block using this control. Otherwise it will fall back on the size settings in Gravity Forms (responsive, small, medium, large). Max size is set to 100% by default.</p>']],
+        false,
+        false,
+        [],
+      ), c(
+        "paypal_button_size",
+        "Paypal Button Size",
+        [],
+        ['type' => 'unit', 'layout' => 'inline'],
+        false,
+        false,
+        [],
       )],
         ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
         false,
@@ -1041,7 +1057,7 @@ observeElement(\'.form_saved_message form\', [\'breakdance-form\']);'],'frontend
 
     static function propertyPathsToWhitelistInFlatProps()
     {
-        return ['design.form_elements.footer.layout.horizontal.vertical_at', 'design.form_elements.vertical_at', 'design.form_elements.footer.styles.styles.size.full_width_at', 'design.form_elements.footer.button.custom.size.full_width_at', 'design.form_elements.footer.button.styles', 'design.form_elements.radio_checkbox.de_select_all_button.custom.size.full_width_at', 'design.form_elements.radio_checkbox.de_select_all_button.styles', 'design.form_elements.list.remove_button.custom.size.full_width_at', 'design.form_elements.list.remove_button.styles', 'design.footer.submit_button.custom.size.full_width_at', 'design.footer.submit_button.styles', 'design.footer.previous_button.custom.size.full_width_at', 'design.footer.previous_button.styles', 'design.footer.next_button.custom.size.full_width_at', 'design.footer.next_button.styles', 'design.footer.save_continue_button.custom.size.full_width_at', 'design.footer.save_continue_button.styles', 'design.form_elements.radio_checkbox.choices_layout.horizontal.vertical_at', 'design.form_elements.uploader.trash_button.custom.size.full_width_at', 'design.form_elements.uploader.trash_button.styles'];
+        return ['design.form_elements.footer.layout.horizontal.vertical_at', 'design.form_elements.vertical_at', 'design.form_elements.footer.styles.styles.size.full_width_at', 'design.form_elements.footer.button.custom.size.full_width_at', 'design.form_elements.footer.button.styles', 'design.form_elements.radio_checkbox.de_select_all_button.custom.size.full_width_at', 'design.form_elements.radio_checkbox.de_select_all_button.styles', 'design.form_elements.list.remove_button.custom.size.full_width_at', 'design.form_elements.list.remove_button.styles', 'design.footer.submit_button.custom.size.full_width_at', 'design.footer.submit_button.styles', 'design.footer.previous_button.custom.size.full_width_at', 'design.footer.previous_button.styles', 'design.footer.next_button.custom.size.full_width_at', 'design.footer.next_button.styles', 'design.footer.save_continue_button.custom.size.full_width_at', 'design.footer.save_continue_button.styles', 'design.form_elements.radio_checkbox.choices_layout.horizontal.vertical_at', 'design.form_elements.uploader.trash_button.custom.size.full_width_at', 'design.form_elements.uploader.trash_button.styles', 'design.footer.paypal_button_size'];
     }
 
     static function propertyPathsToSsrElementWhenValueChanges()

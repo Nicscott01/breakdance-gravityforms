@@ -524,18 +524,24 @@ class FormStyler {
 
                 $field_content = dom_document_replacement( 'select', $field_content );
 
+            case "GF_Field_SingleProduct" :
+            case "GF_Field_Price" :
+                
+                $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+                $field_content = class_replace( 'ginput_amount', 'breakdance-form-field__input ginput_amount', $field_content );
+
+                //Break after doing pricing because our default removes the `ginput_amount` class. We should probably look at a more elegant solution?
+                break;
+
             case "flatpickr_date" :
             case "GF_Field_Post_Title" :
             case "GF_Field_Post_Content" :
             case "GF_Field_Post_Excerpt" :
             case "GF_Field_Post_Tags" :
             case "GF_Field_Post_Image" :
-            case "GF_Field_Price" :
             case "GF_Field_SingleShipping" :
             case "GF_Field_Time" :
             case "GF_Field_Quantity" :
-            case "GF_Field_SingleProduct" :
-            
 
                 $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
 
