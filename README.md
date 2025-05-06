@@ -3,6 +3,8 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 
 
 ## Changelog
+### 5/6/26 v0.5.13
+- Add support for GF_Field_Advanced_Date field (our own Gravity Forms FlatPickr date field)
 ### 4/17/25 v0.5.12
 - Add proper handling of PayPal checkout. Fixes the accidental removal of the Paypal div that's inserted by a wp filter.
 - Add size input for PayPal button size

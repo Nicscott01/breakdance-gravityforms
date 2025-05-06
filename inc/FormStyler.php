@@ -472,6 +472,7 @@ class FormStyler {
             case "GF_Field_Email":
             case "GF_Field_Website":
             case "BDGF\GF_Field_ModernDatePicker":
+            case "GF_Field_Advanced_Date":
 
                 //Style the label                
                 $field_content = class_replace( 'gfield_label gform-field-label', 'gfield_label breakdance-form-field__label gform-field-label', $field_content );
