@@ -543,6 +543,7 @@ class FormStyler {
             case "GF_Field_SingleShipping" :
             case "GF_Field_Time" :
             case "GF_Field_Quantity" :
+            case "GF_Field_Square_CreditCard" :
 
                 $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
 

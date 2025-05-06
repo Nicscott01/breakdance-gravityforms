@@ -1,9 +1,13 @@
 # Breakdance Gravityforms
 This is a Wordpress plugin which gives Gravity Forms the ability to be styled within Breakdance. 
 
+## TODO
+- Work through integrations with payment processors: Square, PayPal
 
 ## Changelog
-### 5/6/26 v0.6.0
+### 5/16/25 v0.6.1
+- Add limited support for Breakdance Square (label class only)
+### 5/6/25 v0.6.0
 - Add support for GF_Field_Advanced_Date field (our own Gravity Forms FlatPickr date field)
 ### 4/17/25 v0.5.12
 - Add proper handling of PayPal checkout. Fixes the accidental removal of the Paypal div that's inserted by a wp filter.
