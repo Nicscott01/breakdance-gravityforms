@@ -5,6 +5,8 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 - Work through integrations with payment processors: Square, PayPal
 
 ## Changelog
+### 9/22/25 v0.6.2
+- Add feature to rewrite the gravity forms tab indecies so there are no collisions between forms. We use the form ID * 100 + the existing tab index to make things clean.
 ### 5/16/25 v0.6.1
 - Add limited support for Breakdance Square (label class only)
 ### 5/6/25 v0.6.0

@@ -3,7 +3,7 @@
  *  Plugin Name: Breakdance GravityForms
  *  Description: Apply Breakdance styling to Gravity Forms
  *  Author: Nic Scott
- *  Version: 0.6.1
+ *  Version: 0.6.2
  *  Requires Plugins: breakdance, gravityforms
  *  
  * 
@@ -15,7 +15,7 @@
  use function \Breakdance\Elements\control;
  use DOMDocument;
 
- define( 'BDGF_VERSION', '0.6.1' );
+ define( 'BDGF_VERSION', '0.6.2' );
  define( 'BDGF_PATH', plugin_dir_path( __FILE__ ) );
  define( 'BDGF_URL', plugin_dir_url( __FILE__ ) );
 
@@ -224,12 +224,28 @@
         });
 
     
+        add_filter( 'gform_tabindex', [ $this, 'prevent_tabindex_collisions' ], 10, 2 );
 
         
     }
 
 
 
+
+
+    /**
+     * Auto-offset Gravity Forms tabindex by Form ID.
+     *
+     * Ensures multiple forms on the same page don't share tabindex values.
+     */
+
+
+    public function prevent_tabindex_collisions( $tab_index, $form ) {
+        // Base each form's tabindex range on its ID, leaving 100 slots per form.
+        $offset = absint( $form['id'] ) * 100;
+        return $offset + (int) $tab_index;
+
+    }
 
 
 
