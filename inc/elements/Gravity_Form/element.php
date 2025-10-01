@@ -97,6 +97,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "vertical_at",
         "Vertical At",
@@ -105,6 +106,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "labels",
         "Labels",
@@ -116,6 +118,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "hide_labels",
         "Hide Labels",
@@ -124,6 +127,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "hide_complex_labels",
         "Hide Complex Labels",
@@ -132,6 +136,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "exclusions",
         "Exclusions",
@@ -143,11 +148,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'repeater', 'layout' => 'vertical', 'condition' => [[['path' => 'design.form_elements.labels.hide_labels', 'operand' => 'is set', 'value' => '']]], 'repeaterOptions' => ['titleTemplate' => '{selector}', 'defaultTitle' => 'Selector', 'buttonName' => 'Add Selector']],
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\spacing_margin_y",
       "Primary Spacing",
@@ -183,6 +190,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "radio_checkbox",
         "Radio & Checkbox",
@@ -194,6 +202,7 @@ class GravityForm extends \Breakdance\Elements\Element
         true,
         false,
         [],
+        
       ), c(
         "gap",
         "Gap",
@@ -202,6 +211,7 @@ class GravityForm extends \Breakdance\Elements\Element
         true,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\spacing_margin_y",
       "Choices Spacing",
@@ -215,6 +225,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\simpleLayout",
       "Choices Layout",
@@ -241,6 +252,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\typography",
       "Typography",
@@ -251,6 +263,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\AtomV1ButtonDesign",
       "De/Select All Button",
@@ -274,11 +287,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section', 'layout' => 'inline', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
         [],
+        
       ), c(
         "inputs",
         "Inputs",
@@ -290,6 +305,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "width_large",
         "Width Large",
@@ -298,6 +314,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "width_medium",
         "Width Medium",
@@ -306,6 +323,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "width_small",
         "Width Small",
@@ -314,11 +332,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
         [],
+        
       ), c(
         "multiselect",
         "Multiselect",
@@ -345,11 +365,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
         [],
+        
       ), c(
         "list",
         "List",
@@ -361,6 +383,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\AtomV1ButtonDesign",
       "Add Button",
@@ -379,6 +402,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "margin_bottom",
         "Margin Bottom",
@@ -387,11 +411,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
         [],
+        
       ), c(
         "time",
         "Time",
@@ -403,11 +429,13 @@ class GravityForm extends \Breakdance\Elements\Element
         true,
         false,
         [],
+        
       )],
         ['type' => 'section', 'layout' => 'inline', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
         [],
+        
       ), c(
         "product",
         "Product",
@@ -429,11 +457,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
         [],
+        
       ), c(
         "validation",
         "Validation",
@@ -448,6 +478,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\borders",
       "Borders",
@@ -463,6 +494,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "messages",
         "Messages",
@@ -479,6 +511,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\borders",
       "Borders",
@@ -499,6 +532,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\typography",
       "H2 Messages",
@@ -514,6 +548,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "confirmation",
         "Confirmation",
@@ -527,6 +562,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\spacing_margin_y",
       "Field Spacing",
@@ -548,6 +584,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "color",
         "Color",
@@ -556,6 +593,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "size",
         "Size",
@@ -564,6 +602,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\borders",
       "Borders",
@@ -574,11 +613,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
         [],
+        
       ), c(
         "progress_bar",
         "Progress Bar",
@@ -590,6 +631,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "progress_color",
         "Progress Color",
@@ -598,6 +640,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\borders",
       "Borders",
@@ -611,6 +654,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\typography",
       "Typography",
@@ -631,6 +675,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "steps",
         "Steps",
@@ -659,6 +704,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "numbered_steps",
         "Numbered Steps",
@@ -670,6 +716,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\typography",
       "Number Typography",
@@ -688,11 +735,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section'],
         false,
         false,
         [],
+        
       ), c(
         "text",
         "Text",
@@ -714,6 +763,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\borders",
       "Section Borders",
@@ -730,6 +780,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "selectors",
         "Selectors",
@@ -738,6 +789,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\typography_with_align",
       "Typography",
@@ -753,11 +805,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section'],
         false,
         false,
         [],
+        
       ), c(
         "footer",
         "Footer",
@@ -769,6 +823,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "button_alignment",
         "Button Alignment",
@@ -777,6 +832,7 @@ class GravityForm extends \Breakdance\Elements\Element
         true,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\AtomV1ButtonDesign",
       "Submit Button",
@@ -805,6 +861,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "paypal_button_about",
         "Paypal Button About",
@@ -813,6 +870,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "paypal_button_size",
         "Paypal Button Size",
@@ -821,11 +879,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
         false,
         false,
         [],
+        
       ), c(
         "gravity_variables",
         "Gravity Variables",
@@ -837,6 +897,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "padding_block",
         "Padding Block",
@@ -845,6 +906,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "font_size_primary",
         "Font Size Primary",
@@ -853,11 +915,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section'],
         false,
         false,
         [],
+        
       ), c(
         "container",
         "Container",
@@ -869,6 +933,7 @@ class GravityForm extends \Breakdance\Elements\Element
         true,
         false,
         [],
+        
       ), c(
         "min_height",
         "Min Height",
@@ -877,6 +942,7 @@ class GravityForm extends \Breakdance\Elements\Element
         true,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\spacing_padding_all",
       "Padding",
@@ -892,6 +958,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), getPresetSection(
       "EssentialElements\\spacing_margin_y",
       "Spacing",
@@ -913,6 +980,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "show_title",
         "Show Title",
@@ -921,6 +989,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "show_description",
         "Show Description",
@@ -929,6 +998,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "notes",
         "Notes",
@@ -937,6 +1007,7 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       ), c(
         "process_with_ajax",
         "Process with AJAX",
@@ -945,11 +1016,13 @@ class GravityForm extends \Breakdance\Elements\Element
         false,
         false,
         [],
+        
       )],
         ['type' => 'section', 'layout' => 'vertical'],
         false,
         false,
         [],
+        
       )];
     }
 
@@ -1017,7 +1090,7 @@ observeElement(\'.form_saved_message form\', [\'breakdance-form\']);'],'frontend
 
     static function nestingRule()
     {
-        return ["type" => "final",   ];
+        return ['type' => 'final'];
     }
 
     static function spacingBars()
@@ -1035,6 +1108,12 @@ observeElement(\'.form_saved_message form\', [\'breakdance-form\']);'],'frontend
         return false;
     }
 
+    static function availableIn()
+    {
+        return ['breakdance'];
+    }
+
+
     static function order()
     {
         return 0;
@@ -1042,7 +1121,7 @@ observeElement(\'.form_saved_message form\', [\'breakdance-form\']);'],'frontend
 
     static function dynamicPropertyPaths()
     {
-        return [['accepts' => 'image_url', 'path' => 'design.form_elements.validation.background.layers[].image'], ['accepts' => 'image_url', 'path' => 'design.form_elements.radio_checkbox.active.background.layers[].image']];
+        return false;
     }
 
     static function additionalClasses()
