@@ -236,8 +236,11 @@ function dom_document_replacement( $tag, $field_content, $add_class = 'breakdanc
     if ( !empty( $matches ) ) {
 
         foreach ( $matches as $match ) {
+            libxml_use_internal_errors( true );
             $dom = new DOMDocument();
-            $dom->loadHTML( $match[0], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+            // prepend an XML encoding declaration so DOMDocument parses as UTF-8
+            $dom->loadHTML( '<?xml encoding="utf-8" ?>' . $match[0], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+            $dom->encoding = 'UTF-8';
             $elements = $dom->getElementsByTagName( $tag );
 
 
@@ -256,6 +259,7 @@ function dom_document_replacement( $tag, $field_content, $add_class = 'breakdanc
             }
 
             $field_content = str_replace( $match[0], $dom->saveHTML(), $field_content );
+            libxml_clear_errors();
         }
 
     }
