@@ -5,6 +5,9 @@
 
 .breakdance .bdgf {
     width: 100%;
+    --bdgf-product-quantity-width: 7.5rem;
+    --bdgf-product-quantity-label-gap: 0.625rem;
+    --bdgf-product-row-gap: calc(var(--bde-form-gap) / 2);
   
   & *:focus-visible {
     outline:none;
@@ -271,8 +274,62 @@
   flex-direction:column;
 }
 
-.breakdance .bdgf .ginput_product_price_wrapper {
-  order:99;
+.breakdance .bdgf .gfield--type-product .ginput_container_singleproduct,
+.breakdance .bdgf .gfield--type-product .breakdance-form-product {
+  display:grid;
+  grid-template-columns:auto minmax(4.5rem, var(--bdgf-product-quantity-width));
+  column-gap: var(--bdgf-product-quantity-label-gap);
+  row-gap: var(--bdgf-product-row-gap);
+  justify-content:start;
+  align-items:end;
+}
+
+.breakdance .bdgf .gfield--type-product .ginput_product_price_wrapper {
+  grid-column:1 / -1;
+  grid-row:2;
+  justify-self:start;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:.5rem;
+  order:0;
+}
+
+.breakdance .bdgf .gfield--type-product .ginput_quantity_label,
+.breakdance .bdgf .gfield--type-product .ginput_product_price_label {
+  margin:0;
+}
+
+.breakdance .bdgf .gfield--type-product .ginput_quantity_label {
+  grid-column:1;
+  grid-row:1;
+  align-self:center;
+  white-space:nowrap;
+}
+
+.breakdance .bdgf .gfield--type-product .ginput_quantity,
+.breakdance .bdgf .gfield--type-product .breakdance-form-field__input--quantity {
+  grid-column:2;
+  grid-row:1;
+  width:100%;
+  margin:0;
+  text-align:center;
+}
+
+@media (max-width:767px) {
+  .breakdance .bdgf .gfield--type-product .ginput_container_singleproduct,
+  .breakdance .bdgf .gfield--type-product .breakdance-form-product {
+    grid-template-columns:minmax(0, 1fr);
+    row-gap:.5rem;
+  }
+
+  .breakdance .bdgf .gfield--type-product .ginput_quantity_label,
+  .breakdance .bdgf .gfield--type-product .ginput_quantity,
+  .breakdance .bdgf .gfield--type-product .breakdance-form-field__input--quantity,
+  .breakdance .bdgf .gfield--type-product .ginput_product_price_wrapper {
+    grid-column:1;
+    grid-row:auto;
+  }
 }
 
 

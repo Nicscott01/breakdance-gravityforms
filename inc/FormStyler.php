@@ -530,6 +530,11 @@ class FormStyler {
                 
                 $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
                 $field_content = class_replace( 'ginput_amount', 'breakdance-form-field__input ginput_amount', $field_content );
+                $field_content = class_replace( 'ginput_container_singleproduct', 'ginput_container_singleproduct breakdance-form-product', $field_content );
+                $field_content = class_replace( 'ginput_product_price_wrapper', 'ginput_product_price_wrapper breakdance-form-product__price', $field_content );
+                $field_content = class_replace( 'ginput_product_price_label', 'ginput_product_price_label breakdance-form-field__label--price', $field_content );
+                $field_content = class_replace( 'ginput_quantity_label', 'ginput_quantity_label breakdance-form-field__label--quantity', $field_content );
+                $field_content = class_replace( 'ginput_quantity', 'breakdance-form-field__input breakdance-form-field__input--quantity ginput_quantity', $field_content );
 
                 //Break after doing pricing because our default removes the `ginput_amount` class. We should probably look at a more elegant solution?
                 break;
