@@ -391,11 +391,154 @@ background-color: {{ design.form_elements.validation.container.background_color 
 }
 
 
-%%SELECTOR%% .ginput_product_price_wrapper {
+{% set product_layout_pattern = design.form_elements.product.layout.pattern|default('') %}
+{% set product_mobile_layout_pattern = design.form_elements.product.layout.mobile_pattern|default('') %}
+{% set product_price_alignment = design.form_elements.product.layout.price_alignment|default('') %}
+{% set product_quantity_input_text_align = design.form_elements.product.quantity.input_text_align|default('') %}
+
+{% if product_layout_pattern == 'inline_left' or product_layout_pattern == 'inline_right' %}
+%%SELECTOR%% .gfield--type-product .ginput_container_singleproduct,
+%%SELECTOR%% .gfield--type-product .breakdance-form-product {
+  grid-template-columns:auto minmax(4.5rem, var(--bdgf-product-quantity-width));
+  justify-content: {{ product_layout_pattern == 'inline_right' ? 'end' : 'start' }};
+}
+
+%%SELECTOR%% .gfield--type-product .ginput_quantity_label {
+  grid-column:1;
+  grid-row:1;
+}
+
+%%SELECTOR%% .gfield--type-product .ginput_quantity,
+%%SELECTOR%% .gfield--type-product .breakdance-form-field__input--quantity {
+  grid-column:2;
+  grid-row:1;
+}
+
+%%SELECTOR%% .gfield--type-product .ginput_product_price_wrapper {
+  grid-column:1 / -1;
+  grid-row:2;
+}
+{% elseif product_layout_pattern == 'stacked' %}
+%%SELECTOR%% .gfield--type-product .ginput_container_singleproduct,
+%%SELECTOR%% .gfield--type-product .breakdance-form-product {
+  grid-template-columns:minmax(0, 1fr);
+  justify-content:start;
+}
+
+%%SELECTOR%% .gfield--type-product .ginput_quantity_label {
+  grid-column:1;
+  grid-row:1;
+}
+
+%%SELECTOR%% .gfield--type-product .ginput_quantity,
+%%SELECTOR%% .gfield--type-product .breakdance-form-field__input--quantity {
+  grid-column:1;
+  grid-row:2;
+}
+
+%%SELECTOR%% .gfield--type-product .ginput_product_price_wrapper {
+  grid-column:1;
+  grid-row:3;
+}
+{% endif %}
+
+{% if product_mobile_layout_pattern == 'inline_left' or product_mobile_layout_pattern == 'inline_right' or product_mobile_layout_pattern == 'stacked' %}
+@media (max-width:767px) {
+  %%SELECTOR%% .gfield--type-product .ginput_container_singleproduct,
+  %%SELECTOR%% .gfield--type-product .breakdance-form-product {
+    {% if product_mobile_layout_pattern == 'stacked' %}
+    grid-template-columns:minmax(0, 1fr);
+    justify-content:start;
+    {% else %}
+    grid-template-columns:auto minmax(4.5rem, var(--bdgf-product-quantity-width));
+    justify-content: {{ product_mobile_layout_pattern == 'inline_right' ? 'end' : 'start' }};
+    {% endif %}
+  }
+
+  %%SELECTOR%% .gfield--type-product .ginput_quantity_label {
+    grid-column:1;
+    grid-row:1;
+  }
+
+  %%SELECTOR%% .gfield--type-product .ginput_quantity,
+  %%SELECTOR%% .gfield--type-product .breakdance-form-field__input--quantity {
+    {% if product_mobile_layout_pattern == 'stacked' %}
+    grid-column:1;
+    grid-row:2;
+    {% else %}
+    grid-column:2;
+    grid-row:1;
+    {% endif %}
+  }
+
+  %%SELECTOR%% .gfield--type-product .ginput_product_price_wrapper {
+    {% if product_mobile_layout_pattern == 'stacked' %}
+    grid-column:1;
+    grid-row:3;
+    {% else %}
+    grid-column:1 / -1;
+    grid-row:2;
+    {% endif %}
+  }
+}
+{% endif %}
+
+{% if design.form_elements.product.layout.quantity_width.style is defined and design.form_elements.product.layout.quantity_width.style and product_layout_pattern != 'stacked' %}
+%%SELECTOR%% .gfield--type-product .ginput_container_singleproduct,
+%%SELECTOR%% .gfield--type-product .breakdance-form-product {
+  grid-template-columns:auto minmax(4.5rem, {{ design.form_elements.product.layout.quantity_width.style }});
+}
+{% endif %}
+
+{% if design.form_elements.product.layout.quantity_label_gap.style is defined and design.form_elements.product.layout.quantity_label_gap.style %}
+%%SELECTOR%% .gfield--type-product .ginput_container_singleproduct,
+%%SELECTOR%% .gfield--type-product .breakdance-form-product {
+  column-gap: {{ design.form_elements.product.layout.quantity_label_gap.style }};
+}
+{% endif %}
+
+{% if design.form_elements.product.layout.row_gap.style is defined and design.form_elements.product.layout.row_gap.style %}
+%%SELECTOR%% .gfield--type-product .ginput_container_singleproduct,
+%%SELECTOR%% .gfield--type-product .breakdance-form-product {
+  row-gap: {{ design.form_elements.product.layout.row_gap.style }};
+}
+{% endif %}
+
+{% if product_price_alignment == 'left' %}
+%%SELECTOR%% .gfield--type-product .ginput_product_price_wrapper {
+  justify-self:start;
+}
+{% elseif product_price_alignment == 'center' %}
+%%SELECTOR%% .gfield--type-product .ginput_product_price_wrapper {
+  justify-self:center;
+}
+{% elseif product_price_alignment == 'right' %}
+%%SELECTOR%% .gfield--type-product .ginput_product_price_wrapper {
+  justify-self:end;
+}
+{% endif %}
+
+{% if product_quantity_input_text_align == 'left' or product_quantity_input_text_align == 'center' or product_quantity_input_text_align == 'right' %}
+%%SELECTOR%% .gfield--type-product .ginput_quantity,
+%%SELECTOR%% .gfield--type-product .breakdance-form-field__input--quantity {
+  text-align: {{ product_quantity_input_text_align }};
+}
+{% endif %}
+
+%%SELECTOR%% .gfield--type-product .ginput_quantity_label,
+%%SELECTOR%% .gfield--type-product .breakdance-form-field__label--quantity {
+  {{ macros.typography(design.form_elements.product.quantity.label_typography, globalSettings) }}
+}
+
+%%SELECTOR%% .gfield--type-product .ginput_product_price_wrapper {
   {{ macros.spacing_margin_y(design.form_elements.product.calculation.price_spacing_) }}
 }
 
-%%SELECTOR%% .ginput_product_price_wrapper .ginput_product_price {
+%%SELECTOR%% .gfield--type-product .ginput_product_price_wrapper .ginput_product_price_label {
+  {{ macros.typography(design.form_elements.product.calculation.price_label_typography, globalSettings) }}
+}
+
+%%SELECTOR%% .gfield--type-product .ginput_product_price_wrapper .ginput_product_price {
   {{ macros.typography(design.form_elements.product.calculation.price_typography, globalSettings) }}
 }
 

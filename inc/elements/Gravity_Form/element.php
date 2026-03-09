@@ -440,12 +440,103 @@ class GravityForm extends \Breakdance\Elements\Element
         "product",
         "Product",
         [c(
+        "layout",
+        "Layout",
+        [c(
+        "pattern",
+        "Pattern",
+        [],
+        ['type' => 'dropdown', 'layout' => 'inline', 'items' => [['value' => 'inline_left', 'text' => 'Inline Left'], ['text' => 'Inline Right', 'value' => 'inline_right'], ['text' => 'Stacked', 'value' => 'stacked']]],
+        false,
+        false,
+        [],
+        
+      ), c(
+        "mobile_pattern",
+        "Mobile Pattern",
+        [],
+        ['type' => 'dropdown', 'layout' => 'inline', 'items' => [['value' => 'inherit', 'text' => 'Inherit'], ['text' => 'Stacked', 'value' => 'stacked'], ['text' => 'Inline Left', 'value' => 'inline_left'], ['text' => 'Inline Right', 'value' => 'inline_right']]],
+        false,
+        false,
+        [],
+        
+      ), c(
+        "quantity_width",
+        "Quantity Width",
+        [],
+        ['type' => 'unit', 'layout' => 'inline', 'rangeOptions' => ['step' => 1], 'unitOptions' => ['types' => ['rem', 'em', 'px', '%']]],
+        false,
+        false,
+        [],
+        
+      ), c(
+        "quantity_label_gap",
+        "Label Gap",
+        [],
+        ['type' => 'unit', 'layout' => 'inline', 'rangeOptions' => ['step' => 1], 'unitOptions' => ['types' => ['rem', 'em', 'px', '%']]],
+        false,
+        false,
+        [],
+        
+      ), c(
+        "row_gap",
+        "Row Gap",
+        [],
+        ['type' => 'unit', 'layout' => 'inline', 'rangeOptions' => ['step' => 1], 'unitOptions' => ['types' => ['rem', 'em', 'px', '%']]],
+        false,
+        false,
+        [],
+        
+      ), c(
+        "price_alignment",
+        "Price Alignment",
+        [],
+        ['type' => 'dropdown', 'layout' => 'inline', 'items' => [['value' => 'left', 'text' => 'Left'], ['text' => 'Center', 'value' => 'center'], ['text' => 'Right', 'value' => 'right']]],
+        false,
+        false,
+        [],
+        
+      )],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
+        false,
+        false,
+        [],
+        
+      ), c(
+        "quantity",
+        "Quantity",
+        [getPresetSection(
+      "EssentialElements\\typography",
+      "Label Typography",
+      "label_typography",
+       ['type' => 'popout']
+     ), c(
+        "input_text_align",
+        "Input Text Align",
+        [],
+        ['type' => 'dropdown', 'layout' => 'inline', 'items' => [['value' => 'left', 'text' => 'Left'], ['text' => 'Center', 'value' => 'center'], ['text' => 'Right', 'value' => 'right']]],
+        false,
+        false,
+        [],
+        
+      )],
+        ['type' => 'section', 'sectionOptions' => ['type' => 'popout']],
+        false,
+        false,
+        [],
+        
+      ), c(
         "calculation",
         "Calculation",
         [getPresetSection(
       "EssentialElements\\spacing_margin_y",
       "Price Spacing ",
       "price_spacing_",
+       ['type' => 'popout']
+     ), getPresetSection(
+      "EssentialElements\\typography",
+      "Price Label Typography",
+      "price_label_typography",
        ['type' => 'popout']
      ), getPresetSection(
       "EssentialElements\\typography",
