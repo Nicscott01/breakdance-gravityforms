@@ -85,7 +85,8 @@ function button_text( $button, $form ) {
 
 /**
 * Filters the next, previous and submit buttons.
-* Replaces the form's <input> buttons with <button> while maintaining attributes from original <input>.
+* Styles native Gravity Forms 3 buttons and converts legacy input buttons.
+* Preserve submission attributes, button content, and adjacent payment markup.
 *
 * @param string $button Contains the <input> tag to be filtered.
 * @param object $form Contains all the properties of the current form.
@@ -95,48 +96,69 @@ function button_text( $button, $form ) {
 
 function input_to_button( $button, $form ) {
 
-    error_log( 'input_to_button $button:' . $button );
-
-    libxml_use_internal_errors( true );
+    $previous_errors = libxml_use_internal_errors( true );
 
     $wrapper_id = 'submit-button-wrapper-' . $form['id'];
 
     $dom = new DOMDocument();
     $dom->loadHTML( '<?xml encoding="utf-8" ?><div id="'.$wrapper_id.'">' . $button . '</div>' ); // wrap in container to preserve siblings
+    libxml_clear_errors();
+    libxml_use_internal_errors( $previous_errors );
 
     $wrapper = $dom->getElementById( $wrapper_id );
-    $input   = $wrapper->getElementsByTagName( 'input' )->item(0);
+    $xpath = new \DOMXPath( $dom );
+    $controls = $xpath->query( './/button | .//input[@type="submit" or @type="button" or @type="image"]', $wrapper );
+    $control = null;
 
-    if ( $input ) {
+    // Select GF's control, never a provider button or a hidden input beside it.
+    foreach ( $controls as $candidate ) {
+        if ( preg_match( '/^gform_(?:submit|next|previous)_button_' . (int) $form['id'] . '(?:_\d+)?$/', $candidate->getAttribute( 'id' ) ) ) {
+            $control = $candidate;
+            break;
+        }
+    }
+
+    if ( !$control ) {
+        return $button;
+    }
+
+    if ( $control->tagName === 'input' ) {
         $new_button = $dom->createElement( 'button' );
-        $new_button->appendChild( $dom->createTextNode( $input->getAttribute( 'value' ) ) );
-        $input->removeAttribute( 'value' );
-
-        foreach( $input->attributes as $attribute ) {
-            if ( $attribute->name === 'class' ) {
-                $class = $attribute->value;
-
-                if ( strpos( $class, 'gform_previous_button' ) !== false || strpos( $class, 'gform_next_button' ) !== false ) {
-                    $class .= ' button-atom button-atom--primary breakdance-form-button';
-                } else {
-                    $class .= ' button-atom button-atom--primary breakdance-form-button breakdance-form-button__submit';
-                }
-
-                $new_button->setAttribute( 'class', $class );
-            } else {
-                $new_button->setAttribute( $attribute->name, $attribute->value );
-            }
+        foreach ( $control->attributes as $attribute ) {
+            $new_button->setAttribute( $attribute->name, $attribute->value );
         }
 
-        $input->parentNode->replaceChild( $new_button, $input );
+        if ( $control->getAttribute( 'type' ) === 'image' ) {
+            $image = $dom->createElement( 'img' );
+            $image->setAttribute( 'src', $control->getAttribute( 'src' ) );
+            $image->setAttribute( 'alt', $control->getAttribute( 'alt' ) );
+            $new_button->appendChild( $image );
+            $new_button->setAttribute( 'type', 'submit' );
+            $new_button->removeAttribute( 'src' );
+            $new_button->removeAttribute( 'alt' );
+        } else {
+            $new_button->appendChild( $dom->createTextNode( $control->getAttribute( 'value' ) ) );
+        }
+
+        $control->parentNode->replaceChild( $new_button, $control );
+        $control = $new_button;
     }
+
+    $classes = preg_split( '/\s+/', trim( $control->getAttribute( 'class' ) ), -1, PREG_SPLIT_NO_EMPTY );
+    $classes[] = 'button-atom';
+    if ( !preg_grep( '/^button-atom--/', $classes ) ) {
+        $classes[] = 'button-atom--primary';
+    }
+    $classes[] = 'breakdance-form-button';
+    if ( strpos( $control->getAttribute( 'id' ), 'gform_submit_button_' ) === 0 ) {
+        $classes[] = 'breakdance-form-button__submit';
+    }
+    $control->setAttribute( 'class', implode( ' ', array_unique( $classes ) ) );
 
     $new_html_button = '';
     foreach ( $wrapper->childNodes as $child ) {
         $new_html_button .= $dom->saveHTML( $child );
     }
-
-    error_log( 'input_to_button $new_button:' . $new_html_button );
 
     return $new_html_button;
 }
@@ -288,4 +310,3 @@ function dom_document_replacement( $tag, $field_content, $add_class = 'breakdanc
     );
     
  }
-

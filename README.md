@@ -5,6 +5,10 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 - Work through integrations with payment processors: Square, PayPal
 
 ## Changelog
+### 9/29/26 v0.6.6
+- Apply Breakdance button classes server-side to Gravity Forms 3 submit, next, and previous buttons.
+- Preserve native button content, submission attributes, and adjacent payment controls; retain legacy input-button support.
+- Add regression coverage: `php tests/buttons.php`.
 ### 10/30/25 v0.6.4
 - Update encoding to UTF-8 when doing DOM_Document replacement
 ### 10/1/25 v0.6.3
