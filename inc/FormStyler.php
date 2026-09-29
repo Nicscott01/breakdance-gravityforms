@@ -377,7 +377,8 @@ class FormStyler {
         //var_dump( $field->type );
         //var_dump ( $field_content );
 
-        switch( get_class( $field ) ) {
+        // Stripe 6.1+ namespaces its field class; the registered field type is stable.
+        switch( ( $field->type ?? '' ) === 'stripe_creditcard' ? 'stripe_creditcard' : get_class( $field ) ) {
 
             case "GF_Field_List" :
 
@@ -546,7 +547,7 @@ class FormStyler {
                 //Break after doing pricing because our default removes the `ginput_amount` class. We should probably look at a more elegant solution?
                 break;
 
-            case "GF_Field_Stripe_CreditCard" :
+            case "stripe_creditcard" :
                 $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
                 break;
 

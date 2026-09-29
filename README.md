@@ -23,6 +23,8 @@ add-ons retain Appearance styling with system font fallbacks. Legacy Card
 Elements use the separate Stripe Style API and a normal outer-field CSS box.
 
 ## Changelog
+### 9/29/26 v0.7.3
+- Identify Stripe fields by their stable field type to support the namespaced field classes in current Stripe add-ons.
 ### 9/29/26 v0.7.2
 - Apply native Breakdance label styling to the Stripe field heading and match the form's default label line height.
 - Document optimized CSS cache regeneration required after style updates.
