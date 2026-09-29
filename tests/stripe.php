@@ -2,8 +2,10 @@
 /** Run with: php tests/stripe.php */
 require __DIR__ . '/../inc/StripeStyles.php';
 require __DIR__ . '/../inc/FormStyler.php';
+require __DIR__ . '/../inc/helper-functions.php';
 
 class GFStripe {}
+class GF_Field_Stripe_CreditCard {}
 $config_requests = [];
 function do_action( $hook, $args ) {
     global $config_requests;
@@ -33,6 +35,10 @@ $first->enqueue_stripe_config( ['id' => 9] );
 $second->enqueue_stripe_config( ['id' => 10] );
 $first->enqueue_stripe_config( ['id' => 9] );
 check( end( $config_requests ) === ['form_ids' => [9, 10]], 'Config localization lost another embedded form or duplicated IDs' );
+$field_html = '<label class="gfield_label gform-field-label">Credit Card</label><div id="stripe-mount"></div><input type="hidden" name="stripe_response">';
+$field_html = $first->gform_field_content( $field_html, new GF_Field_Stripe_CreditCard(), '', 0, 9 );
+check( str_contains( $field_html, 'breakdance-form-field__label' ), 'Stripe field label did not inherit Breakdance styling' );
+check( str_contains( $field_html, '<div id="stripe-mount"></div><input type="hidden" name="stripe_response">' ), 'Changed Stripe-owned controls' );
 check( in_array( $payment['theme'], ['stripe', 'night', 'flat'], true ), 'Unsupported Stripe theme' );
 check( !isset( $payment['base'] ), 'Mixed legacy Style and Appearance APIs' );
 

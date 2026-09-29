@@ -546,6 +546,10 @@ class FormStyler {
                 //Break after doing pricing because our default removes the `ginput_amount` class. We should probably look at a more elegant solution?
                 break;
 
+            case "GF_Field_Stripe_CreditCard" :
+                $field_content = class_replace( 'gform-field-label', 'breakdance-form-field__label gform-field-label', $field_content );
+                break;
+
             case "flatpickr_date" :
             case "GF_Field_Post_Title" :
             case "GF_Field_Post_Content" :

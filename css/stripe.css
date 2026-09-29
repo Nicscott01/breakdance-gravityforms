@@ -12,7 +12,7 @@
     --bdgf-stripe-label-font-family: var(--bde-body-font-family);
     --bdgf-stripe-label-font-size: var(--bde-form-font-size);
     --bdgf-stripe-label-font-weight: var(--bde-form-label-font-weight);
-    --bdgf-stripe-label-line-height: var(--bde-body-line-height, 1.4);
+    --bdgf-stripe-label-line-height: 1;
     --bdgf-stripe-label-letter-spacing: normal;
     --bdgf-stripe-label-margin-bottom: var(--bde-form-after-label);
 }

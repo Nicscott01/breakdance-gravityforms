@@ -11,7 +11,9 @@ add-on resolves them on the containing form before calling Stripe's public
 [Appearance API](https://docs.stripe.com/elements/appearance-api).
 Field colors, borders, padding, focus states, spacing, and typography inherit the
 Breakdance form settings. Element-specific label typography and spacing take
-precedence over global settings. Regenerate Breakdance CSS after upgrading.
+precedence over global settings. Regenerate Breakdance CSS after upgrading and
+clear the affected page's optimized CSS cache (such as Perfmatters Used CSS).
+Stripe reads the computed variables when its secure field initializes.
 
 Stripe Add-On 7.0+ also exposes `gform/stripe/elements/config/`. The small font
 adapter uses this hook to pass matching, already-loaded webfont stylesheets to
@@ -21,6 +23,9 @@ add-ons retain Appearance styling with system font fallbacks. Legacy Card
 Elements use the separate Stripe Style API and a normal outer-field CSS box.
 
 ## Changelog
+### 9/29/26 v0.7.2
+- Apply native Breakdance label styling to the Stripe field heading and match the form's default label line height.
+- Document optimized CSS cache regeneration required after style updates.
 ### 9/29/26 v0.7.1
 - Output native Gravity Forms configuration for Breakdance embeds so Stripe 6.1+ receives the form's styling before its separate configuration request.
 - Preserve configuration for multiple embedded forms on the same page.
