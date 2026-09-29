@@ -241,7 +241,11 @@ class FormStyler {
 
 
 
-        //Style Stripe Checkoug
+        // Gravity Forms resolves these CSS variables before passing them to Stripe.
+        if ( class_exists( '\\GFStripe' ) ) {
+            wp_enqueue_style( 'bdgf-stripe', BDGF_URL . 'css/stripe.css', [], BDGF_VERSION );
+            wp_enqueue_script( 'bdgf-stripe-fonts', BDGF_URL . 'assets/js/stripe-fonts.js', ['gform_gravityforms'], BDGF_VERSION, true );
+        }
         add_filter( 'gform_stripe_elements_style', [ $this, 'style_stripe_form' ], 10, 3 );
 
 
@@ -599,151 +603,12 @@ class FormStyler {
 
 
     public function style_stripe_form( $card_styles, $form_id, $is_payment_element_enabled ) {
-
-        //error_log( 'card_styles: ' . print_r( $card_styles, 1 ));
-        //error_log( 'is_payment_element_enabled: '. print_r( $is_payment_element_enabled, 1 ) );
-
-        //Start with the global styles
-        $global_styles = \Breakdance\Data\get_global_settings_array();
-
-        $primary_color = null;
-        $text_color = null;
-        $headings_color = null;
-        $form_input_border_radius = null;
-        $body_typography = null;
-        $body_font_size_global = null;
-        $label_font_size_form = null;
-        $font_weight_label = null;
-        $field_margin_bottom = null;
-        $label_margin_bottom = null;
-
-        if ( isset( $global_styles['settings']['colors'] ) ) {
-
-            $primary_color = isset($global_styles['settings']['colors']['brand']) ? $global_styles['settings']['colors']['brand'] : null;
-            $text_color    = isset($global_styles['settings']['colors']['text']) ? $global_styles['settings']['colors']['text'] : null;
-            $headings_color = isset($global_styles['settings']['colors']['headings']) ? $global_styles['settings']['colors']['headings'] : null;
-        
-        } 
-
-
-        if ( isset( $global_styles['settings'] ) ) {
-
-            //Defaults
-            //--bde-form-input-border-radius
-            $form_input_border_radius =  $global_styles['settings']['forms']['fields']['borders']['radius']['breakpoint_base']['all']['style'] ?? '3px';
-
-            //Typography
-            $body_typography = \Breakdance\Fonts\process_font( $global_styles['settings']['typography']['body_font'] ) ?? '';
-            
-            //Font Size
-            $body_font_size_global = isset($global_styles['settings']['typography']['base_size']['breakpoint_base']['style']) ? $global_styles['settings']['typography']['base_size']['breakpoint_base']['style'] : null;
-            
+        if ( (int) $form_id !== (int) $this->form_id ) {
+            return $card_styles;
         }
 
-
-
-        if ( isset( $this->propertiesData['design']['form_elements']['labels']['primary_typography'] ) ) {
-        
-            $label_font_size_form = $this->propertiesData['design']['form_elements']['labels']['primary_typography']['typography']['custom']['customTypography']['fontSize']['breakpoint_base']['style'];
-
-            //Font Weight
-            //var(--bde-form-label-font-weight)
-            $font_weight_label = $this->propertiesData['design']['form_elements']['labels']['primary_typography']['typography']['custom']['customTypography']['fontWeight']['breakpoint_base'] ?? '500';
-
-        }
-
-    
-        if ( isset( $this->propertiesData['design']['form_elements']['field_spacing'] ) ) {
-
-            //Field margin bottom
-            $field_margin_bottom = $this->propertiesData['design']['form_elements']['field_spacing']['margin_bottom']['breakpoint_base']['style'];
-
-        }
-
-
-        if ( isset( $this->propertiesData['design']['form_elements']['labels'] ) ) {
-            //Label margin bottom
-            $label_margin_bottom = $this->propertiesData['design']['form_elements']['labels']['primary_spacing']['margin_bottom']['breakpoint_base']['style'];
-
-        }
-
-        //error_log( 'field_margin_bottom: ' . print_r( $field_margin_bottom, 1 ) );
-        //error_log( 'global_styles' . print_r( $global_styles, 1 ));
-
-
-        $card_styles['theme'] = 'minimal';
-
-        if ( $is_payment_element_enabled ) {
-
-            // reference https://docs.stripe.com/elements/appearance-api
-            if ( !empty( $primary_color ) ) {
-                $card_styles['variables']['colorPrimary'] = $primary_color;
-            }
-            if ( !empty( $text_color ) ) {
-                $card_styles['variables']['colorTextSecondary'] = $text_color;
-            }
-            if ( !empty( $headings_color ) ) {
-                $card_styles['variables']['colorText'] = $headings_color;
-            }
-            if ( !empty( $body_typography ) ) {
-                $card_styles['variables']['fontFamily'] = $body_typography;
-            }
-
-            if ( !empty( $body_font_size_global ) ) {
-                $card_styles['variables']['fontSizeBase'] = $body_font_size_global;
-            }
-            $card_styles['variables']['tabSpacing'] = '3rem';
-            if ( !empty( $form_input_border_radius ) ) {
-                $card_styles['variables']['borderRadius'] = $form_input_border_radius;
-            }
-            if ( !empty( $field_margin_bottom ) ) {
-                $card_styles['variables']['spacingGridRow'] = $field_margin_bottom;
-            }
-             
-            $rules = [];
-
-            if ( !empty( $label_font_size_form ) ) {
-                $rules['fontSize'] = $label_font_size_form;
-            }
-            if ( !empty( $font_weight_label ) ) {
-                $rules['fontWeight'] = $font_weight_label;
-            }
-            if ( !empty( $label_margin_bottom ) ) {
-                $rules['marginBottom'] = $label_margin_bottom;
-            }
-
-            if ( !empty( $body_typography ) ) {
-                $rules['fontFamily'] = $body_typography;
-            }
-
-            if ( !empty( $rules ) ) {
-                $card_styles['rules'] = [
-                    '.Label' => $rules
-                ];
-            }
-     
-        } else {
-     
-            // reference https://docs.stripe.com/js/appendix/style
-            $card_styles['base'] = array(
-                'color' => $primary_color,
-                'fontFamily' => $body_typography,
-                'fontSize' => '22px',
-                'borderColor' => '#000000',
-                ':focus' => array(
-                    'color' => '#272829'
-                )
-            );
-     
-            $card_styles = [];
-        }
-         
-        return $card_styles;
-
+        return StripeStyles::get( $is_payment_element_enabled );
     }
-
-
-
 
 
     public function kill_modifications() {

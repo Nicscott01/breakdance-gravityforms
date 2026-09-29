@@ -4,7 +4,29 @@ This is a Wordpress plugin which gives Gravity Forms the ability to be styled wi
 ## TODO
 - Work through integrations with payment processors: Square, PayPal
 
+## Stripe styling
+Use Gravity Forms' Orbital form theme with the Stripe Payment Element. The plugin
+passes Breakdance CSS variables through `gform_stripe_elements_style`; the Stripe
+add-on resolves them on the containing form before calling Stripe's public
+[Appearance API](https://docs.stripe.com/elements/appearance-api).
+Field colors, borders, padding, focus states, spacing, and typography inherit the
+Breakdance form settings. Element-specific label typography and spacing take
+precedence over global settings. Regenerate Breakdance CSS after upgrading.
+
+Stripe Add-On 7.0+ also exposes `gform/stripe/elements/config/`. The small font
+adapter uses this hook to pass matching, already-loaded webfont stylesheets to
+Stripe's `fonts` option. It does not modify payment settings or access iframe DOM.
+Font files must be publicly reachable and permit cross-origin loading. Older
+add-ons retain Appearance styling with system font fallbacks. Legacy Card
+Elements use the separate Stripe Style API and a normal outer-field CSS box.
+
 ## Changelog
+### 9/29/26 v0.7.0
+- Match Stripe's secure payment fields to the containing Breakdance form using the supported Appearance/Style APIs.
+- Inherit global field typography and per-element labels, spacing, colors, borders, padding, and focus styles.
+- Load existing webfonts through the Stripe Elements Fonts API on Stripe Add-On 7.0+.
+- Scope styling to the correct form and restore the legacy Card Element style configuration.
+- Checks: `php tests/buttons.php`, `php tests/stripe.php`, `node tests/stripe-fonts.cjs`, and `wp eval-file path/to/tests/stripe-twig.php`.
 ### 9/29/26 v0.6.6
 - Apply Breakdance button classes server-side to Gravity Forms 3 submit, next, and previous buttons.
 - Preserve native button content, submission attributes, and adjacent payment controls; retain legacy input-button support.

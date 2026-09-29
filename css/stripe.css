@@ -1,0 +1,32 @@
+/* Values are inherited from the same Breakdance form as the payment field. */
+.breakdance .bdgf {
+    --bdgf-stripe-danger: var(--red-500, #ef4444);
+    --bdgf-stripe-row-gap: var(--bde-form-gap);
+    --bdgf-stripe-input-color: var(--bde-form-text-color);
+    --bdgf-stripe-input-font-family: var(--bde-body-font-family);
+    --bdgf-stripe-input-font-size: var(--bde-form-font-size);
+    --bdgf-stripe-input-font-weight: 400;
+    --bdgf-stripe-input-line-height: 1;
+    --bdgf-stripe-input-letter-spacing: normal;
+    --bdgf-stripe-label-color: var(--bde-form-label-color);
+    --bdgf-stripe-label-font-family: var(--bde-body-font-family);
+    --bdgf-stripe-label-font-size: var(--bde-form-font-size);
+    --bdgf-stripe-label-font-weight: var(--bde-form-label-font-weight);
+    --bdgf-stripe-label-line-height: var(--bde-body-line-height, 1.4);
+    --bdgf-stripe-label-letter-spacing: normal;
+    --bdgf-stripe-label-margin-bottom: var(--bde-form-after-label);
+}
+
+/* The legacy Card Element's outer box is owned by the page, not its iframe. */
+.breakdance .bdgf .StripeElement--card {
+    padding: var(--bde-form-input-padding-top) var(--bde-form-input-padding-right) var(--bde-form-input-padding-bottom) var(--bde-form-input-padding-left);
+    background: var(--bde-form-input-background-color);
+    border: var(--bde-form-input-border-width) solid var(--bde-form-input-border-color);
+    border-radius: var(--bde-form-input-border-radius);
+}
+
+.breakdance .bdgf .StripeElement--card.StripeElement--focus {
+    background: var(--bde-form-input-focused-background-color);
+    border-color: var(--bde-form-input-focused-border-color);
+    box-shadow: var(--bde-form-input-focused-shadow);
+}

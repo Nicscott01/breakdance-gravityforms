@@ -549,3 +549,30 @@ background-color: {{ design.form_elements.validation.container.background_color 
 {% endif %}
 
 
+
+{# Export Breakdance's actual typography declarations for Stripe's Appearance API.
+   Global field styles come first, followed by this element's label overrides. #}
+%%SELECTOR%% {
+  {% if design.form_elements.field_spacing.margin_bottom.style is not empty %}
+    --bdgf-stripe-row-gap: {{ design.form_elements.field_spacing.margin_bottom.style }};
+  {% endif %}
+  {% if design.form_elements.labels.primary_spacing.margin_bottom.style is not empty %}
+    --bdgf-stripe-label-margin-bottom: {{ design.form_elements.labels.primary_spacing.margin_bottom.style }};
+  {% endif %}
+  {% if design.form_elements.validation.messages.messages.color is not empty %}
+    --bdgf-stripe-danger: {{ design.form_elements.validation.messages.messages.color }};
+  {% endif %}
+  {% set stripe_typography = {
+    'input': macros.typography(globalSettings.forms.typography.values, globalSettings),
+    'label': macros.typography(globalSettings.forms.typography.labels, globalSettings) ~ macros.typography(design.form_elements.labels.primary_typography, globalSettings)
+  } %}
+  {% for target, typography in stripe_typography %}
+    {% for declaration in typography|split(';') %}
+      {% set parts = declaration|split(':', 2) %}
+      {% set property = parts[0]|trim %}
+      {% if property in ['color', 'font-family', 'font-size', 'font-weight', 'line-height', 'letter-spacing'] and parts[1]|default('')|trim %}
+        --bdgf-stripe-{{ target }}-{{ property }}: {{ parts[1]|trim }};
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+}
