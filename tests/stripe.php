@@ -3,6 +3,13 @@
 require __DIR__ . '/../inc/StripeStyles.php';
 require __DIR__ . '/../inc/FormStyler.php';
 
+class GFStripe {}
+$config_requests = [];
+function do_action( $hook, $args ) {
+    global $config_requests;
+    if ( $hook === 'gform_output_config' ) $config_requests[] = $args;
+}
+
 $checks = 0;
 function check( $condition, $message ) {
     global $checks;
@@ -20,6 +27,12 @@ $unrelated = ['theme' => 'night', 'variables' => ['colorPrimary' => '#123456']];
 check( $first->style_stripe_form( $unrelated, 11, true ) === $unrelated, 'Changed an unrelated form' );
 $payment = $first->style_stripe_form( $unrelated, 9, true );
 check( $second->style_stripe_form( $payment, 9, true ) === $payment, 'A second form overwrote the first' );
+$first->enqueue_stripe_config( ['id' => 11] );
+check( !$config_requests, 'Localized config for an unrelated form' );
+$first->enqueue_stripe_config( ['id' => 9] );
+$second->enqueue_stripe_config( ['id' => 10] );
+$first->enqueue_stripe_config( ['id' => 9] );
+check( end( $config_requests ) === ['form_ids' => [9, 10]], 'Config localization lost another embedded form or duplicated IDs' );
 check( in_array( $payment['theme'], ['stripe', 'night', 'flat'], true ), 'Unsupported Stripe theme' );
 check( !isset( $payment['base'] ), 'Mixed legacy Style and Appearance APIs' );
 

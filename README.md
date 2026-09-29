@@ -21,6 +21,9 @@ add-ons retain Appearance styling with system font fallbacks. Legacy Card
 Elements use the separate Stripe Style API and a normal outer-field CSS box.
 
 ## Changelog
+### 9/29/26 v0.7.1
+- Output native Gravity Forms configuration for Breakdance embeds so Stripe 6.1+ receives the form's styling before its separate configuration request.
+- Preserve configuration for multiple embedded forms on the same page.
 ### 9/29/26 v0.7.0
 - Match Stripe's secure payment fields to the containing Breakdance form using the supported Appearance/Style APIs.
 - Inherit global field typography and per-element labels, spacing, colors, borders, padding, and focus styles.

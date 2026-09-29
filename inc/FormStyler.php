@@ -3,6 +3,8 @@ namespace BDGF;
 
 class FormStyler {
 
+    private static $stripe_config_form_ids = [];
+
     //The BD Element props
     public $propertiesData;
 
@@ -247,6 +249,7 @@ class FormStyler {
             wp_enqueue_script( 'bdgf-stripe-fonts', BDGF_URL . 'assets/js/stripe-fonts.js', ['gform_gravityforms'], BDGF_VERSION, true );
         }
         add_filter( 'gform_stripe_elements_style', [ $this, 'style_stripe_form' ], 10, 3 );
+        add_action( 'gform_enqueue_scripts_' . $this->form_id, [ $this, 'enqueue_stripe_config' ], 20 );
 
 
         //GravityForms File Uploader
@@ -601,6 +604,18 @@ class FormStyler {
 
 
 
+
+    public function enqueue_stripe_config( $form ) {
+        if ( !class_exists( '\\GFStripe' ) || (int) $form['id'] !== (int) $this->form_id ) {
+            return;
+        }
+
+        // Breakdance embeds are not discovered by GF's shortcode/block scan.
+        // Output config while this form's filters exist, before Stripe 6.1+
+        // falls back to a separate AJAX request without the element context.
+        self::$stripe_config_form_ids[(int) $this->form_id] = true;
+        do_action( 'gform_output_config', ['form_ids' => array_keys( self::$stripe_config_form_ids )] );
+    }
 
     public function style_stripe_form( $card_styles, $form_id, $is_payment_element_enabled ) {
         if ( (int) $form_id !== (int) $this->form_id ) {
